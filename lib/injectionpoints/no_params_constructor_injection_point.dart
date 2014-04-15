@@ -9,5 +9,5 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
   //-----------------------------------
 	
 	NoParamsConstructorInjectionPoint()
-		: super( new Symbol(''), [], null );
+		: super( [], null );
 }
