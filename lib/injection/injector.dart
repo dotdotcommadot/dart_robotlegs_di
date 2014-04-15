@@ -8,9 +8,49 @@ class Injector implements IInjector
   //
   //-----------------------------------
 	
-	Injector _parentInjector;
+	//-----------------------------------
+	// Streams
+	//-----------------------------------
+	
+  Stream _onPostInstantiated;
+  Stream get onPostInstantiated => _onPostInstantiated;
+  final StreamController _onPostInstantiatedController = new StreamController();
+
+  Stream _onPreMappingCreated;
+  Stream get onPreMappingCreated => _onPreMappingCreated;
+  final StreamController _onPreMappingCreatedController = new StreamController();
+
+  Stream _onPreMappingChanged;
+  Stream get onPreMappingChanged => _onPreMappingChanged;
+  final StreamController _onPreMappingChangedController = new StreamController();
+
+  Stream _onPostMappingCreated;
+  Stream get onPostMappingCreated => _onPostMappingCreated;
+  final StreamController _onPostMappingCreatedController = new StreamController();
+
+  Stream _onPostMappingChanged;
+  Stream get onPostMappingChanged => _onPostMappingChanged;
+  final StreamController _onPostMappingChangedController = new StreamController();
+
+  Stream _onPostMappingRemoved;
+  Stream get onPostMappingRemoved => _onPostMappingRemoved;
+  final StreamController _onPostMappingRemovedController = new StreamController();
+
+  Stream _onPreConstruct;
+  Stream get onPreConstruct => _onPreConstruct;
+  final StreamController _onPreConstructController = new StreamController();
+
+  Stream _onPostConstruct;
+  Stream get onPostConstruct => _onPostConstruct;
+  final StreamController _onPostConstructController = new StreamController();
+	
+	//-----------------------------------
+	// ParentInjector
+	//-----------------------------------
+  
+	IInjector _parentInjector;
 	set parentInjector(IInjector value) => _parentInjector = parentInjector;
-	get parentInjector => _parentInjector;
+	IInjector get parentInjector => _parentInjector;
 
   //-----------------------------------
   //
@@ -28,7 +68,17 @@ class Injector implements IInjector
   //
   //-----------------------------------
 	
-	Injector();
+	Injector()
+	{
+		_onPostInstantiated 	= _onPostInstantiatedController.stream.asBroadcastStream();
+		_onPreMappingCreated 	= _onPreMappingCreatedController.stream.asBroadcastStream();
+		_onPreMappingChanged 	= _onPreMappingChangedController.stream.asBroadcastStream();
+		_onPostMappingCreated = _onPostMappingCreatedController.stream.asBroadcastStream();
+		_onPostMappingChanged = _onPostMappingChangedController.stream.asBroadcastStream();
+		_onPostMappingRemoved = _onPostMappingRemovedController.stream.asBroadcastStream();
+		_onPreConstruct 			= _onPreConstructController.stream.asBroadcastStream();
+		_onPostConstruct 			= _onPostConstructController.stream.asBroadcastStream();
+	}
 	
   //-----------------------------------
   //
@@ -57,6 +107,9 @@ class Injector implements IInjector
 	 		return _createMapping(mappingId, type, name);
 	 	else 
 	 		return _mappings[mappingId];
+	 	
+	 	
+	 	_onPostInstantiatedController.add("");
 	}
   	
   void unmap(Type type, [String name = ''])

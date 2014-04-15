@@ -8,8 +8,32 @@ abstract class IInjector
   //
   //-----------------------------------
 	
+	//-----------------------------------
+	// Streams
+	//-----------------------------------
+	
+  Stream get onPostInstantiated;
+
+  Stream get onPreMappingCreated;
+
+  Stream get onPreMappingChanged;
+  
+  Stream get onPostMappingCreated;
+  
+  Stream get onPostMappingChanged;
+
+  Stream get onPostMappingRemoved;
+
+  Stream get onPreConstruct;
+
+  Stream get onPostConstruct;
+  
+	//-----------------------------------
+	// ParentInjector
+	//-----------------------------------
+	
 	set parentInjector(IInjector value);
-	get parentInjector;
+	IInjector get parentInjector;
 	
   //-----------------------------------
   //
