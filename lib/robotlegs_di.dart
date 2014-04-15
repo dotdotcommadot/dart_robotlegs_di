@@ -13,6 +13,12 @@ import 'dart:mirrors';
 part 'descriptors/type_descriptor.dart';
 
 //-----------------------------------
+// Errors
+//-----------------------------------
+
+part 'errors/injector_error.dart';
+
+//-----------------------------------
 // Injection
 //-----------------------------------
 
