@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint {
-	
+class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint 
+{
 	//-----------------------------------
   //
   // Constructor

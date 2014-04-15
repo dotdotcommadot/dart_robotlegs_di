@@ -6,12 +6,12 @@ part of robotlegs_di;
 
 const Inject inject = const Inject();
 
-class Inject {
-	
+class Inject 
+{
 	final String name;
 	final bool optional;
 	
-  const Inject( {this.name : "", this.optional : false} );
+  const Inject({this.name : "", this.optional : false});
 }
 
 //-----------------------------------
@@ -20,12 +20,12 @@ class Inject {
 
 const PostConstruct postConstruct = const PostConstruct();
 
-class PostConstruct {
-	
+class PostConstruct 
+{
 	final String name;
 	final int order;
 	
-	const PostConstruct( {this.name : "", this.order : 99999} );
+	const PostConstruct({this.name : "", this.order : 99999});
 }
 
 //-----------------------------------
@@ -34,10 +34,10 @@ class PostConstruct {
 
 const PreDestroy preDestroy = const PreDestroy();
 
-class PreDestroy {
-	
+class PreDestroy 
+{
 	final String name;
 	final int order;
 	
-	const PreDestroy( {this.name : "", this.order : 99999} );
+	const PreDestroy({this.name : "", this.order : 99999});
 }

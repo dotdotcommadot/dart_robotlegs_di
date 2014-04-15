@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class ConstructorInjectionPoint extends MethodInjectionPoint {
-	
+class ConstructorInjectionPoint extends MethodInjectionPoint 
+{
 	//-----------------------------------
   //
   // Constructor
@@ -9,8 +9,8 @@ class ConstructorInjectionPoint extends MethodInjectionPoint {
   //-----------------------------------
 	
 	ConstructorInjectionPoint(
-		Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments  )
-		: super( method, positionalArguments, namedArguments );
+		Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
+		: super( method, positionalArguments, namedArguments);
 	
 	//-----------------------------------
   //
@@ -18,7 +18,8 @@ class ConstructorInjectionPoint extends MethodInjectionPoint {
   //
   //-----------------------------------
 	
-	dynamic createInstance( Type type, IInjector injector) {
-		return reflectClass( type ).newInstance( method, positionalArguments, namedArguments ).reflectee;
+	dynamic createInstance(Type type, IInjector injector) 
+	{
+		return reflectClass(type).newInstance(method, positionalArguments, namedArguments).reflectee;
 	}
 }

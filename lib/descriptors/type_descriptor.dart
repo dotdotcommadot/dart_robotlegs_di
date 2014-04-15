@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class TypeDescriptor {
-	
+class TypeDescriptor 
+{
   //-----------------------------------
   //
   // Public Properties
@@ -9,6 +9,7 @@ class TypeDescriptor {
   //-----------------------------------
 	
 	InjectionPoint injectionPoints;
+	
 	ConstructorInjectionPoint constructorInjectionPoint;
 	
   //-----------------------------------
@@ -17,8 +18,9 @@ class TypeDescriptor {
   //
   //-----------------------------------
 	
-	TypeDescriptor( [bool useDefaultConstructor = true] ) {
-		if( useDefaultConstructor )
+	TypeDescriptor([bool useDefaultConstructor = true]) 
+	{
+		if (useDefaultConstructor)
 			constructorInjectionPoint = new NoParamsConstructorInjectionPoint();
 	}
 	
@@ -28,9 +30,9 @@ class TypeDescriptor {
   //
   //-----------------------------------
 	
-	void addInjectionPoint( InjectionPoint injectionPoint ) {
-		
-		if( injectionPoints != null )
+	void addInjectionPoint(InjectionPoint injectionPoint) 
+	{
+		if (injectionPoints != null)
 		{
 			injectionPoints.last.next = injectionPoint;
 			injectionPoints.last = injectionPoint;

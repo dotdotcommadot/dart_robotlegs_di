@@ -1,10 +1,21 @@
 part of robotlegs_di;
 
-abstract class InjectionPoint {
+abstract class InjectionPoint 
+{
+	//-----------------------------------
+  //
+  // Public Properties
+  //
+  //-----------------------------------
 	
   InjectionPoint next;
   InjectionPoint last;
   
-	void applyInjection( IInjector injector, dynamic target, Type type );
-	
+	//-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+  
+	void applyInjection(IInjector injector, dynamic target, Type type);
 }

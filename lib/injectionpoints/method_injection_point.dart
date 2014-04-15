@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class MethodInjectionPoint extends InjectionPoint {
-	
+class MethodInjectionPoint extends InjectionPoint 
+{
   //-----------------------------------
   //
   // Public Properties
@@ -20,7 +20,7 @@ class MethodInjectionPoint extends InjectionPoint {
   //
   //-----------------------------------
 	
-	MethodInjectionPoint( this.method, this.positionalArguments, this.namedArguments  );
+	MethodInjectionPoint(this.method, this.positionalArguments, this.namedArguments);
 	
   //-----------------------------------
   //
@@ -28,8 +28,8 @@ class MethodInjectionPoint extends InjectionPoint {
   //
   //-----------------------------------
 	
-	void applyInjection( Injector injector, Object target, Type targetType ) {
-		
-		reflect( target ).invoke( method, positionalArguments, namedArguments);
+	void applyInjection(Injector injector, Object target, Type targetType)
+	{
+		reflect(target).invoke(method, positionalArguments, namedArguments);
 	}
 }

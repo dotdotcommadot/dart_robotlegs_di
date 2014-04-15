@@ -2,7 +2,6 @@ part of robotlegs_di;
 
 abstract class IInjector 
 {
-
   //-----------------------------------
   //
   // Public Properties

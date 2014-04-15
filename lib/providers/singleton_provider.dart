@@ -9,6 +9,7 @@ class SingletonProvider implements IProvider
   //-----------------------------------
 	
 	IInjector injector;
+	
 	Type type;
 	
 	dynamic _instance;
@@ -19,7 +20,7 @@ class SingletonProvider implements IProvider
 	//
 	//-----------------------------------
 	
-	SingletonProvider( IInjector injector, Type type );
+	SingletonProvider(IInjector injector, Type type);
 
 	//-----------------------------------
 	//
@@ -27,15 +28,15 @@ class SingletonProvider implements IProvider
 	//
 	//-----------------------------------
   
-	dynamic apply( IInjector injector, Type type ) {
-		
-		if( _instance == null )
-			_instance = reflectClass( type ).newInstance( new Symbol(''), [] ).reflectee;
+	dynamic apply(IInjector injector, Type type) 
+	{
+		if (_instance == null)
+			_instance = reflectClass(type).newInstance(new Symbol(''), []).reflectee;
 		
   	return _instance;
   }
   
-  void destroy() {
-  	
+  void destroy() 
+  {
   }
 }

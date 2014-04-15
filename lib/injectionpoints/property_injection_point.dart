@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class PropertyInjectionPoint extends InjectionPoint {
-	
+class PropertyInjectionPoint extends InjectionPoint 
+{
   //-----------------------------------
   //
   // Private Properties
@@ -9,8 +9,10 @@ class PropertyInjectionPoint extends InjectionPoint {
   //-----------------------------------
 	
 	String _mappingId;
-  Symbol _property;
-  bool _optional;
+  
+	Symbol _property;
+  
+	bool _optional;
   
   //-----------------------------------
   //
@@ -18,9 +20,7 @@ class PropertyInjectionPoint extends InjectionPoint {
   //
   //-----------------------------------
   
-	PropertyInjectionPoint( this._mappingId, this._property, this._optional  ) {
-		
-	}
+	PropertyInjectionPoint(this._mappingId, this._property, this._optional);
 	
   //-----------------------------------
   //
@@ -28,16 +28,16 @@ class PropertyInjectionPoint extends InjectionPoint {
   //
   //-----------------------------------
 	
-  void applyInjection( IInjector injector, dynamic target, Type type )
+  void applyInjection(IInjector injector, dynamic target, Type type)
   {
-    IProvider provider = injector._getProvider( _mappingId );
+    IProvider provider = injector._getProvider(_mappingId);
     
-    if ( provider == null )
+    if (provider == null)
     {
-    	if( _optional )
+    	if (_optional)
       	return;
     	
-    	print( 'Injector is missing a mapping to handle injection into property ${_property.toString()} of object ${target}' );
+    	print('Injector is missing a mapping to handle injection into property ${_property.toString()} of object ${target}');
     	
       /*throw(new InjectorMissingMappingError(
           'Injector is missing a mapping to handle injection into property "' +
@@ -46,9 +46,9 @@ class PropertyInjectionPoint extends InjectionPoint {
           '". Target dependency: "' + _mappingId + '"'));*/
     }
     
-		var instance = provider.apply( injector, type );
+		var instance = provider.apply(injector, type);
     
-    InstanceMirror instanceMirror = reflect( target );
-    instanceMirror.setField( _property, instance );
+    InstanceMirror instanceMirror = reflect(target);
+    instanceMirror.setField(_property, instance);
   }
 }

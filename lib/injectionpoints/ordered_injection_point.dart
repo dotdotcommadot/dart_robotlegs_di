@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class OrderedInjectionPoint extends MethodInjectionPoint {
-	
+class OrderedInjectionPoint extends MethodInjectionPoint 
+{
 	//-----------------------------------
   //
   // Public Properties
@@ -17,6 +17,6 @@ class OrderedInjectionPoint extends MethodInjectionPoint {
   //-----------------------------------
 	
 	OrderedInjectionPoint( 
-		Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, this.order  )
-		: super( method, positionalArguments, namedArguments );
+		Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, this.order)
+		: super(method, positionalArguments, namedArguments);
 }

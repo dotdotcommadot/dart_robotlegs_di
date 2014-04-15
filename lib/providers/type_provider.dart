@@ -1,6 +1,7 @@
 part of robotlegs_di;
 
-class TypeProvider implements IProvider {
+class TypeProvider implements IProvider 
+{
   //-----------------------------------
   //
   // Public Properties
@@ -15,7 +16,7 @@ class TypeProvider implements IProvider {
 	//
 	//-----------------------------------
 	
-	TypeProvider( this.targetType );
+	TypeProvider(this.targetType);
 
 	//-----------------------------------
 	//
@@ -23,12 +24,12 @@ class TypeProvider implements IProvider {
 	//
 	//-----------------------------------
   
-	dynamic apply( IInjector injector, Type type ) {
-		
-		return injector.instantiateUnMapped( targetType );
+	dynamic apply(IInjector injector, Type type) 
+	{
+		return injector.instantiateUnMapped(targetType);
   }
   
-  void destroy() {
-  	
+  void destroy() 
+  {
   }
 }

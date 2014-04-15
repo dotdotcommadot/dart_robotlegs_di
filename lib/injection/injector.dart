@@ -1,7 +1,17 @@
 part of robotlegs_di;
 
-class Injector implements IInjector {
+class Injector implements IInjector 
+{
+  //-----------------------------------
+  //
+  // Public Properties
+  //
+  //-----------------------------------
 	
+	Injector _parentInjector;
+	set parentInjector(IInjector value) => _parentInjector = parentInjector;
+	get parentInjector => _parentInjector;
+
   //-----------------------------------
   //
   // Private Properties
@@ -9,10 +19,6 @@ class Injector implements IInjector {
   //-----------------------------------
 	
 	Map<String, InjectionMapping> _mappings = new Map<String, InjectionMapping>();
-	
-	Injector _parentInjector;
-	set parentInjector(IInjector value) => _parentInjector = parentInjector;
-	get parentInjector => _parentInjector;
 	
 	Reflector _reflector = new Reflector();
 	
@@ -45,20 +51,20 @@ class Injector implements IInjector {
 	
 	InjectionMapping map(Type type, [String name = '']) 
 	{
-		final String mappingId = _getMappingId( type, name );
+		final String mappingId = _getMappingId(type, name);
 	 	
-	 	if( _mappings[mappingId] == null )
-	 		return _createMapping( mappingId, type, name );
+	 	if (_mappings[mappingId] == null)
+	 		return _createMapping(mappingId, type, name);
 	 	else 
 	 		return _mappings[mappingId];
 	}
   	
   void unmap(Type type, [String name = ''])
   {
-  	final String mappingId = _getMappingId( type, name );
+  	final String mappingId = _getMappingId(type, name);
   	InjectionMapping mapping = _mappings[mappingId];
   	
-  	_mappings.remove( mappingId );
+  	_mappings.remove(mappingId);
   }
   
 	void injectInto(dynamic target )
@@ -73,10 +79,10 @@ class Injector implements IInjector {
   	final String mappingId = _getMappingId( type, name );
   	
   	IProvider provider = _mappings[mappingId].provider;
-  	TypeDescriptor typeDescription = _reflector.getDescriptor( type );
+  	TypeDescriptor typeDescription = _reflector.getDescriptor(type);
   	InjectionMapping mapping = _mappings[mappingId];
   	
-  	return mapping.provider.apply( this, type );
+  	return mapping.provider.apply(this, type);
   }
   
   dynamic getOrCreateNewInstance(Type type, [String name = ''])
@@ -86,9 +92,9 @@ class Injector implements IInjector {
   
   dynamic instantiateUnMapped(Type type) 
   {
-  	TypeDescriptor typeDescription = _reflector.getDescriptor( type );
-  	dynamic instance = typeDescription.constructorInjectionPoint.createInstance( type, this );
-  	_applyinjectionPoints( instance, type, typeDescription );
+  	TypeDescriptor typeDescription = _reflector.getDescriptor(type);
+  	dynamic instance = typeDescription.constructorInjectionPoint.createInstance(type, this);
+  	_applyinjectionPoints(instance, type, typeDescription);
   	
   	return instance;
   }
@@ -124,9 +130,9 @@ class Injector implements IInjector {
   
   InjectionMapping _createMapping(String mappingId, Type type, String name) 
   {
-  	final String mappingId = _getMappingId( type, name );
+  	final String mappingId = _getMappingId(type, name);
   	
-  	final InjectionMapping mapping = new InjectionMapping( mappingId, this, type, name );
+  	final InjectionMapping mapping = new InjectionMapping(mappingId, this, type, name);
   	_mappings[mappingId] = mapping;
   	
   	return mapping;
@@ -142,8 +148,9 @@ class Injector implements IInjector {
   {
   	InjectionPoint injectionPoint = typeDescription.injectionPoints;
   	
-  	while( injectionPoint != null ) {
-  		injectionPoint.applyInjection( this, instance, type );
+  	while (injectionPoint != null)
+  	{
+  		injectionPoint.applyInjection(this, instance, type);
       injectionPoint = injectionPoint.next;
   	}
   }

@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class PostConstructInjectionPoint extends OrderedInjectionPoint {
-	
+class PostConstructInjectionPoint extends OrderedInjectionPoint 
+{
 	//-----------------------------------
   //
   // Constructor
@@ -9,6 +9,6 @@ class PostConstructInjectionPoint extends OrderedInjectionPoint {
   //-----------------------------------
 	
 	PostConstructInjectionPoint( 
-			Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order )
-      : super( method, positionalArguments, namedArguments, order );
+		Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order)
+		: super(method, positionalArguments, namedArguments, order);
 }

@@ -1,7 +1,7 @@
 part of robotlegs_di;
 
-class ValueProvider implements IProvider {
-	
+class ValueProvider implements IProvider 
+{
 	//-----------------------------------
 	//
 	// Private Properties
@@ -16,7 +16,7 @@ class ValueProvider implements IProvider {
 	//
 	//-----------------------------------
 	
-	ValueProvider( this._value );
+	ValueProvider(this._value);
 	
 	//-----------------------------------
 	//
@@ -24,11 +24,12 @@ class ValueProvider implements IProvider {
 	//
 	//-----------------------------------
   
-	dynamic apply( IInjector injector, Type type ) {
+	dynamic apply(IInjector injector, Type type) 
+	{
   	return _value;
   }
   
-  void destroy() {
-  	
+  void destroy() 
+  {
   }
 }
