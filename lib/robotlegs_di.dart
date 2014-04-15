@@ -5,6 +5,7 @@ library robotlegs_di;
 //-----------------------------------
 
 import 'dart:mirrors';
+import 'dart:async';
 
 //-----------------------------------
 // Descriptors
@@ -17,6 +18,7 @@ part 'descriptors/type_descriptor.dart';
 //-----------------------------------
 
 part 'errors/injector_error.dart';
+part 'errors/injector_missing_mapping_error.dart';
 
 //-----------------------------------
 // Injection
