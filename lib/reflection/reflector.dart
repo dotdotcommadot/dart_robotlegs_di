@@ -42,6 +42,11 @@ class Reflector
      return descriptorsCache[type];
   }
 	
+	void addDescriptor(Type type, TypeDescriptor descriptor)
+	{
+		descriptorsCache[type] = descriptor;
+	}
+	
 	Type getType(dynamic value)
 	{
 		return reflect(value).runtimeType;
@@ -61,9 +66,9 @@ class Reflector
 		typeDescriptor.constructorInjectionPoint = _getConstructorInjectionPoint();
 		propertyInjectionPoints.forEach( (PropertyInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
 		methodInjectionPoints.forEach( (MethodInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
-		postConstructInjectionPoints.sort( (x, y) => x.order > y.order );
+		postConstructInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
 		postConstructInjectionPoints.forEach( (PostConstructInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
-		preDestroyInjectionPoints.sort( (x, y) => x.order > y.order );
+		preDestroyInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
 		preDestroyInjectionPoints.forEach( (PreDestroyInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
 		
 		constructorInjectionPoint = propertyInjectionPoints = methodInjectionPoints = postConstructInjectionPoints = preDestroyInjectionPoints = null;

@@ -4,11 +4,11 @@ class TypeProvider implements IProvider
 {
   //-----------------------------------
   //
-  // Public Properties
+  // Private Properties
   //
   //-----------------------------------
 	
-	Type targetType;
+	Type _responseType;
 	
 	//-----------------------------------
 	//
@@ -16,7 +16,7 @@ class TypeProvider implements IProvider
 	//
 	//-----------------------------------
 	
-	TypeProvider(this.targetType);
+	TypeProvider(this._responseType);
 
 	//-----------------------------------
 	//
@@ -24,9 +24,9 @@ class TypeProvider implements IProvider
 	//
 	//-----------------------------------
   
-	dynamic apply(IInjector injector, Type type) 
+	dynamic apply(IInjector injector, Type targetType, Map injectParameters) 
 	{
-		return injector.instantiateUnMapped(targetType);
+		return injector.instantiateUnMapped(_responseType);
   }
   
   void destroy() 

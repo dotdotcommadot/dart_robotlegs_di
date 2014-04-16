@@ -37,16 +37,14 @@ class PropertyInjectionPoint extends InjectionPoint
     	if (_optional)
       	return;
     	
-    	print('Injector is missing a mapping to handle injection into property ${_property.toString()} of object ${target}');
-    	
-      /*throw(new InjectorMissingMappingError(
-          'Injector is missing a mapping to handle injection into property "' +
-          _propertyName.toString() + '" of object "' + target + '" with type "' +
-          targetType.toString() +
-          '". Target dependency: "' + _mappingId + '"'));*/
+    	throw(new InjectorMissingMappingError(
+    		'Injector is missing a mapping to handle injection into property "' +
+    		_property.runtimeType.toString() + '" of object "' + target + '" with type "' +
+    		type.runtimeType.toString() + '". Target dependency: "' + _mappingId + '"'));
     }
     
-		var instance = provider.apply(injector, type);
+    // TODO: figure out injectParameters;
+		var instance = provider.apply(injector, type, new Map());
     
     InstanceMirror instanceMirror = reflect(target);
     instanceMirror.setField(_property, instance);

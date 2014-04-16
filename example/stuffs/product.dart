@@ -1,71 +1,42 @@
 part of robotlegs_di_example;
 
-class Product implements IProduct {
+class Product {
 	
-	String param;
-	
-// Constructor
 	Product();
 	
-	/*// Constructor with parameters
-	@inject
-	Product.withParamsConstructor( String param ){ 
-		this.param = param; 
-	}
-
-	// Constructor without parameters
-	@inject
-	Product.withoutParamsConstructor(){ 
-		
-	}*/
-	
 	@postConstruct
-	void postConstructMethod() {
-		print( "postConstructMethod" );
+	void postConstructMethod() 
+	{
+		print( "Product::postConstructMethod" );
 	}
 
-	/*@PostConstruct( order: 10)
-	void orderedPostConstructMethod() {
-		
-	}*/
+	@PostConstruct(order: 1)
+	void firstPostConstructMethod() 
+	{
+		print( "Product::firstPostConstructMethod" );
+	}
+
+	@PostConstruct(order: 1)
+	void secondPostConstructMethod() 
+	{
+		print( "Product::secondPostConstructMethod" );
+	}
 
 	@preDestroy
-	void preDestroyMethod() {
-		print( "preDestroyMethod" );
+	void preDestroyMethod() 
+	{
+		print( "Product::preDestroyMethod" );
 	}
 
-	/*@PreDestroy(order: 10)
-	void orderedPreDestroyMethod() {
-		
-	}*/
-	
-	@inject
-	String getParam() {
-		return param;
+	@PreDestroy(order: 1)
+	void firstPreDestroyMethod() 
+	{
+		print( "Product::orderedPreDestroyMethod" );
 	}
 
-	/*@inject
-	void withPositionalParamsMethod( String paramOne ) {
-
-	}
-
-	@inject
-	void withNamedParamsMethod( {param} ) {
-		
-	}*/
-
-	@inject
-	void withoutParamsMethod() {
-		print( "withoutParamsMethod" );
-	}
-	
-	@inject
-	void interfaceMethod() {
-		print( "interfaceMethod" );
-	}
-	
-	@Inject(name: "myNamedInjectionMethod")
-	void namedInjectionMethod() {
-		print( "namedInjectionMethod" );
+	@PreDestroy(order: 2)
+	void secondPreDestroyMethod() 
+	{
+		print( "Product::secondPreDestroyMethod" );
 	}
 }

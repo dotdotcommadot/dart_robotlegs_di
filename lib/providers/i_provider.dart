@@ -8,7 +8,7 @@ abstract class IProvider
   //
   //-----------------------------------
   
-  dynamic apply(IInjector injector, Type type);
+  dynamic apply(IInjector injector, Type type, Map injectParameters);
   
   void destroy();
 }

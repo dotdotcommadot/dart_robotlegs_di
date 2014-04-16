@@ -1,15 +1,14 @@
-part of robotlegs_di_example;
+part of robotlegs_di;
 
-class Shop {
-
+class InjectorUsingProvider extends ForwardingProvider
+{
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
 	
-	@inject
-	Product product;
+	IInjector injector;
 	
   //-----------------------------------
   //
@@ -17,7 +16,7 @@ class Shop {
   //
   //-----------------------------------
 	
-	Shop();
+	InjectorUsingProvider(this.injector, IProvider provider) : super(provider);
 	
   //-----------------------------------
   //
@@ -25,21 +24,9 @@ class Shop {
   //
   //-----------------------------------
 	
-	@postConstruct
-	void onPostConstruct() 
-	{
-		print("Shop::onPostConstruct: " + product.toString());
-	}
-
-	@preDestroy
-	void onPreDestroy() 
-	{
-		print("Shop::onPreDestroy");
-	}
-
-	@inject
-	void injectMethod() 
-	{
-		print("Shop::injectMethod");
-	}
+	@override
+  dynamic apply(IInjector injector, Type type, Map injectParameters)
+  {
+  	return provider.apply(injector, type, injectParameters);
+  }
 }

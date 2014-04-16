@@ -4,15 +4,14 @@ class SingletonProvider implements IProvider
 {
   //-----------------------------------
   //
-  // Public Properties
+  // Private Properties
   //
   //-----------------------------------
 	
-	IInjector injector;
-	
-	Type type;
-	
-	dynamic _instance;
+	IInjector _creatingInjector;
+	Type _responseType ;
+	dynamic _response;
+	bool _destroyed;
 
 	//-----------------------------------
 	//
@@ -20,7 +19,7 @@ class SingletonProvider implements IProvider
 	//
 	//-----------------------------------
 	
-	SingletonProvider(IInjector injector, Type type);
+	SingletonProvider(this._creatingInjector, this._responseType );
 
 	//-----------------------------------
 	//
@@ -28,15 +27,27 @@ class SingletonProvider implements IProvider
 	//
 	//-----------------------------------
   
-	dynamic apply(IInjector injector, Type type) 
+	dynamic apply(IInjector injector, Type type, Map injectParameters) 
 	{
-		if (_instance == null)
-			_instance = reflectClass(type).newInstance(new Symbol(''), []).reflectee;
+		if (_response == null)
+			_response = reflectClass(type).newInstance(new Symbol(''), []).reflectee;
 		
-  	return _instance;
+  	return _response;
   }
   
   void destroy() 
   {
+  	_destroyed = true;
+  	if (_response == null)
+  		return;
+  	
+  	TypeDescriptor descriptor = _creatingInjector.getTypeDescriptor(_responseType);
+  	PreDestroyInjectionPoint preDestroyInjectonPoint = descriptor.preDestroyMethods;
+  	while (preDestroyInjectonPoint != null)
+  	{
+  		preDestroyInjectonPoint.applyInjection(_creatingInjector, _response, _responseType);
+  		preDestroyInjectonPoint = preDestroyInjectonPoint.next;
+  	}
+  	_response = null;
   }
 }

@@ -8,6 +8,17 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
   //
   //-----------------------------------
 	
-	NoParamsConstructorInjectionPoint()
-		: super( [], null );
+	NoParamsConstructorInjectionPoint() : super( [], null );
+	
+	//-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+	
+	@override
+	dynamic createInstance(Type type, IInjector injector)
+	{
+		return reflectClass(type).newInstance(method, []).reflectee;
+	}
 }

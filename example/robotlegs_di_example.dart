@@ -11,10 +11,8 @@ void main()
 {
 	IInjector injector = new Injector();
 	
-	injector.map( IProduct ).toType( Product );
+	injector.map( Product );
 	injector.map( Shop );
 	
 	Shop shop = injector.getInstance( Shop );
-	
-	print( shop.product );
 }

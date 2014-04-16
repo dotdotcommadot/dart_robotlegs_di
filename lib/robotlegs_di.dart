@@ -18,6 +18,7 @@ part 'descriptors/type_descriptor.dart';
 //-----------------------------------
 
 part 'errors/injector_error.dart';
+part 'errors/injector_interface_constructor_error.dart';
 part 'errors/injector_missing_mapping_error.dart';
 
 //-----------------------------------
@@ -45,13 +46,22 @@ part 'injectionpoints/property_injection_point.dart';
 //-----------------------------------
 
 part 'mapping/injection_mapping.dart';
+part 'mapping/i_providerless_mapping.dart';
+part 'mapping/i_unsealed_mapping.dart';
 
 //-----------------------------------
 // Providers
 //-----------------------------------
 
+part 'providers/factory_provider.dart';
+part 'providers/forwarding_provider.dart';
+part 'providers/injector_using_provider.dart';
+part 'providers/i_fallback_provider.dart';
 part 'providers/i_provider.dart';
+part 'providers/local_only_provider.dart';
+part 'providers/other_mapping_provider.dart';
 part 'providers/singleton_provider.dart';
+part 'providers/soft_provider.dart';
 part 'providers/type_provider.dart';
 part 'providers/value_provider.dart';
 
