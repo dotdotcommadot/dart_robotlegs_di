@@ -31,7 +31,7 @@ class Product {
 	@PreDestroy(order: 1)
 	void firstPreDestroyMethod() 
 	{
-		print( "Product::orderedPreDestroyMethod" );
+		print( "Product::firstPreDestroyMethod" );
 	}
 
 	@PreDestroy(order: 2)
