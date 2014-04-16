@@ -295,7 +295,6 @@ class Injector implements IInjector
 
   bool _canBeInstantiated(Type type)
   {
-  	print(type.runtimeType.toString());
   	final TypeDescriptor descriptor = _reflector.getDescriptor(type);
   	return descriptor.constructorInjectionPoint != null;
   }
