@@ -10,7 +10,10 @@ class Shop {
 	
 	@inject
 	Product product;
-	
+
+	@inject
+	Product otherProduct;
+
   //-----------------------------------
   //
   // Constructor
@@ -29,6 +32,7 @@ class Shop {
 	void onPostConstruct() 
 	{
 		print("Shop::onPostConstruct: " + product.toString());
+		print("Shop::onPostConstruct: " + otherProduct.toString());
 	}
 
 	@preDestroy
@@ -38,8 +42,8 @@ class Shop {
 	}
 
 	@inject
-	void injectMethod() 
+	void injectedMethod() 
 	{
-		print("Shop::injectMethod");
+		print("Shop::injectedMethod");
 	}
 }
