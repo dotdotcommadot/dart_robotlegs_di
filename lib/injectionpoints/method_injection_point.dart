@@ -28,6 +28,7 @@ class MethodInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
+	@override
 	void applyInjection(Injector injector, Object target, Type targetType)
 	{
 		reflect(target).invoke(method, positionalArguments, namedArguments);

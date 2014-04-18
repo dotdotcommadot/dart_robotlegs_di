@@ -8,7 +8,8 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
   //
   //-----------------------------------
 	
-	NoParamsConstructorInjectionPoint() : super( [], null );
+	NoParamsConstructorInjectionPoint() 
+		: super([], null);
 	
 	//-----------------------------------
   //

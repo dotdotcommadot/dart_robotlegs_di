@@ -28,6 +28,5 @@ class InjectionPoint
   
 	void applyInjection(IInjector injector, dynamic target, Type type)
 	{
-		
 	}
 }

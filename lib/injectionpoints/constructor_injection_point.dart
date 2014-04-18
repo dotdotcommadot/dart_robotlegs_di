@@ -8,9 +8,8 @@ class ConstructorInjectionPoint extends MethodInjectionPoint
   //
   //-----------------------------------
 	
-	ConstructorInjectionPoint(
-		List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
-		: super( new Symbol(""), positionalArguments, namedArguments);
+	ConstructorInjectionPoint(List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
+		: super(new Symbol(""), positionalArguments, namedArguments);
 	
 	//-----------------------------------
   //

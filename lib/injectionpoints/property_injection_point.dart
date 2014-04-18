@@ -28,6 +28,7 @@ class PropertyInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
+	@override
   void applyInjection(IInjector injector, dynamic target, Type type)
   {
     IProvider provider = injector._getProvider(_mappingId);

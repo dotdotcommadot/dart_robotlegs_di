@@ -64,9 +64,17 @@ class Injector implements IInjector
 	set parentInjector(IInjector value) => _parentInjector = value;
 	IInjector get parentInjector => _parentInjector;
 	
+	//-----------------------------------
+	// FallbackProvider
+	//-----------------------------------
+	
 	IFallbackProvider _fallbackProvider;
 	set fallbackProvider(IFallbackProvider value) => _fallbackProvider = value;
 	IFallbackProvider get fallbackProvider => _fallbackProvider;
+	
+	//-----------------------------------
+	// BlockParentFallbackProvider
+	//-----------------------------------
 
 	bool _blockParentFallbackProvider;
 	set blockParentFallbackProvider(bool value) => _blockParentFallbackProvider = value;
@@ -128,7 +136,7 @@ class Injector implements IInjector
   	final String mappingId = _getMappingId(type, name);
   	InjectionMapping mapping = _mappings[mappingId];
   	
-  	if( (mapping != null) && mapping.isSealed)
+  	if ((mapping != null) && mapping.isSealed)
   	{
   		throw new InjectorError('can\'t unmap a sealed mapping');
   	}
@@ -153,7 +161,7 @@ class Injector implements IInjector
   bool satisfiesDirectly(Type type, [String name = ''])
   {
   	final String mappingId = _getMappingId(type, name);
-  	return hasDirectMapping(type, name) || _getDefaultProvider(mappingId, false) != null;
+  	return hasDirectMapping(type, name) || (_getDefaultProvider(mappingId, false) != null);
   }
   
   InjectionMapping getMapping(Type type, [String name = ''])
