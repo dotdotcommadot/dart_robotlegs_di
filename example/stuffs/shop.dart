@@ -70,8 +70,8 @@ class Shop {
 	}
 
 	@inject
-	void withParamesInjectedMethod(String value) 
+	void withParamesInjectedMethod(int value) 
 	{
-		print("Shop::withParamesInjectedMethod " + value);
+		print("Shop::withParamesInjectedMethod " + value.toString());
 	}
 }

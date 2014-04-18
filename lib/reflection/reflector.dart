@@ -116,7 +116,7 @@ class Reflector
 					}
 					else if (declaration is MethodMirror)
 					{
-						_createMethodInjectionPoint(declaration.simpleName, [], null);
+						_createMethodInjectionPoint(declaration.simpleName, declaration.parameters);
 					}
 				} 
 				else if (metadata.reflectee is PostConstruct) 
@@ -131,6 +131,12 @@ class Reflector
 		});
 	}
 	
+  //-----------------------------------
+  //
+  // Private Methods
+  //
+  //-----------------------------------
+	
 	ConstructorInjectionPoint _getConstructorInjectionPoint() 
 	{
 		return new NoParamsConstructorInjectionPoint();
@@ -143,9 +149,12 @@ class Reflector
 		propertyInjectionPoints.add(injectionPoint);
   }
 	
-	void _createMethodInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
+	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters)
 	{
-		MethodInjectionPoint injectionPoint = new MethodInjectionPoint(method, positionalArguments, namedArguments);
+		MethodInjectionPoint injectionPoint = new MethodInjectionPoint(
+			method, 
+			_getPositionalParameters(parameters), 
+			_getNamedParameters(parameters));
 		
 		methodInjectionPoints.add(injectionPoint);
 	}
@@ -162,5 +171,33 @@ class Reflector
 		PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, namedArguments, order);
 		
 		preDestroyInjectionPoints.add(injectionPoint);
+	}
+	
+	List<Type> _getPositionalParameters(List<ParameterMirror> parameterMirrors)
+	{
+		List<Type> parameters = new List<Type>();
+		
+		parameterMirrors.where((ParameterMirror parameter) => !parameter.isNamed).forEach(
+			(ParameterMirror parameter) 
+			{
+				parameters.add(parameter.type.reflectedType);
+			}
+		); 
+		
+		return parameters;
+	}
+
+	Map<Symbol, Type> _getNamedParameters(List<ParameterMirror> parameterMirrors)
+	{
+		Map<Symbol, Type> parameters = new Map<dynamic, Type>();
+		
+		parameterMirrors.where((ParameterMirror parameter) => !parameter.isNamed).forEach(
+			(ParameterMirror parameter) 
+			{
+				parameters[parameter.simpleName] = parameter.type.reflectedType;
+			}
+		); 
+		
+    return parameters;
 	}
 }

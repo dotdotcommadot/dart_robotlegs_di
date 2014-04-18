@@ -71,7 +71,7 @@ class TypeDescriptor
 		return this;
 	}
 	
-	TypeDescriptor addPropertyInjection(
+	TypeDescriptor addProperty(
 	   Symbol property,
 	   Type type,
 	   [String injectionName = '',
@@ -86,7 +86,7 @@ class TypeDescriptor
 		return this;
 	}
 	
-	TypeDescriptor addMethodInjection(
+	TypeDescriptor addMethod(
 		Symbol method,
 		[positionalArguments = null, 
      namedArguments = null,

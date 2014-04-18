@@ -33,7 +33,7 @@ void main()
 	
 	injector.map( Product );
 	injector.map( Shop );
-	injector.map( String ).toValue("hello");
+	injector.map( int ).toValue(5);
 	
 	Shop shop = injector.getInstance( Shop );
 }

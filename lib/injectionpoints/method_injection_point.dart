@@ -33,8 +33,8 @@ class MethodInjectionPoint extends InjectionPoint
 	Symbol method;
 	bool isOptional;
 	
-	List<dynamic> positionalArguments;
-	Map<Symbol, dynamic> namedArguments;
+	List<Type> positionalArguments;
+	Map<Symbol, Type> namedArguments;
 	
   //-----------------------------------
   //
@@ -53,6 +53,36 @@ class MethodInjectionPoint extends InjectionPoint
 	@override
 	void applyInjection(Injector injector, Object target, Type targetType)
 	{
-		reflect(target).invoke(method, positionalArguments, namedArguments);
+		reflect(target).invoke(
+			method, 
+			_getPositionalValues(injector, target, targetType)
+		);
+	}
+	
+	List<dynamic> _getPositionalValues(Injector injector, Object target, Type targetType)
+	{
+		if (positionalArguments == null || positionalArguments.length == 0)
+			return [];
+		
+		IProvider provider;
+		List<dynamic> positionalValues = new List<dynamic>();
+		
+		positionalArguments.forEach( 
+			(Type type)
+		{
+			provider = injector._getProvider(Injector._getMappingId(type));
+			
+			if (provider == null)
+			{
+				if (!isOptional)
+					throw(new InjectorMissingMappingError(
+		        'Injector is missing a mapping to handle injection into target ' +
+		        target.toString() + ' of type "' + targetType.toString() ));
+			}
+			
+			positionalValues.add(provider.apply(injector, type, null));
+		});
+			
+		return positionalValues;
 	}
 }

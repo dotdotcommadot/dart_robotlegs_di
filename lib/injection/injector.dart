@@ -431,7 +431,7 @@ class Injector implements IInjector
   //
   //-----------------------------------
 	
-  static String _getMappingId(Type type, String injectionName) 
+  static String _getMappingId(Type type, [String injectionName = '']) 
   {
   	Symbol qualifiedNameSymbol = reflectClass( type ).qualifiedName;
   	String qualifiedName = MirrorSystem.getName( qualifiedNameSymbol );
