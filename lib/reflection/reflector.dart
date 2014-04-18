@@ -34,7 +34,7 @@ class Reflector
   //
   //-----------------------------------
 	
-	TypeDescriptor getDescriptor( Type type ) 
+	TypeDescriptor getDescriptor(Type type) 
 	{
      if (descriptorsCache[type] == null)
     	 descriptorsCache[type] = createDescriptor(type);
@@ -69,7 +69,7 @@ class Reflector
 		postConstructInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
 		postConstructInjectionPoints.forEach( (PostConstructInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
 		preDestroyInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
-		preDestroyInjectionPoints.forEach( (PreDestroyInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
+		preDestroyInjectionPoints.forEach( (PreDestroyInjectionPoint injectionPoint) => typeDescriptor.addPreDestroyInjectionPoint(injectionPoint) );
 		
 		constructorInjectionPoint = propertyInjectionPoints = methodInjectionPoints = postConstructInjectionPoints = preDestroyInjectionPoints = null;
 		
