@@ -100,16 +100,7 @@ class TypeDescriptor
 	{
 		final PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, namedArguments, 0);
 		
-		if (preDestroyMethods != null)
-		{
-			preDestroyMethods.last.next = injectionPoint;
-    	preDestroyMethods.last = injectionPoint;
-		}
-		else
-		{
-			preDestroyMethods = injectionPoint;
-    	preDestroyMethods.last = injectionPoint;
-		}
+		addPreDestroyInjectionPoint(injectionPoint);
 		
 		return this;
 	}
@@ -125,6 +116,20 @@ class TypeDescriptor
 		{
 			injectionPoints = injectionPoint;
 			injectionPoints.last = injectionPoint;
+		}
+	}
+	
+	addPreDestroyInjectionPoint(PreDestroyInjectionPoint injectionPoint)
+	{
+		if (preDestroyMethods != null)
+		{
+			preDestroyMethods.last.next = injectionPoint;
+    	preDestroyMethods.last = injectionPoint;
+		}
+		else
+		{
+			preDestroyMethods = injectionPoint;
+    	preDestroyMethods.last = injectionPoint;
 		}
 	}
 }
