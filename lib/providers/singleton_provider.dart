@@ -52,7 +52,7 @@ class SingletonProvider implements IProvider
 	dynamic apply(IInjector injector, Type type, Map injectParameters) 
 	{
 		if (_response == null)
-			_response = reflectClass(type).newInstance(new Symbol(''), []).reflectee;
+			_response = reflectClass(type).newInstance(const Symbol(''), []).reflectee;
 		
   	return _response;
   }
