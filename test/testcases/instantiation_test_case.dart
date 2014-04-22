@@ -56,7 +56,6 @@ instantiationTestCase()
 	test('Instantiating Class From Abstract Class', ()
 	{
 		injector.map(AbstractClazz).toType(Clazz);
-		injector.map(AbstractClazz).toType(Clazz);
 		
 		var myClazz = injector.getInstance(AbstractClazz);
 		expect(myClazz, isNotNull);

@@ -146,17 +146,23 @@ class Clazz extends AbstractClazz implements InterfaceClazz
 	firstPreDestroyMethod()
 	{
 		hasRunFirstPreDestroyMethod = true;
+		firstPreDestroytMethodOrder = preDestroyOrder;
+		preDestroyOrder++;
 	}
 
 	@PreDestroy(order: 2)
 	secondPreDestroyMethod()
 	{
 		hasRunSecondPreDestroyMethod = true;
+		secondPreDestroytMethodOrder = preDestroyOrder;
+    preDestroyOrder++;
 	}
 
 	@preDestroy
 	lastPreDestroyMethod()
 	{
 		hasRunLastPreDestroyMethod = true;
+		lastPreDestroytMethodOrder = preDestroyOrder;
+    preDestroyOrder++;
 	}
 }

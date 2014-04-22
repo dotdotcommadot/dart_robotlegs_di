@@ -67,6 +67,12 @@ preDestroyMethodsTestCase()
 		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
 		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
     expect(myClazz.hasRunLastPostConstructMethod, isTrue);
+    
+    injector.teardown();
+    
+    expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
+    expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
+    expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
 	});
 
 	test('Running Methods in Right Order', () 

@@ -116,7 +116,7 @@ class Injector implements IInjector
 
 	Map<String, InjectionMapping> _mappings = new Map<String, InjectionMapping>();
 
-	Map _managedObjects = new Map();
+	List<dynamic> _managedObjects = new List<dynamic>();
 	
   //-----------------------------------
   //
@@ -273,14 +273,14 @@ class Injector implements IInjector
   		mapping.getProvider().destroy();
 		});
   	
-  	_managedObjects.forEach((String key, dynamic instance)
+  	_managedObjects.forEach( (dynamic instance)
 		{
   		destroyInstance(instance);
 		});
   	
   	_mappings = new Map<String, InjectionMapping>();
 	  _mappingsInProcess = new Map();
-	  _managedObjects = new Map();
+	  _managedObjects = new List<dynamic>();
 	  _fallbackProvider = null;
 	  _blockParentFallbackProvider = false;
   }
@@ -419,7 +419,7 @@ class Injector implements IInjector
   	
   	if (typeDescriptor.preDestroyMethods != null)
 	  {
-			_managedObjects[instance] = instance;
+			_managedObjects.add(instance);
 	  }
   	
   	_onPostConstructController.add('');
