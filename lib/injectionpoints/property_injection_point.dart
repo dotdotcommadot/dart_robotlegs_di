@@ -62,8 +62,8 @@ class PropertyInjectionPoint extends InjectionPoint
     	
     	throw(new InjectorMissingMappingError(
     		'Injector is missing a mapping to handle injection into property "' +
-    		_property.runtimeType.toString() + '" of object "' + target + '" with type "' +
-    		type.runtimeType.toString() + '". Target dependency: "' + _mappingId + '"'));
+    		_property.toString() + '" of object "' + target.runtimeType.toString() + '" with type "' +
+    		type.toString() + '". \nTarget dependency: "' + _mappingId + '"'));
     }
     
     // TODO: figure out injectParameters;

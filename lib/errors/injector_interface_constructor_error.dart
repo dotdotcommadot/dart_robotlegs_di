@@ -31,4 +31,5 @@ class InjectorInterfaceConstructorError extends InjectorError
   //-----------------------------------
 	
 	InjectorInterfaceConstructorError([String message = ""]) : super(message);
+	
 }

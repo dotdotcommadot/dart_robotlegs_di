@@ -98,7 +98,7 @@ class Injector implements IInjector
 	// BlockParentFallbackProvider
 	//-----------------------------------
 
-	bool _blockParentFallbackProvider;
+	bool _blockParentFallbackProvider = false;
 	set blockParentFallbackProvider(bool value) => _blockParentFallbackProvider = value;
 	bool get blockParentFallbackProvider => _blockParentFallbackProvider;
 

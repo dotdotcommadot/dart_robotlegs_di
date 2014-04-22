@@ -35,5 +35,7 @@ void main()
 	injector.map( Shop );
 	injector.map( int ).toValue(5);
 	
+	
 	Shop shop = injector.getInstance( Shop );
+	injector.unmap(Product);
 }
