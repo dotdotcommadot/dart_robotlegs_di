@@ -26,7 +26,8 @@ instantiationTestCase()
 {
 	IInjector injector;
 	
-	setUp(() {
+	setUp(() 
+	{
 		injector = new Injector();	
 		injector.map(String).toValue('');
 		injector.map(InjectedClazz);
@@ -46,14 +47,15 @@ instantiationTestCase()
 
 	test('Instantiating Class From Interface', ()
 	{
-		injector.map(InterfaceClass).toType(Clazz);
+		injector.map(InterfaceClazz).toType(Clazz);
 		
-		var myClazz = injector.getInstance(InterfaceClass);
+		var myClazz = injector.getInstance(InterfaceClazz);
 		expect(myClazz, isNotNull);
 	});
 
 	test('Instantiating Class From Abstract Class', ()
 	{
+		injector.map(AbstractClazz).toType(Clazz);
 		injector.map(AbstractClazz).toType(Clazz);
 		
 		var myClazz = injector.getInstance(AbstractClazz);

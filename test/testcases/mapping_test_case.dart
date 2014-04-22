@@ -26,15 +26,18 @@ mappingTestCase()
 {
 	IInjector injector;
 	
-	setUp(() {
+	setUp(() 
+	{
 		injector = new Injector();	
 	});
 	
-	tearDown(() {
+	tearDown(() 
+	{
 		injector = null;
 	});
 	
-	test('Mapping To Value', () {
+	test('Mapping To Value', () 
+	{
 		injector.map(String).toValue("abcABC-123");
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
@@ -42,10 +45,21 @@ mappingTestCase()
 		Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz.myInjectedString, equals("abcABC-123"));
 	});
-
-	test('Mapping As Singleton', () {
+	
+	test('Mapping To Type', () 
+	{
+		injector.map(InterfaceClazz).toType(Clazz);
 		injector.map(String).toValue("abcABC-123");
+		injector.map(InjectedClazz);
+		
+		InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
+		expect(myInterfaceClazz, isNotNull);
+	});
+
+	test('Mapping As Singleton', () 
+	{
 		injector.map(InjectedClazz).asSingleton();
+		injector.map(String).toValue("abcABC-123");
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);

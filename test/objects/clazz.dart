@@ -22,7 +22,7 @@
 
 part of robotlegs_di_test;
 
-class Clazz extends AbstractClazz implements InterfaceClass
+class Clazz extends AbstractClazz implements InterfaceClazz
 {
   //-----------------------------------
   //
@@ -47,22 +47,38 @@ class Clazz extends AbstractClazz implements InterfaceClass
   //-----------------------------------
   // Post-Construct Methods
   //-----------------------------------
+	
+	int postConstructOrder = 0;
 
 	bool hasRunFirstPostConstructMethod = false;
 
+	int firstPostConstructMethodOrder = 0;
+
 	bool hasRunSecondPostConstructMethod = false;
 
+	int secondPostConstructMethodOrder = 0;
+
 	bool hasRunLastPostConstructMethod = false;
+
+	int lastPostConstructMethodOrder = 0;
 	
   //-----------------------------------
   // Pre-Destroy Methods
   //-----------------------------------
 	
+	int preDestroyOrder = 0;
+	
 	bool hasRunFirstPreDestroyMethod = false;
+	
+	int firstPreDestroytMethodOrder = 0;
 
 	bool hasRunSecondPreDestroyMethod = false;
+	
+	int secondPreDestroytMethodOrder = 0;
 
 	bool hasRunLastPreDestroyMethod = false;
+	
+	int lastPreDestroytMethodOrder = 0;
 	
   //-----------------------------------
   //
@@ -102,18 +118,24 @@ class Clazz extends AbstractClazz implements InterfaceClass
 	firstPostConstructMethod()
 	{
 		hasRunFirstPostConstructMethod = true;
+		firstPostConstructMethodOrder = postConstructOrder;
+		postConstructOrder++;
 	}
 
 	@PostConstruct(order: 2)
 	secondPostConstructMethod()
 	{
 		hasRunSecondPostConstructMethod = true;
+    secondPostConstructMethodOrder = postConstructOrder;
+    postConstructOrder++;
 	}
 
 	@postConstruct
 	lastPostConstructMethod()
 	{
 		hasRunLastPostConstructMethod = true;
+    lastPostConstructMethodOrder = postConstructOrder;
+    postConstructOrder++;
 	}
 	
   //-----------------------------------

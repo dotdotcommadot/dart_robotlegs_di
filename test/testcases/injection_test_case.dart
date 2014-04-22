@@ -26,15 +26,18 @@ injectionTestCase()
 {
 	IInjector injector;
 	
-	setUp(() {
+	setUp(() 
+	{
 		injector = new Injector();	
 	});
 	
-	tearDown(() {
+	tearDown(() 
+	{
 		injector = null;
 	});
 	
-	test('Injecting String', () {
+	test('Injecting String', () 
+	{
 		injector.map(String).toValue("abcABC-123");
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
@@ -43,7 +46,8 @@ injectionTestCase()
     expect(myClazz.myInjectedString, equals("abcABC-123"));
 	});
 
-	test('Injecting Class', () {
+	test('Injecting Class', () 
+	{
 		injector.map(String).toValue("abcABC-123");
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
