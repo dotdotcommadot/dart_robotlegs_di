@@ -31,7 +31,7 @@ void main()
 {
 	IInjector injector = new Injector();
 	
-	injector.map( Product );
+	injector.map( Product ).asSingleton();
 	injector.map( Shop );
 	injector.map( int ).toValue(5);
 	

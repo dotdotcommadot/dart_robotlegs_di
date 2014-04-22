@@ -31,7 +31,10 @@ class Clazz extends AbstractClazz implements InterfaceClass
   //-----------------------------------
 	
 	@inject
-	String helloWorld;
+	String myInjectedString;
+
+	@inject
+	InjectedClazz myInjectedClazz;
 	
   //-----------------------------------
   // Injectable Methods
@@ -39,7 +42,7 @@ class Clazz extends AbstractClazz implements InterfaceClass
 	
 	bool hasRunFirstMethod = false;
 	
-	String firstMethodWithParametersValue = '';
+	InjectedClazz firstMethodWithParametersValue;
 	
   //-----------------------------------
   // Post-Construct Methods
@@ -86,8 +89,9 @@ class Clazz extends AbstractClazz implements InterfaceClass
 	}
 
 	@inject
-	firstMethodWithParameters()
+	firstMethodWithParameters(InjectedClazz value)
 	{
+		this.firstMethodWithParametersValue = value;
 	}
 	
   //-----------------------------------

@@ -22,7 +22,35 @@
 
 part of robotlegs_di_test;
 
-abstract class AbstractClazz
+mappingTestCase()
 {
+	IInjector injector;
 	
+	setUp(() {
+		injector = new Injector();	
+	});
+	
+	tearDown(() {
+		injector = null;
+	});
+	
+	test('Mapping To Value', () {
+		injector.map(String).toValue("abcABC-123");
+		injector.map(InjectedClazz);
+		injector.map(Clazz);
+		
+		Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedString, equals("abcABC-123"));
+	});
+
+	test('Mapping As Singleton', () {
+		injector.map(String).toValue("abcABC-123");
+		injector.map(InjectedClazz).asSingleton();
+		injector.map(Clazz);
+		
+		Clazz myClazz = injector.getInstance(Clazz);
+		expect(myClazz.myInjectedClazz, isNotNull);
+		expect(myClazz.firstMethodWithParametersValue, isNotNull);
+		expect(identical(myClazz.firstMethodWithParametersValue, myClazz.myInjectedClazz), isTrue);
+	});
 }
