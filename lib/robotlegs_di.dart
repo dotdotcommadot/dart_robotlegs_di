@@ -22,6 +22,8 @@
 
 library robotlegs_di;
 
+@MirrorsUsed(metaTargets: const ['Inject', 'PostConstruct', 'PreDestroy'])
+
 //-----------------------------------
 // imports
 //-----------------------------------
