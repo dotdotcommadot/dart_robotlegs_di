@@ -22,7 +22,7 @@
 
 part of robotlegs_di_test;
 
-class Clazz extends AbstractClazz implements InterfaceClazz
+class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
 {
   //-----------------------------------
   //

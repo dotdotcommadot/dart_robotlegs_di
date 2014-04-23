@@ -20,28 +20,9 @@
 * THE SOFTWARE.
 */
 
-library robotlegs_di_test;
+part of robotlegs_di_test;
 
-import 'package:unittest/unittest.dart';
-import 'package:robotlegs_di/robotlegs_di.dart';
-
-part 'objects/abstract_clazz.dart';
-part 'objects/clazz.dart';
-part 'objects/injected_clazz.dart';
-part 'objects/interface_clazz.dart';
-part 'objects/mixin_clazz.dart';
-
-part 'testcases/instantiation_test_case.dart';
-part 'testcases/injection_test_case.dart';
-part 'testcases/mapping_test_case.dart';
-part 'testcases/post_construct_methods_test_case.dart';
-part 'testcases/pre_destroy_methods_test_case.dart';
-
-main()
+abstract class MixinClazz
 {
-	group('Instantiation Tests -', instantiationTestCase);
-	group('Injection Tests -', injectionTestCase);
-	group('Mapping Tests -', mappingTestCase);
-	group('Post-Contrust Methods Tests -', postConstructMethodsTestCase);
-	group('Pre-Destroy Methods Tests -', preDestroyMethodsTestCase);
+	
 }
