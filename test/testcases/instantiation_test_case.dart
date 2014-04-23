@@ -63,9 +63,9 @@ instantiationTestCase()
 
 	test('Instantiating Class From Mixin', ()
 			{
-		injector.map(AbstractClazz).toType(Clazz);
+		injector.map(MixinClazz).toType(Clazz);
 		
-		var myClazz = injector.getInstance(AbstractClazz);
+		var myClazz = injector.getInstance(MixinClazz);
 		expect(myClazz, isNotNull);
 	});
 }
