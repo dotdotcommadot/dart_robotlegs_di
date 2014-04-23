@@ -95,7 +95,7 @@ These methods run right before the mappings for this object are removed by calli
 	@PreDestroy(order: 1)
 	void rightBeforeDestruction() { }
 	
-	## Info
+## Info
 	
-	For more info about this project, contact:
-		- [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
+For more info about this project, contact:
+	- [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
