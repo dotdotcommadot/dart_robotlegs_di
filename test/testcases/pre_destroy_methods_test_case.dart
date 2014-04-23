@@ -46,10 +46,16 @@ part of robotlegs_di_test;
 preDestroyMethodsTestCase()
 {
 	IInjector injector;
+	Clazz myClazz;
 	
 	setUp(() 
 	{
 		injector = new Injector();	
+		injector.map(String).toValue("abcABC-123");
+		injector.map(InjectedClazz);
+		injector.map(Clazz);
+		
+		myClazz = injector.getInstance(Clazz);
 	});
 	
 	tearDown(() 
@@ -59,15 +65,6 @@ preDestroyMethodsTestCase()
 	
 	test('Running Methods', () 
 	{
-		injector.map(String).toValue("abcABC-123");
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
-    expect(myClazz.hasRunLastPostConstructMethod, isTrue);
-    
     injector.teardown();
     
     expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
@@ -77,16 +74,13 @@ preDestroyMethodsTestCase()
 
 	test('Running Methods in Right Order', () 
 	{
-		injector.map(String).toValue("abcABC-123");
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
-    expect(myClazz.hasRunLastPostConstructMethod, isTrue);
+    injector.teardown();
     
-    expect(myClazz.firstPostConstructMethodOrder < myClazz.secondPostConstructMethodOrder, isTrue);
-    expect(myClazz.secondPostConstructMethodOrder < myClazz.lastPostConstructMethodOrder, isTrue);
+    expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
+    expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
+    expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
+    
+    expect(myClazz.firstPreDestroytMethodOrder < myClazz.secondPreDestroytMethodOrder, isTrue);
+    expect(myClazz.secondPreDestroytMethodOrder < myClazz.lastPreDestroytMethodOrder, isTrue);
 	});
 }
