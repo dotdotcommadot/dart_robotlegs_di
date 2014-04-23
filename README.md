@@ -3,7 +3,7 @@
 ## About
 
 Robotlegs DI is a Dependency Injection framework for the Google Dart programming language.
-It will also be the default DI-engine for Robotlegs for Dart
+It will also be the default DI-engine for Robotlegs for Dart.
 
 ### Google Dart
 Google Dart is a new open source programming language by Google, which attempts to clean up the mess web development has become.
@@ -15,7 +15,7 @@ It respects the HTML-CSS-JavaScript mindset, but when the VM will be in place, i
 ### Robotlegs for Dart
 Robotlegs is an open source MV* framework, which was originally written for ActionScript 3.
 It provides a very clean API for building applications ranging from large enterprise software, to mini-sites and animations.
-Robotlegs for Dart project is the beginning of an attempt to bring all the sweetnes Robotlegs for AS3 has to Google Dart.
+Robotlegs for Dart project is the beginning of an attempt to bring all the sweetness Robotlegs for AS3 has to Google Dart.
 - [Robotlegs for AS3 on Github](https://github.com/robotlegs/robotlegs-framework)
 - [Robotlegs for Dart on Github](https://github.com/dotdotcommadot/dart_robotlegs)
 
