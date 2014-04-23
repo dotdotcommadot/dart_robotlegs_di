@@ -71,7 +71,7 @@ class Reflector
 	
 	Type getType(dynamic value)
 	{
-		return reflect(value).runtimeType;
+		return reflect(value).reflectee.runtimeType;
 	}
 	
 	TypeDescriptor createDescriptor(Type type) 
