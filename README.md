@@ -1,5 +1,7 @@
 # Robotlegs DI
 
+###### Version: 0.0.1 -- alpha
+
 ## About
 
 Robotlegs DI is a Dependency Injection framework for the Google Dart programming language.
@@ -92,3 +94,8 @@ These methods run right before the mappings for this object are removed by calli
 	// ordered
 	@PreDestroy(order: 1)
 	void rightBeforeDestruction() { }
+	
+	## Info
+	
+	For more info about this project, contact:
+		- [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
