@@ -255,14 +255,14 @@ class Injector implements IInjector
   		return;
   				
   	final Type type = _reflector.getType(instance);
-  	final TypeDescriptor typeDescription = getTypeDescriptor(type);
+  	final TypeDescriptor typeDescriptor = getTypeDescriptor(type);
   	
-  	PreDestroyInjectionPoint preDestroyHook = typeDescription.preDestroyMethods;
+  	PreDestroyInjectionPoint preDestroyInjectionPoint = typeDescriptor.preDestroyMethods;
   	
-  	while (preDestroyHook != null)
+  	while (preDestroyInjectionPoint != null)
   	{
-  		 preDestroyHook.applyInjection(this, instance, type);
-  		 preDestroyHook = preDestroyHook.next;
+  		preDestroyInjectionPoint.applyInjection(this, instance, type);
+  		preDestroyInjectionPoint = preDestroyInjectionPoint.next;
   	}
   }
   
