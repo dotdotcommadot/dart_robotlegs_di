@@ -23,7 +23,7 @@ Robotlegs for Dart project is the beginning of an attempt to bring all the sweet
 
 ### Robotlegs DI
 Robotlegs DI, the project you're currently looking at, is a Dependency Injection framework inspired by the DI framework the original Robotlegs framework uses, called [SwiftSuspenders](https://github.com/robotlegs/swiftsuspenders).
-The original API is very clean, intu�tive and flexibel, so this project will try to remain as close to the original API as possible, 
+The original API is very clean, intuitive and flexibel, so this project will try to remain as close to the original API as possible, 
 and be extended or modified where needed.
 Programming in Google Dart isn't necessarily that much different to programming in ActionScript 3 (and certainly Apache Flex), so a big part can remain in the same likes.
 - [SwiftSuspenders on Github](https://github.com/robotlegs/swiftsuspenders)
@@ -38,7 +38,7 @@ Programming in Google Dart isn't necessarily that much different to programming 
 	// named mapping
 	injector.map(Product, 'shoe');
 	
-### Mappings to Type, Value, or as Singleton
+### Mapping to Type, Value, or as Singleton
 
 	// map abstract type to implementation
 	injector.map(AbstractProduct).toType(Product);
