@@ -71,7 +71,8 @@ Programming in Google Dart isn't necessarily that much different to programming 
 	@inject
 	Shop(Product myProduct) { };
 	
-### Optionally Ordered Post-Construct (after injection) Methods
+### Optionally Ordered Post-Construct Methods
+These methods run after all injections for the current class have been resolved.
 	
 	// unordered
 	@postConstruct
@@ -82,6 +83,7 @@ Programming in Google Dart isn't necessarily that much different to programming 
 	void whenAllPropertiesAreInjected() { }
 
 ### Optionally Ordered Pre-Destroy Methods
+These methods run right before the mappings for this object are removed by calling 'injector.tearDown()' 
 	
 	// unordered
 	@preDestroy
