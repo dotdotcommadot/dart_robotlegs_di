@@ -63,13 +63,13 @@ Programming in Google Dart isn't necessarily that much different to programming 
 	@inject 
 	Product product;
 	
-	// inject into constructor
-	@inject
-	Shop(Product myProduct) { };
-
 	// inject into method
 	@inject
 	void buyThisThing(Product myProduct) { }
+	
+	// inject into constructor
+	@inject
+	Shop(Product myProduct) { };
 	
 ### Optionally Ordered Post-Construct (after injection) Methods
 	
