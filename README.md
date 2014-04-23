@@ -38,7 +38,7 @@ Programming in Google Dart isn't necessarily that much different to programming 
 	// named mapping
 	injector.map(Product, 'shoe');
 	
-### Mappings to Type, Value, or as Singleton
+### Mapping to Type, Value, or as Singleton
 
 	// map abstract type to implementation
 	injector.map(AbstractProduct).toType(Product);
