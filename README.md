@@ -2,6 +2,8 @@
 
 ###### Version: 0.0.1 -- alpha
 
+[![Build Status](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/status.png)](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/latest)
+
 ## About
 
 Robotlegs DI is a Dependency Injection framework for the Google Dart programming language.
