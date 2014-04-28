@@ -42,6 +42,12 @@ Programming in Google Dart isn't necessarily that much different to programming 
 
 	// map abstract type to implementation
 	injector.map(AbstractProduct).toType(Product);
+
+	// map interface to implementation
+	injector.map(IProduct).toType(Product);
+
+	// map mixin to implementation
+	injector.map(SellableMixin).toType(Product);
 	
 	// map type to instance
 	injector.map(Product).toValue(new Product);
