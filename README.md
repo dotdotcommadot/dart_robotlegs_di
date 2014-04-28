@@ -1,7 +1,6 @@
 # Robotlegs DI
 
 [![Build Status](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/status.png)](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/latest)
-
 ###### Version: 0.0.1 -- alpha
 
 ## About
