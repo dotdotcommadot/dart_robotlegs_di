@@ -56,4 +56,26 @@ injectionTestCase()
 		expect(myClazz.myInjectedClazz, isNotNull);
 		expect(myClazz.firstMethodWithParametersValue, isNotNull);
 	});
+
+	test('Named Injection', () 
+	{
+		injector.map(String).toValue("abcABC-123");
+		injector.map(String, "hello").toValue("hello world");
+		injector.map(InjectedClazz);
+		injector.map(Clazz);
+		
+		Clazz myClazz = injector.getInstance(Clazz);
+		expect(myClazz.myInjectedString, equals("abcABC-123"));
+		expect(myClazz.myInjectedHelloString, equals("hello world"));
+	});
+
+	test('Optional Injection', () 
+	{
+		injector.map(String).toValue("abcABC-123");
+		injector.map(InjectedClazz);
+		injector.map(Clazz);
+		
+		Clazz myClazz = injector.getInstance(Clazz);
+		expect(myClazz.myInjectedHelloString, isNull);
+	});
 }

@@ -33,6 +33,9 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
 	@inject
 	String myInjectedString;
 
+	@Inject(name: 'hello', optional: true)
+	String myInjectedHelloString;
+
 	@inject
 	InjectedClazz myInjectedClazz;
 	

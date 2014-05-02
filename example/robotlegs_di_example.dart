@@ -36,5 +36,5 @@ void main()
 	injector.map( int ).toValue(5);
 	
 	Shop shop = injector.getInstance( Shop );
-	injector.teardown();
+	//injector.teardown();
 }
