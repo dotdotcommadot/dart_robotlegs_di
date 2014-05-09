@@ -105,6 +105,8 @@ abstract class IInjector
 	TypeDescriptor getTypeDescriptor(Type type);
 	
 	bool hasMapping(Type type, [String name = '']);
+	
+	bool hasDirectMapping(Type type, [String name = '']);
 
   //-----------------------------------
   //
