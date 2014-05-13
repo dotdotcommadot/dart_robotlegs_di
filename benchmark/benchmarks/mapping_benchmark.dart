@@ -24,20 +24,26 @@ part of robotlegs_di_benchmark;
 
 class MappingBenchmark extends BenchmarkBase 
 {
-  final List<String> ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  
+	final int ITERATIONS = 1000;
+	
   IInjector injector = new Injector();
 
   MappingBenchmark() : super( "Mapping" );
 
   void run() 
   {
-    ALPHABET.forEach((abc) => injector.getInstance(String, abc));
+    for (int i = 0; i< ITERATIONS; i++)
+    {
+    	injector.getInstance(int, i.toString());
+    }
   }
 
   void setup() 
   { 
-    ALPHABET.forEach((abc) => injector.map(String, abc).toValue(abc));
+    for (int i = 0; i< ITERATIONS; i++)
+    {
+    	injector.map(int, i.toString()).toValue(i);
+    }
   }
 
   void teardown() 
