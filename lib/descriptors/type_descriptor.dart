@@ -32,7 +32,7 @@ class TypeDescriptor
 	
 	InjectionPoint injectionPoints;
 	
-	ConstructorInjectionPoint constructorInjectionPoint;
+	List<ConstructorInjectionPoint> constructorInjectionPoints = new List<ConstructorInjectionPoint>();
 	
 	PreDestroyInjectionPoint preDestroyMethods;
 	
@@ -53,7 +53,7 @@ class TypeDescriptor
 	TypeDescriptor([bool useDefaultConstructor = true]) 
 	{
 		if (useDefaultConstructor)
-			constructorInjectionPoint = new NoParamsConstructorInjectionPoint();
+			constructorInjectionPoints.add(new NoParamsConstructorInjectionPoint(const Symbol('')));
 	}
 	
   //-----------------------------------
@@ -62,12 +62,13 @@ class TypeDescriptor
   //
   //-----------------------------------
 	
-	TypeDescriptor setConstructor(
+	TypeDescriptor addConstructor(
+	  Symbol method,
 		[positionalArguments = null, 
 		 namedArguments = null]
 	)
 	{
-		constructorInjectionPoint = new ConstructorInjectionPoint(positionalArguments, namedArguments);
+		constructorInjectionPoints.add(new ConstructorInjectionPoint(method, positionalArguments, namedArguments));
 		return this;
 	}
 	
@@ -125,6 +126,13 @@ class TypeDescriptor
 		addPreDestroyInjectionPoint(injectionPoint);
 		
 		return this;
+	}
+	
+	void addConstructorInjectionPoint(
+  	  ConstructorInjectionPoint injectionPoint
+  	)
+	{
+		constructorInjectionPoints.add(injectionPoint);
 	}
 	
 	void addInjectionPoint(InjectionPoint injectionPoint) 

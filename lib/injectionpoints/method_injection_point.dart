@@ -31,7 +31,7 @@ class MethodInjectionPoint extends InjectionPoint
   //-----------------------------------
 	
 	Symbol method;
-	bool isOptional;
+	bool isOptional = false;
 	
 	List<Type> positionalArguments;
 	Map<Symbol, Type> namedArguments;
@@ -77,7 +77,7 @@ class MethodInjectionPoint extends InjectionPoint
 				if (!isOptional)
 					throw(new InjectorMissingMappingError(
 		        'Injector is missing a mapping to handle injection into target ' +
-		        target.toString() + ' of type "' + targetType.toString() ));
+		        target.toString() + ' of type "' + targetType.toString() + '"'));
 			}
 			
 			positionalValues.add(provider.apply(injector, type, null));

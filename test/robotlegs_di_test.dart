@@ -27,6 +27,7 @@ import 'package:robotlegs_di/robotlegs_di.dart';
 
 part 'objects/abstract_clazz.dart';
 part 'objects/clazz.dart';
+part 'objects/clazz_two.dart';
 part 'objects/injected_clazz.dart';
 part 'objects/interface_clazz.dart';
 part 'objects/mixin_clazz.dart';

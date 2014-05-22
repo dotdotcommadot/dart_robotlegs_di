@@ -24,13 +24,21 @@ part of robotlegs_di;
 
 class TypeProvider implements IProvider 
 {
-  //-----------------------------------
+	//-----------------------------------
+	//
+	// Private Properties
+	//
+	//-----------------------------------
+
+	final Symbol constructor;
+	
+	//-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
 	
-	Type _responseType;
+	final Type _responseType;
 	
 	//-----------------------------------
 	//
@@ -38,7 +46,7 @@ class TypeProvider implements IProvider
 	//
 	//-----------------------------------
 	
-	TypeProvider(this._responseType);
+	TypeProvider(this._responseType, [this.constructor = const Symbol('')]);
 
 	//-----------------------------------
 	//
@@ -48,7 +56,7 @@ class TypeProvider implements IProvider
   
 	dynamic apply(IInjector injector, Type targetType, Map injectParameters) 
 	{
-		return injector.instantiateUnMapped(_responseType);
+		return injector.instantiateUnmapped(_responseType, constructor);
   }
   
   void destroy() 

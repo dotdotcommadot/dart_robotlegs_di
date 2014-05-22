@@ -33,7 +33,7 @@ class SingletonProvider implements IProvider
 	IInjector _creatingInjector;
 	Type _responseType ;
 	dynamic _response;
-	bool _destroyed;
+	bool _destroyed = false;
 
 	//-----------------------------------
 	//
@@ -52,11 +52,11 @@ class SingletonProvider implements IProvider
 	dynamic apply(IInjector injector, Type type, Map injectParameters) 
 	{
 		if (_response == null)
-			_response = reflectClass(_responseType).newInstance(const Symbol(''), []).reflectee;
+			_response = _createResponse(_creatingInjector);
 		
   	return _response;
   }
-  
+	
   void destroy() 
   {
   	_destroyed = true;
@@ -72,4 +72,15 @@ class SingletonProvider implements IProvider
   	}
   	_response = null;
   }
+  
+  dynamic _createResponse(Injector injector)
+	{
+  	if (_destroyed)
+  	{
+  		throw new InjectorError("Forbidden usage of unmapped singleton provider for type "
+    		+ _responseType.runtimeType.toString());
+  	}
+  	
+  	return injector.instantiateUnmapped(_responseType);
+	}
 }

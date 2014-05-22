@@ -41,7 +41,7 @@ instantiationTestCase()
 	{
 		injector.map(Clazz);
 		
-		var myClazz = injector.getInstance(Clazz);
+		Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz, isNotNull);
 	});
 
@@ -49,7 +49,7 @@ instantiationTestCase()
 	{
 		injector.map(InterfaceClazz).toType(Clazz);
 		
-		var myClazz = injector.getInstance(InterfaceClazz);
+		Clazz myClazz = injector.getInstance(InterfaceClazz);
 		expect(myClazz, isNotNull);
 	});
 
@@ -57,7 +57,7 @@ instantiationTestCase()
 	{
 		injector.map(AbstractClazz).toType(Clazz);
 		
-		var myClazz = injector.getInstance(AbstractClazz);
+		Clazz myClazz = injector.getInstance(AbstractClazz);
 		expect(myClazz, isNotNull);
 	});
 
@@ -65,7 +65,15 @@ instantiationTestCase()
 			{
 		injector.map(MixinClazz).toType(Clazz);
 		
-		var myClazz = injector.getInstance(MixinClazz);
+		Clazz myClazz = injector.getInstance(MixinClazz);
 		expect(myClazz, isNotNull);
+	});
+	
+	test('Instantiating Class with Named Constructor', () 
+	{
+		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, const Symbol('named'));
+		
+		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
+		expect(myClazzTwo.injectedString, equals("named"));
 	});
 }

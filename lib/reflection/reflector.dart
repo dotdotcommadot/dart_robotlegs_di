@@ -32,7 +32,7 @@ class Reflector
 	
 	Map<Type, TypeDescriptor> descriptorsCache = new Map<Type, TypeDescriptor>();
 	
-	ConstructorInjectionPoint constructorInjectionPoint;
+	List<ConstructorInjectionPoint> constructorInjectionPoints;
 	
 	List<PropertyInjectionPoint> propertyInjectionPoints; 
 	
@@ -76,6 +76,7 @@ class Reflector
 	
 	TypeDescriptor createDescriptor(Type type) 
 	{
+		constructorInjectionPoints = new List<ConstructorInjectionPoint>();
 		propertyInjectionPoints = new List<PropertyInjectionPoint>();
 		methodInjectionPoints = new List<MethodInjectionPoint>();
 		postConstructInjectionPoints = new List<PostConstructInjectionPoint>();
@@ -85,7 +86,7 @@ class Reflector
 		
 		generateInjectionPoints(type);
 		
-		typeDescriptor.constructorInjectionPoint = _getConstructorInjectionPoint();
+		constructorInjectionPoints.forEach( (ConstructorInjectionPoint injectionPoint) => typeDescriptor.addConstructorInjectionPoint(injectionPoint));
 		propertyInjectionPoints.forEach( (PropertyInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
 		methodInjectionPoints.forEach( (MethodInjectionPoint injectionPoint) => typeDescriptor.addInjectionPoint(injectionPoint) );
 		postConstructInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
@@ -93,7 +94,7 @@ class Reflector
 		preDestroyInjectionPoints.sort( (x, y) => x.order.compareTo(y.order) );
 		preDestroyInjectionPoints.forEach( (PreDestroyInjectionPoint injectionPoint) => typeDescriptor.addPreDestroyInjectionPoint(injectionPoint) );
 		
-		constructorInjectionPoint = propertyInjectionPoints = methodInjectionPoints = postConstructInjectionPoints = preDestroyInjectionPoints = null;
+		constructorInjectionPoints = propertyInjectionPoints = methodInjectionPoints = postConstructInjectionPoints = preDestroyInjectionPoints = null;
 		
 		return typeDescriptor;
 	}
@@ -101,6 +102,18 @@ class Reflector
 	void generateInjectionPoints(Type type) 
 	{
 		ClassMirror mirror = reflectClass(type);
+		
+		List<DeclarationMirror> constructors = new List.from(
+      mirror.declarations.values.where( (declare) => declare is MethodMirror && declare.isConstructor)
+    );
+		
+		constructors.forEach( (constructor) 
+		{
+      if (constructor is MethodMirror) 
+      {
+        _createConstructorInjectionPoint(constructor.constructorName, constructor.parameters);
+      }
+    });
 		
 		mirror.declarations.values.forEach( (DeclarationMirror declaration) 
 		{
@@ -137,9 +150,20 @@ class Reflector
   //
   //-----------------------------------
 	
-	ConstructorInjectionPoint _getConstructorInjectionPoint() 
+	void _createConstructorInjectionPoint(Symbol method, List<ParameterMirror> parameters)
 	{
-		return new NoParamsConstructorInjectionPoint();
+		ConstructorInjectionPoint injectionPoint;
+		
+		if (parameters == null || parameters.length == 0)
+			injectionPoint = new NoParamsConstructorInjectionPoint(method);
+		else
+			injectionPoint = new ConstructorInjectionPoint(
+					method,
+					_getPositionalParameters(parameters), 
+					_getNamedParameters(parameters));
+		
+		constructorInjectionPoints.add(injectionPoint);
+		
 	}
 	
 	void _createPropertyInjectionPoint(String mappingId, Symbol property, bool optional) 

@@ -30,7 +30,7 @@ abstract class IProviderlessMapping
   //
   //-----------------------------------
 	
-	IUnsealedMapping toType(Type type);
+	IUnsealedMapping toType(Type type, [Symbol constructorName = const Symbol('')]);
 
 	IUnsealedMapping toValue(dynamic value);
 

@@ -212,8 +212,13 @@ class Injector implements IInjector
   	
   	if (provider != null)
   	{
-  		final ConstructorInjectionPoint constructorInjectionPoint = _reflector.getDescriptor(type).constructorInjectionPoint;
-  		return provider.apply(this, targetType, (constructorInjectionPoint != null)? constructorInjectionPoint.injectParameters : null);
+  		final ConstructorInjectionPoint constructorInjectionPoint = 
+  			_reflector.getDescriptor(type).constructorInjectionPoints.where((injectionPoint) => injectionPoint.method == (provider as TypeProvider).constructor).first;
+  		
+  		return provider.apply(
+  				this, 
+  				targetType, 
+  				(constructorInjectionPoint != null)? constructorInjectionPoint.injectParameters : null);
   	}
   	
   	String fallbackMessage = (_fallbackProvider != null)
@@ -230,19 +235,19 @@ class Injector implements IInjector
   	if (satisfies(type))
   		instance = getInstance(type);
   	else
-  		instance = instantiateUnMapped(type);
+  		instance = instantiateUnmapped(type);
   	
   	return instance;
   }
   
-  dynamic instantiateUnMapped(Type type) 
+  dynamic instantiateUnmapped(Type type, [Symbol constructor = const Symbol('')]) 
   {
   	if (!_canBeInstantiated(type))
   	{
   		throw new InjectorInterfaceConstructorError('Can\'t instantiate interface ' + type.toString());
   	}
   	TypeDescriptor typeDescription = _reflector.getDescriptor(type);
-  	dynamic instance = typeDescription.constructorInjectionPoint.createInstance(type, this);
+  	dynamic instance = typeDescription.constructorInjectionPoints.where((injectionPoint) => injectionPoint.method == constructor).first.createInstance(type, this);
   	_onPostInstantiatedController.add("");
   	_applyinjectionPoints(instance, type, typeDescription);
   	
@@ -326,7 +331,7 @@ class Injector implements IInjector
   bool _canBeInstantiated(Type type)
   {
   	final TypeDescriptor descriptor = _reflector.getDescriptor(type);
-  	return descriptor.constructorInjectionPoint != null;
+  	return descriptor.constructorInjectionPoints.length != null;
   }
   
   IProvider _getProvider(String mappingId, [fallbackToDefault= true]) 
@@ -361,11 +366,6 @@ class Injector implements IInjector
   
   IProvider _getDefaultProvider(String mappingId, bool consultParents)
   {
-  	/*if (_baseTypes.indexOf(mappingId) > -1)
-	  {
-	  	return null;
-	  }*/
-  	
   	if ((_fallbackProvider != null) && (_fallbackProvider.prepareNextRequest(mappingId) != null))
   	{
   		return _fallbackProvider;

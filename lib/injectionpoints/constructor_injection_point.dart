@@ -30,8 +30,8 @@ class ConstructorInjectionPoint extends MethodInjectionPoint
   //
   //-----------------------------------
 	
-	ConstructorInjectionPoint(List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
-		: super(new Symbol(""), positionalArguments, namedArguments);
+	ConstructorInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments)
+		: super(method, positionalArguments, namedArguments);
 	
 	//-----------------------------------
   //
@@ -41,6 +41,6 @@ class ConstructorInjectionPoint extends MethodInjectionPoint
 	
 	dynamic createInstance(Type type, IInjector injector) 
 	{
-		return reflectClass(type).newInstance(method, positionalArguments, namedArguments).reflectee;
+		return reflectClass(type).newInstance(method, _getPositionalValues(injector, type, type)).reflectee;
 	}
 }

@@ -88,11 +88,11 @@ abstract class IInjector
 	
 	void injectInto(dynamic target);
 
-	dynamic getInstance(Type type, [String name = '']);
+	dynamic getInstance(Type type, [String name = '', Type targetType = null]);
 
 	dynamic getOrCreateNewInstance(Type type, [String name = '']);
 	
-	dynamic instantiateUnMapped(Type type);
+	dynamic instantiateUnmapped(Type type, [Symbol constructor = const Symbol('')]);
 	
 	void destroyInstance(dynamic instance);
 
