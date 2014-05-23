@@ -129,7 +129,7 @@ class Reflector
 					}
 					else if (declaration is MethodMirror)
 					{
-						_createMethodInjectionPoint(declaration.simpleName, declaration.parameters);
+						_createMethodInjectionPoint(declaration.simpleName, declaration.parameters, (metadata.reflectee as Inject).optional);
 					}
 				} 
 				else if (metadata.reflectee is PostConstruct) 
@@ -160,6 +160,7 @@ class Reflector
 			injectionPoint = new ConstructorInjectionPoint(
 					method,
 					_getPositionalParameters(parameters), 
+					_getNumberOfRequiredPositionalParameters(parameters),
 					_getNamedParameters(parameters));
 		
 		constructorInjectionPoints.add(injectionPoint);
@@ -173,26 +174,28 @@ class Reflector
 		propertyInjectionPoints.add(injectionPoint);
   }
 	
-	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters)
+	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters, bool optional)
 	{
 		MethodInjectionPoint injectionPoint = new MethodInjectionPoint(
 			method, 
 			_getPositionalParameters(parameters), 
-			_getNamedParameters(parameters));
+			_getNumberOfRequiredPositionalParameters(parameters),
+			_getNamedParameters(parameters),
+			optional);
 		
 		methodInjectionPoints.add(injectionPoint);
 	}
 
 	void _createPostConstructInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order)
 	{
-		PostConstructInjectionPoint injectionPoint = new PostConstructInjectionPoint(method, positionalArguments, namedArguments, order);
+		PostConstructInjectionPoint injectionPoint = new PostConstructInjectionPoint(method, positionalArguments, 0, namedArguments, order);
 		
 		postConstructInjectionPoints.add(injectionPoint);
 	}
 
 	void _createPreDestroyInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order)
 	{
-		PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, namedArguments, order);
+		PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, 0, namedArguments, order);
 		
 		preDestroyInjectionPoints.add(injectionPoint);
 	}
@@ -211,6 +214,11 @@ class Reflector
 		return parameters;
 	}
 
+	int _getNumberOfRequiredPositionalParameters(List<ParameterMirror> parameterMirrors)
+	{
+		return parameterMirrors.where((ParameterMirror parameter) => !parameter.isNamed && !parameter.isOptional).length;
+	}
+	
 	Map<Symbol, Type> _getNamedParameters(List<ParameterMirror> parameterMirrors)
 	{
 		Map<Symbol, Type> parameters = new Map<dynamic, Type>();

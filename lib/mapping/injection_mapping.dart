@@ -50,7 +50,7 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping
 
 	IInjector _overridingInjector;
 	
-	bool _defaultProviderSet;
+	bool _defaultProviderSet = false;
 	
 	IProvider provider;
 	
@@ -86,9 +86,9 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping
 		return this;
 	}
 	
-	IUnsealedMapping toType(Type type, [Symbol constructorName = const Symbol('')]) 
+	IUnsealedMapping toType(Type type, [Symbol constructor = const Symbol('')]) 
 	{
-		toProvider(new TypeProvider(type, constructorName));
+		toProvider(new TypeProvider(type, constructor));
 		return this;
 	}
 	

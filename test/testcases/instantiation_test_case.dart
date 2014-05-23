@@ -62,7 +62,7 @@ instantiationTestCase()
 	});
 
 	test('Instantiating Class From Mixin', ()
-			{
+	{
 		injector.map(MixinClazz).toType(Clazz);
 		
 		Clazz myClazz = injector.getInstance(MixinClazz);

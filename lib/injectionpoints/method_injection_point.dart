@@ -30,11 +30,15 @@ class MethodInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
-	Symbol method;
-	bool isOptional = false;
+	final Symbol method;
 	
-	List<Type> positionalArguments;
-	Map<Symbol, Type> namedArguments;
+	final bool isOptional;
+	
+	final List<Type> positionalArguments;
+
+	final int numRequiredPositionalArguments;
+	
+	final Map<Symbol, Type> namedArguments;
 	
   //-----------------------------------
   //
@@ -42,7 +46,7 @@ class MethodInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
-	MethodInjectionPoint(this.method, this.positionalArguments, this.namedArguments);
+	MethodInjectionPoint(this.method, this.positionalArguments, this.numRequiredPositionalArguments,  this.namedArguments, this.isOptional);
 	
   //-----------------------------------
   //
@@ -67,6 +71,8 @@ class MethodInjectionPoint extends InjectionPoint
 		IProvider provider;
 		List<dynamic> positionalValues = new List<dynamic>();
 		
+		int nunmProcessedPositionalArguments = 0;
+		
 		positionalArguments.forEach( 
 			(Type type)
 		{
@@ -74,13 +80,16 @@ class MethodInjectionPoint extends InjectionPoint
 			
 			if (provider == null)
 			{
-				if (!isOptional)
-					throw(new InjectorMissingMappingError(
-		        'Injector is missing a mapping to handle injection into target ' +
-		        target.toString() + ' of type "' + targetType.toString() + '"'));
+				if (isOptional || nunmProcessedPositionalArguments >= numRequiredPositionalArguments)
+					return;
+				
+				throw(new InjectorMissingMappingError(
+	        'Injector is missing a mapping to handle injection into target ' +
+	        target.toString() + ' of type "' + type.toString() + '"'));
 			}
 			
 			positionalValues.add(provider.apply(injector, type, null));
+			nunmProcessedPositionalArguments++;
 		});
 			
 		return positionalValues;

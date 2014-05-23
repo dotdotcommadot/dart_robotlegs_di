@@ -65,18 +65,19 @@ class TypeDescriptor
 	TypeDescriptor addConstructor(
 	  Symbol method,
 		[positionalArguments = null, 
-		 namedArguments = null]
+		int numRequiredPositionalArguments = 0,
+		namedArguments = null]
 	)
 	{
-		constructorInjectionPoints.add(new ConstructorInjectionPoint(method, positionalArguments, namedArguments));
+		constructorInjectionPoints.add(new ConstructorInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments));
 		return this;
 	}
 	
 	TypeDescriptor addProperty(
-	   Symbol property,
-	   Type type,
-	   [String injectionName = '',
-	    bool optional = false]
+		Symbol property,
+	  Type type,
+	  [String injectionName = '',
+	  bool optional = false]
 	)
 	{
 		if (_postConstructAdded)
@@ -90,14 +91,15 @@ class TypeDescriptor
 	TypeDescriptor addMethod(
 		Symbol method,
 		[positionalArguments = null, 
-     namedArguments = null,
-     optional = false]
+		int numRequiredPositionalArguments = 0,
+    namedArguments = null,
+    optional = false]
 	)
 	{
 		if (_postConstructAdded)
     	throw new InjectorError('Can\'t add injection point after post construct method');
 		
-		addInjectionPoint(new MethodInjectionPoint(method, positionalArguments, namedArguments));
+		addInjectionPoint(new MethodInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, optional));
 		
 		return this;
 	}
@@ -105,12 +107,13 @@ class TypeDescriptor
 	TypeDescriptor addPostConstructMethod(
 		Symbol method,
 		[positionalArguments = null, 
-		 namedArguments = null]
+		int numRequiredPositionalArguments = 0,
+		namedArguments = null]
 	)
 	{
 		_postConstructAdded = true;
 		
-		addInjectionPoint(new PostConstructInjectionPoint(method, positionalArguments, namedArguments, 0));
+		addInjectionPoint(new PostConstructInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, 0));
 		
 		return this;
 	}
@@ -118,19 +121,18 @@ class TypeDescriptor
 	TypeDescriptor addPreDestroyMethod(
 	  Symbol method,
 	  [positionalArguments = null, 
-	   namedArguments = null]
+	  int numRequiredPositionalArguments = 0,
+	  namedArguments = null]
 	)
 	{
-		final PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, namedArguments, 0);
+		final PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, 0);
 		
 		addPreDestroyInjectionPoint(injectionPoint);
 		
 		return this;
 	}
 	
-	void addConstructorInjectionPoint(
-  	  ConstructorInjectionPoint injectionPoint
-  	)
+	void addConstructorInjectionPoint(ConstructorInjectionPoint injectionPoint)
 	{
 		constructorInjectionPoints.add(injectionPoint);
 	}

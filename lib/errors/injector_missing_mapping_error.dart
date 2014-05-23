@@ -31,5 +31,4 @@ class InjectorMissingMappingError extends InjectorError
   //-----------------------------------
 	
 	InjectorMissingMappingError([String message = ""]) : super(message);
-	
 }
