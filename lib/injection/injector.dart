@@ -350,7 +350,7 @@ class Injector implements IInjector
   	Injector injector = this;
   	while (injector != null)
   	{
-  		IProvider provider = _providerMappings[mappingId];
+  		IProvider provider = injector._providerMappings[mappingId];
   		if (provider != null)
   		{
   			if (provider is SoftProvider)
