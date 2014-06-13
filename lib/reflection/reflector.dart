@@ -127,9 +127,10 @@ class Reflector
 						
 						_createPropertyInjectionPoint(mappingId, declaration.simpleName, (metadata.reflectee as Inject).optional);
 					}
-					else if (declaration is MethodMirror)
+					else if (declaration is MethodMirror && !declaration.isGetter)
 					{
-						_createMethodInjectionPoint(declaration.simpleName, declaration.parameters, (metadata.reflectee as Inject).optional);
+						String name = declaration.simpleName.toString().split('=').first;  
+						_createMethodInjectionPoint(new Symbol(name), declaration.parameters, (metadata.reflectee as Inject).optional);
 					}
 				} 
 				else if (metadata.reflectee is PostConstruct) 
