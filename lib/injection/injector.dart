@@ -212,13 +212,23 @@ class Injector implements IInjector
   	
   	if (provider != null)
   	{
-  		final ConstructorInjectionPoint constructorInjectionPoint = 
-  			_reflector.getDescriptor(type).constructorInjectionPoints.where((injectionPoint) => injectionPoint.method == (provider as TypeProvider).constructor).first;
-  		
-  		return provider.apply(
+  		if (provider is TypeProvider)
+  		{
+	  		final ConstructorInjectionPoint constructorInjectionPoint = 
+	  			_reflector.getDescriptor(type).constructorInjectionPoints.where((injectionPoint) => injectionPoint.method == (provider as TypeProvider).constructor).first;
+	  		
+	  		return provider.apply(
   				this, 
   				targetType, 
-  				(constructorInjectionPoint != null)? constructorInjectionPoint.injectParameters : null);
+  				constructorInjectionPoint.injectParameters);
+  		}
+  		else
+  		{
+  			return provider.apply(
+  				this, 
+  				targetType,
+  				null);
+  		}
   	}
   	
   	String fallbackMessage = (_fallbackProvider != null)
