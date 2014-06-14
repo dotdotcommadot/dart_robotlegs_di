@@ -34,8 +34,6 @@ class MethodInjectionPoint extends InjectionPoint
 	
 	final bool isOptional;
 
-	final bool isSetter;
-	
 	final List<Type> positionalArguments;
 
 	final int numRequiredPositionalArguments;
@@ -48,7 +46,7 @@ class MethodInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
-	MethodInjectionPoint(this.method, this.positionalArguments, this.numRequiredPositionalArguments,  this.namedArguments, this.isOptional, this.isSetter);
+	MethodInjectionPoint(this.method, this.positionalArguments, this.numRequiredPositionalArguments,  this.namedArguments, this.isOptional);
 	
   //-----------------------------------
   //
@@ -59,20 +57,10 @@ class MethodInjectionPoint extends InjectionPoint
 	@override
 	void applyInjection(Injector injector, Object target, Type targetType)
 	{
-	  if (!isSetter)
-	  {
-			reflect(target).invoke(
-  			method, 
-  			_getPositionalValues(injector, target, targetType)
-  		);
-	  }
-	  else
-	  {
-	    reflect(target).setField(
-        method, 
-        _getPositionalValues(injector, target, targetType).first
-      );
-	  }
+    reflect(target).invoke(
+      method, 
+      _getPositionalValues(injector, target, targetType)
+    );
 	}
 	
 	List<dynamic> _getPositionalValues(Injector injector, Object target, Type targetType)

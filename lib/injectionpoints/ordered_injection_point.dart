@@ -39,5 +39,5 @@ class OrderedInjectionPoint extends MethodInjectionPoint
   //-----------------------------------
 	
 	OrderedInjectionPoint(Symbol method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<Symbol, dynamic> namedArguments, this.order)
-		: super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, false, false);
+		: super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, false);
 }
