@@ -31,6 +31,7 @@ instantiationTestCase()
 		injector = new Injector();	
 		injector.map(String).toValue('');
 		injector.map(InjectedClazz);
+		injector.map(String, 'setterInjectedString').toValue("");
 	});
 	
 	tearDown(() {

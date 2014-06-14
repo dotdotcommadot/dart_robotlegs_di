@@ -129,8 +129,8 @@ class Reflector
 					}
 					else if (declaration is MethodMirror && !declaration.isGetter)
 					{
-						String name = declaration.simpleName.toString().split('=').first;  
-						_createMethodInjectionPoint(new Symbol(name), declaration.parameters, (metadata.reflectee as Inject).optional);
+						String name = MirrorSystem.getName(declaration.simpleName).toString().split('=').first;  
+						_createMethodInjectionPoint(new Symbol(name), declaration.parameters, (metadata.reflectee as Inject).optional, declaration.isSetter);
 					}
 				} 
 				else if (metadata.reflectee is PostConstruct) 
@@ -175,14 +175,15 @@ class Reflector
 		propertyInjectionPoints.add(injectionPoint);
   }
 	
-	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters, bool optional)
+	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters, bool optional, bool isSetter)
 	{
 		MethodInjectionPoint injectionPoint = new MethodInjectionPoint(
 			method, 
 			_getPositionalParameters(parameters), 
 			_getNumberOfRequiredPositionalParameters(parameters),
 			_getNamedParameters(parameters),
-			optional);
+			optional,
+			isSetter);
 		
 		methodInjectionPoints.add(injectionPoint);
 	}

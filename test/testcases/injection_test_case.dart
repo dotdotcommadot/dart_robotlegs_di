@@ -87,4 +87,14 @@ injectionTestCase()
 		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo);
 		expect(myClazzTwo.injectedString, equals("abcABC-123"));
 	});
+
+	test('Setter Injection', () 
+	{
+		injector.map(String).toValue("abcABC-123");
+		injector.map(Clazz);
+		injector.map(InjectedClazz);
+		
+		Clazz myClazz = injector.getInstance(Clazz);
+		expect(myClazz.mySetterInjectedString, equals("abcABC-123"));
+	});
 }

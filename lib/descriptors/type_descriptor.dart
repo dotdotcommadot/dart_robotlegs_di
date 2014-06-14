@@ -93,13 +93,14 @@ class TypeDescriptor
 		[positionalArguments = null, 
 		int numRequiredPositionalArguments = 0,
     namedArguments = null,
-    optional = false]
+    optional = false,
+    isSetter = false]
 	)
 	{
 		if (_postConstructAdded)
     	throw new InjectorError('Can\'t add injection point after post construct method');
 		
-		addInjectionPoint(new MethodInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, optional));
+		addInjectionPoint(new MethodInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, optional, isSetter));
 		
 		return this;
 	}

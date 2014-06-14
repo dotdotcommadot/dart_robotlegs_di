@@ -39,6 +39,12 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
 	@inject
 	InjectedClazz myInjectedClazz;
 	
+	String _mySetterInjectedString;
+	
+	@inject
+	set mySetterInjectedString(String value) => _mySetterInjectedString = value;
+	String get mySetterInjectedString => _mySetterInjectedString;
+	
   //-----------------------------------
   // Injectable Methods
   //-----------------------------------
