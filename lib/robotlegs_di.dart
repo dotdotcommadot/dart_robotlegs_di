@@ -26,7 +26,6 @@ library robotlegs_di;
 // imports
 //-----------------------------------
 
-@MirrorsUsed(metaTargets: const ['Inject', 'PostConstruct', 'PreDestroy'], targets: const ['Inject', 'PostConstruct', 'PreDestroy'])
 import 'dart:mirrors';
 import 'dart:async';
 
