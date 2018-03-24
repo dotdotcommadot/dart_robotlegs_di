@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +25,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 preDestroyMethodsTestCase()
 {
@@ -29,8 +34,8 @@ preDestroyMethodsTestCase()
 	
 	setUp(() 
 	{
-		injector = new Injector();	
-		injector.map(String).toValue("abcABC-123");
+		injector = new Injector();
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		

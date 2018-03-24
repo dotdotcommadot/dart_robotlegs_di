@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +25,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 mappingTestCase()
 {
@@ -38,18 +43,18 @@ mappingTestCase()
 	
 	test('Mapping To Value', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-    expect(myClazz.myInjectedString, equals("abcABC-123"));
+		expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
 	});
 	
 	test('Mapping To Type', () 
 	{
 		injector.map(InterfaceClazz).toType(Clazz);
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		
 		InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
@@ -59,7 +64,7 @@ mappingTestCase()
 	test('Mapping As Singleton', () 
 	{
 		injector.map(InjectedClazz).asSingleton();
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);

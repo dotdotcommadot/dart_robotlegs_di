@@ -22,25 +22,21 @@
 
 library robotlegs_di_test;
 
-import 'package:unittest/unittest.dart';
-import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
 
-part 'objects/abstract_clazz.dart';
-part 'objects/clazz.dart';
-part 'objects/clazz_two.dart';
-part 'objects/injected_clazz.dart';
-part 'objects/interface_clazz.dart';
-part 'objects/mixin_clazz.dart';
+import 'robotlegs_di_test.reflectable.dart';
+import 'testcases/instantiation_test_case.dart';
+import 'testcases/parent_injector_test_case.dart';
+import 'testcases/mapping_test_case.dart';
+import 'testcases/post_construct_methods_test_case.dart';
+import 'testcases/pre_destroy_methods_test_case.dart';
+import 'testcases/injection_test_case.dart';
 
-part 'testcases/instantiation_test_case.dart';
-part 'testcases/injection_test_case.dart';
-part 'testcases/mapping_test_case.dart';
-part 'testcases/parent_injector_test_case.dart';
-part 'testcases/post_construct_methods_test_case.dart';
-part 'testcases/pre_destroy_methods_test_case.dart';
+
 
 main()
 {
+	initializeReflectable();
 	group('Instantiation Tests -', instantiationTestCase);
 	group('Injection Tests -', injectionTestCase);
 	group('Mapping Tests -', mappingTestCase);

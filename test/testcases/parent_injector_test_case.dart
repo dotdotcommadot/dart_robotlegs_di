@@ -1,3 +1,6 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,14 +23,14 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 parentInjectorTestCase()
 {
   IInjector injector;
   IInjector childInjector;
   
-  setUp(() 
+  setUp(()
   {
     injector = new Injector();
   });

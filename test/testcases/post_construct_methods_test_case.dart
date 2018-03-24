@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +25,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 postConstructMethodsTestCase()
 {
@@ -38,7 +43,7 @@ postConstructMethodsTestCase()
 	
 	test('Running Methods', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -50,7 +55,7 @@ postConstructMethodsTestCase()
 
 	test('Running Methods in Right Order', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		

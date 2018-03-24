@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +25,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 instantiationTestCase()
 {
@@ -29,9 +34,9 @@ instantiationTestCase()
 	setUp(() 
 	{
 		injector = new Injector();	
-		injector.map(String).toValue('');
+		injector.map(ValueHolder).toValue('');
 		injector.map(InjectedClazz);
-		injector.map(String, 'setterInjectedString').toValue("");
+		injector.map(ValueHolder, 'setterInjectedValueHolder').toValue("");
 	});
 	
 	tearDown(() {
@@ -75,6 +80,6 @@ instantiationTestCase()
 		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, const Symbol('named'));
 		
 		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
-		expect(myClazzTwo.injectedString, equals("named"));
+		expect(myClazzTwo.valueHolder, equals("named"));
 	});
 }

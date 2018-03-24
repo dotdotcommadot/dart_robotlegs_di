@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +25,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+
 
 injectionTestCase()
 {
@@ -36,19 +41,19 @@ injectionTestCase()
 		injector = null;
 	});
 	
-	test('Injecting String', () 
+	test('Injecting ValueHolder', ()
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-    expect(myClazz.myInjectedString, equals("abcABC-123"));
+    expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
 	});
 
 	test('Injecting Class', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -59,42 +64,42 @@ injectionTestCase()
 
 	test('Named Injection', () 
 	{
-		injector.map(String).toValue("abcABC-123");
-		injector.map(String, "hello").toValue("hello world");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder, "hello").toValue(ValueHolder("hello world"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedString, equals("abcABC-123"));
-		expect(myClazz.myInjectedHelloString, equals("hello world"));
+		expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
+		expect(myClazz.myInjectedHelloValueHolder.value, equals("hello world"));
 	});
 
 	test('Optional Injection', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedHelloString, isNull);
+		expect(myClazz.myInjectedHelloValueHolder.value, isNull);
 	});
 
 	test('Constructor Injection', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(ClazzTwo);
 		
 		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo);
-		expect(myClazzTwo.injectedString, equals("abcABC-123"));
+		expect(myClazzTwo.valueHolder.value, equals("abcABC-123"));
 	});
 
 	test('Setter Injection', () 
 	{
-		injector.map(String).toValue("abcABC-123");
+		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
 		injector.map(Clazz);
 		injector.map(InjectedClazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.mySetterInjectedString, equals("abcABC-123"));
+		expect(myClazz.mySetterInjectedValueHolder.value, equals("abcABC-123"));
 	});
 }
