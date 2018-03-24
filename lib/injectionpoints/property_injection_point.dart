@@ -69,7 +69,7 @@ class PropertyInjectionPoint extends InjectionPoint
     // TODO: figure out injectParameters;
 		var instance = provider.apply(injector, type, null);
     
-    InstanceMirror instanceMirror = refly.reflect(target);
+    InstanceMirror instanceMirror = _refly.reflect(target);
     instanceMirror.invokeSetter(_property, instance);
   }
 }

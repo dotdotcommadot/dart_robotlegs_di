@@ -93,3 +93,5 @@ part 'providers/value_provider.dart';
 
 part 'reflection/annotations.dart';
 part 'reflection/reflector.dart';
+
+const Refly _refly = const Refly();

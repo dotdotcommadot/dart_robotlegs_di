@@ -443,7 +443,8 @@ class Injector implements IInjector
 	
   static String _getMappingId(Type type, [String injectionName = '']) 
   {
-  	String qualifiedName = refly.reflectType( type ).qualifiedName;
+  	TypeMirror reflectType = _refly.reflectType( type );
+  	String qualifiedName = reflectType.qualifiedName;
   	return qualifiedName + "|" + injectionName;
   }
 }

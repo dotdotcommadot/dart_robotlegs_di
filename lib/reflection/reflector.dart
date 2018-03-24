@@ -23,10 +23,16 @@
 part of robotlegs_di;
 
 class Refly extends Reflectable {
-	const Refly():super(typeCapability,newInstanceCapability);
+	const Refly():super(
+		instanceInvokeCapability,
+		invokingCapability,
+		reflectedTypeCapability,
+		typeCapability,
+		typingCapability,
+		metadataCapability,
+		newInstanceCapability,
+	);
 }
-
-const Refly refly = Refly();
 
 class Reflector
 {
@@ -258,7 +264,7 @@ class Reflector
 	{
 		_processableClassMirrors = new List<ClassMirror>();
 
-		ClassMirror classMirror = refly.reflectType(type);
+		ClassMirror classMirror = _refly.reflectType(type);
 		
 		while (classMirror != null)
 		{

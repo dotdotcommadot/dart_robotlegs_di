@@ -42,7 +42,7 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
 	@override
 	dynamic createInstance(Type type, IInjector injector)
 	{
-		ClassMirror reflectType = refly.reflectType(type) as ClassMirror;
+		ClassMirror reflectType = _refly.reflectType(type) as ClassMirror;
 		return reflectType.newInstance(method, []);
 	}
 }
