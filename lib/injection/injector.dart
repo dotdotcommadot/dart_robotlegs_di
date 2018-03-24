@@ -443,8 +443,7 @@ class Injector implements IInjector
 	
   static String _getMappingId(Type type, [String injectionName = '']) 
   {
-  	Symbol qualifiedNameSymbol = reflectClass( type ).qualifiedName;
-  	String qualifiedName = MirrorSystem.getName( qualifiedNameSymbol );
+  	String qualifiedName = refly.reflectType( type ).qualifiedName;
   	return qualifiedName + "|" + injectionName;
   }
 }

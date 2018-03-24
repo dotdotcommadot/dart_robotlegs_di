@@ -26,8 +26,8 @@ library robotlegs_di;
 // imports
 //-----------------------------------
 
-import 'dart:mirrors';
 import 'dart:async';
+import 'package:reflectable/reflectable.dart';
 
 //-----------------------------------
 // Descriptors

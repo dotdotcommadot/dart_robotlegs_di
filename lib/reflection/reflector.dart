@@ -22,7 +22,13 @@
 
 part of robotlegs_di;
 
-class Reflector 
+class Refly extends Reflectable {
+	const Refly():super(typeCapability,newInstanceCapability);
+}
+
+const Refly refly = Refly();
+
+class Reflector
 {
   //-----------------------------------
   //
@@ -43,7 +49,7 @@ class Reflector
 	List<PostConstructInjectionPoint> _postConstructInjectionPoints; 
 	
 	List<PreDestroyInjectionPoint> _preDestroyInjectionPoints; 
-	
+
   //-----------------------------------
   //
   // Constructor
@@ -142,10 +148,10 @@ class Reflector
 					{
 					  if (declaration.isSetter)
 					  {
-							final String name = MirrorSystem.getName(declaration.simpleName).toString().split('=').first; 
+							final String name = (declaration.simpleName).toString().split('=').first;
 					    final String mappingId = Injector._getMappingId(declaration.parameters.first.type.reflectedType, (metadata.reflectee as Inject).name );
 					    
-					    _createPropertyInjectionPoint(mappingId, new Symbol(name), (metadata.reflectee as Inject).optional);
+					    _createPropertyInjectionPoint(mappingId, name, (metadata.reflectee as Inject).optional);
 					  }
 					  else
 					  {
@@ -165,7 +171,7 @@ class Reflector
 		});
 	}
 	
-	void _createConstructorInjectionPoint(Symbol method, List<ParameterMirror> parameters)
+	void _createConstructorInjectionPoint(String method, List<ParameterMirror> parameters)
 	{
 		ConstructorInjectionPoint injectionPoint;
 		
@@ -182,14 +188,14 @@ class Reflector
 		
 	}
 	
-	void _createPropertyInjectionPoint(String mappingId, Symbol property, bool optional) 
+	void _createPropertyInjectionPoint(String mappingId, String property, bool optional)
 	{
 		PropertyInjectionPoint injectionPoint = new PropertyInjectionPoint(mappingId, property, optional);
 		
 		_propertyInjectionPoints.add(injectionPoint);
   }
 	
-	void _createMethodInjectionPoint(Symbol method, List<ParameterMirror> parameters, bool optional, bool isSetter)
+	void _createMethodInjectionPoint(String method, List<ParameterMirror> parameters, bool optional, bool isSetter)
 	{
 		MethodInjectionPoint injectionPoint = new MethodInjectionPoint(
 			method, 
@@ -201,14 +207,14 @@ class Reflector
 		_methodInjectionPoints.add(injectionPoint);
 	}
 
-	void _createPostConstructInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order)
+	void _createPostConstructInjectionPoint(String method, List<dynamic> positionalArguments, Map<String, dynamic> namedArguments, int order)
 	{
 		PostConstructInjectionPoint injectionPoint = new PostConstructInjectionPoint(method, positionalArguments, 0, namedArguments, order);
 		
 		_postConstructInjectionPoints.add(injectionPoint);
 	}
 
-	void _createPreDestroyInjectionPoint(Symbol method, List<dynamic> positionalArguments, Map<Symbol, dynamic> namedArguments, int order)
+	void _createPreDestroyInjectionPoint(String method, List<dynamic> positionalArguments, Map<String, dynamic> namedArguments, int order)
 	{
 		PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, 0, namedArguments, order);
 		
@@ -234,9 +240,9 @@ class Reflector
 		return parameterMirrors.where((ParameterMirror parameter) => !parameter.isNamed && !parameter.isOptional).length;
 	}
 	
-	Map<Symbol, Type> _getNamedParameters(List<ParameterMirror> parameterMirrors)
+	Map<String, Type> _getNamedParameters(List<ParameterMirror> parameterMirrors)
 	{
-		Map<Symbol, Type> parameters = new Map<dynamic, Type>();
+		Map<String, Type> parameters = new Map<String, Type>();
 		
 		parameterMirrors.where((ParameterMirror parameter) => !parameter.isNamed).forEach(
 			(ParameterMirror parameter) 
@@ -251,8 +257,8 @@ class Reflector
 	void _createProcessableClassMirrorsFor(Type type)
 	{
 		_processableClassMirrors = new List<ClassMirror>();
-		
-		ClassMirror classMirror = reflectClass(type);
+
+		ClassMirror classMirror = refly.reflectType(type);
 		
 		while (classMirror != null)
 		{

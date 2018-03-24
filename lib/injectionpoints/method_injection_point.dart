@@ -30,7 +30,7 @@ class MethodInjectionPoint extends InjectionPoint
   //
   //-----------------------------------
 	
-	final Symbol method;
+	final String method;
 	
 	final bool isOptional;
 
@@ -38,7 +38,7 @@ class MethodInjectionPoint extends InjectionPoint
 
 	final int numRequiredPositionalArguments;
 	
-	final Map<Symbol, Type> namedArguments;
+	final Map<String, Type> namedArguments;
 	
   //-----------------------------------
   //
@@ -57,7 +57,7 @@ class MethodInjectionPoint extends InjectionPoint
 	@override
 	void applyInjection(Injector injector, Object target, Type targetType)
 	{
-    reflect(target).invoke(
+    refly.reflect(target).invoke(
       method, 
       _getPositionalValues(injector, target, targetType)
     );

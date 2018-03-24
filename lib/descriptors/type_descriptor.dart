@@ -53,7 +53,7 @@ class TypeDescriptor
 	TypeDescriptor([bool useDefaultConstructor = true]) 
 	{
 		if (useDefaultConstructor)
-			constructorInjectionPoints.add(new NoParamsConstructorInjectionPoint(const Symbol('')));
+			constructorInjectionPoints.add(new NoParamsConstructorInjectionPoint(''));
 	}
 	
   //-----------------------------------
@@ -63,7 +63,7 @@ class TypeDescriptor
   //-----------------------------------
 	
 	TypeDescriptor addConstructor(
-	  Symbol method,
+	  String method,
 		[positionalArguments = null, 
 		int numRequiredPositionalArguments = 0,
 		namedArguments = null]
@@ -74,7 +74,7 @@ class TypeDescriptor
 	}
 	
 	TypeDescriptor addProperty(
-		Symbol property,
+		String property,
 	  Type type,
 	  [String injectionName = '',
 	  bool optional = false]
@@ -89,7 +89,7 @@ class TypeDescriptor
 	}
 	
 	TypeDescriptor addMethod(
-		Symbol method,
+		String method,
 		[positionalArguments = null, 
 		int numRequiredPositionalArguments = 0,
     namedArguments = null,
@@ -105,7 +105,7 @@ class TypeDescriptor
 	}
 	
 	TypeDescriptor addPostConstructMethod(
-		Symbol method,
+		String method,
 		[positionalArguments = null, 
 		int numRequiredPositionalArguments = 0,
 		namedArguments = null]
@@ -119,7 +119,7 @@ class TypeDescriptor
 	}
 
 	TypeDescriptor addPreDestroyMethod(
-	  Symbol method,
+	  String method,
 	  [positionalArguments = null, 
 	  int numRequiredPositionalArguments = 0,
 	  namedArguments = null]

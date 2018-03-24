@@ -32,7 +32,7 @@ class PropertyInjectionPoint extends InjectionPoint
 	
 	String _mappingId;
   
-	Symbol _property;
+	String _property;
   
 	bool _optional;
   
@@ -67,9 +67,9 @@ class PropertyInjectionPoint extends InjectionPoint
     }
     
     // TODO: figure out injectParameters;
-		var instance = provider.apply(injector, type, new Map());
+		var instance = provider.apply(injector, type, null);
     
-    InstanceMirror instanceMirror = reflect(target);
-    instanceMirror.setField(_property, instance);
+    InstanceMirror instanceMirror = refly.reflect(target);
+    instanceMirror.invokeSetter(_property, instance);
   }
 }

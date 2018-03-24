@@ -30,7 +30,7 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
   //
   //-----------------------------------
 	
-	NoParamsConstructorInjectionPoint(Symbol method) 
+	NoParamsConstructorInjectionPoint(String method)
 		: super(method, [], 0, null);
 	
 	//-----------------------------------
@@ -42,6 +42,7 @@ class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint
 	@override
 	dynamic createInstance(Type type, IInjector injector)
 	{
-		return reflectClass(type).newInstance(method, []).reflectee;
+		ClassMirror reflectType = refly.reflectType(type) as ClassMirror;
+		return reflectType.newInstance(method, []);
 	}
 }

@@ -31,6 +31,6 @@ class PreDestroyInjectionPoint extends OrderedInjectionPoint
   //-----------------------------------
 	
 	PreDestroyInjectionPoint(
-		Symbol method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<Symbol, dynamic> namedArguments, int order)
+		String method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<String, dynamic> namedArguments, int order)
 	  : super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, order);
 }
