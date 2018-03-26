@@ -22,37 +22,34 @@
 
 part of robotlegs_di;
 
-class ForwardingProvider implements IProvider
-{
+class ForwardingProvider implements IProvider {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	IProvider provider;
-	
+
+  IProvider provider;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	ForwardingProvider(this.provider);
-	
+
+  ForwardingProvider(this.provider);
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-  dynamic apply(IInjector injector, Type type, Map injectParameters)
-  {
-  	return provider.apply(injector, type, injectParameters);
+
+  dynamic apply(IInjector injector, Type type, Map injectParameters) {
+    return provider.apply(injector, type, injectParameters);
   }
-  
-  void destroy()
-  {
-  	provider.destroy();
+
+  void destroy() {
+    provider.destroy();
   }
 }

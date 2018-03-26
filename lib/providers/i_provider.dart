@@ -22,15 +22,14 @@
 
 part of robotlegs_di;
 
-abstract class IProvider
-{
+abstract class IProvider {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-  
+
   dynamic apply(IInjector injector, Type type, Map injectParameters);
-  
+
   void destroy();
 }

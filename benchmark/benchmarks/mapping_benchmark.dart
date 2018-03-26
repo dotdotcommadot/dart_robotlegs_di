@@ -22,32 +22,26 @@
 
 part of robotlegs_di_benchmark;
 
-class MappingBenchmark extends BenchmarkBase 
-{
-	final int ITERATIONS = 1000;
-	
+class MappingBenchmark extends BenchmarkBase {
+  final int ITERATIONS = 1000;
+
   IInjector injector = new Injector();
 
-  MappingBenchmark() : super( "Mapping" );
+  MappingBenchmark() : super("Mapping");
 
-  void run() 
-  {
-    for (int i = 0; i< ITERATIONS; i++)
-    {
-    	injector.getInstance(int, i.toString());
+  void run() {
+    for (int i = 0; i < ITERATIONS; i++) {
+      injector.getInstance(int, i.toString());
     }
   }
 
-  void setup() 
-  { 
-    for (int i = 0; i< ITERATIONS; i++)
-    {
-    	injector.map(int, i.toString()).toValue(i);
+  void setup() {
+    for (int i = 0; i < ITERATIONS; i++) {
+      injector.map(int, i.toString()).toValue(i);
     }
   }
 
-  void teardown() 
-  { 
+  void teardown() {
     injector = null;
   }
 }

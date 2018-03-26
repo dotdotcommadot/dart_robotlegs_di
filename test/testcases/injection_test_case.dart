@@ -25,81 +25,72 @@ import '../objects/objects.dart';
 * THE SOFTWARE.
 */
 
+injectionTestCase() {
+  IInjector injector;
 
+  setUp(() {
+    injector = new Injector();
+  });
 
-injectionTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Injecting ValueHolder', ()
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Injecting ValueHolder', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
-	});
+  });
 
-	test('Injecting Class', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedClazz, isNotNull);
-		expect(myClazz.firstMethodWithParametersValue, isNotNull);
-	});
+  test('Injecting Class', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
 
-	test('Named Injection', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(ValueHolder, "hello").toValue(const ValueHolder("hello world"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
-		expect(myClazz.myInjectedHelloValueHolder.value, equals("hello world"));
-	});
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedClazz, isNotNull);
+    expect(myClazz.firstMethodWithParametersValue, isNotNull);
+  });
 
-	test('Optional Injection', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedHelloValueHolder, isNull);
-	});
+  test('Named Injection', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector
+        .map(ValueHolder, "hello")
+        .toValue(const ValueHolder("hello world"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
 
-	test('Constructor Injection', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(ClazzTwo);
-		
-		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo);
-		expect(myClazzTwo.valueHolder.value, equals("abcABC-123"));
-	});
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
+    expect(myClazz.myInjectedHelloValueHolder.value, equals("hello world"));
+  });
 
-	test('Setter Injection', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(Clazz);
-		injector.map(InjectedClazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.mySetterInjectedValueHolder.value, equals("abcABC-123"));
-	});
+  test('Optional Injection', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedHelloValueHolder, isNull);
+  });
+
+  test('Constructor Injection', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(ClazzTwo);
+
+    ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo);
+    expect(myClazzTwo.valueHolder.value, equals("abcABC-123"));
+  });
+
+  test('Setter Injection', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(Clazz);
+    injector.map(InjectedClazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.mySetterInjectedValueHolder.value, equals("abcABC-123"));
+  });
 }

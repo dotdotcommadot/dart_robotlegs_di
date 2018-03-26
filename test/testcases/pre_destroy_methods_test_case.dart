@@ -25,46 +25,45 @@ import '../objects/objects.dart';
 * THE SOFTWARE.
 */
 
+preDestroyMethodsTestCase() {
+  IInjector injector;
+  Clazz myClazz;
 
+  setUp(() {
+    injector = new Injector();
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
 
-preDestroyMethodsTestCase()
-{
-	IInjector injector;
-	Clazz myClazz;
-	
-	setUp(() 
-	{
-		injector = new Injector();
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		myClazz = injector.getInstance(Clazz);
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Running Methods', () 
-	{
+    myClazz = injector.getInstance(Clazz);
+  });
+
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Running Methods', () {
     injector.teardown();
-    
+
     expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
     expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
     expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
-	});
+  });
 
-	test('Running Methods in Right Order', () 
-	{
+  test('Running Methods in Right Order', () {
     injector.teardown();
-    
+
     expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
     expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
     expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
-    
-    expect(myClazz.firstPreDestroytMethodOrder < myClazz.secondPreDestroytMethodOrder, isTrue);
-    expect(myClazz.secondPreDestroytMethodOrder < myClazz.lastPreDestroytMethodOrder, isTrue);
-	});
+
+    expect(
+        myClazz.firstPreDestroytMethodOrder <
+            myClazz.secondPreDestroytMethodOrder,
+        isTrue);
+    expect(
+        myClazz.secondPreDestroytMethodOrder <
+            myClazz.lastPreDestroytMethodOrder,
+        isTrue);
+  });
 }

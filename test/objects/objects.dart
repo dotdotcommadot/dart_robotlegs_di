@@ -1,6 +1,5 @@
 import 'package:robotlegs_di/robotlegs_di.dart';
 
-
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -24,14 +23,10 @@ import 'package:robotlegs_di/robotlegs_di.dart';
 */
 
 @Reflect()
-abstract class AbstractClazz
-{
-
-}
+abstract class AbstractClazz {}
 
 @Reflect()
-class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
-{
+class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz {
   //-----------------------------------
   //
   // Properties
@@ -50,7 +45,9 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
   ValueHolder _mySetterInjectedValueHolder;
 
   @inject
-  set mySetterInjectedValueHolder(ValueHolder value) => _mySetterInjectedValueHolder = value;
+  set mySetterInjectedValueHolder(ValueHolder value) =>
+      _mySetterInjectedValueHolder = value;
+
   ValueHolder get mySetterInjectedValueHolder => _mySetterInjectedValueHolder;
 
   //-----------------------------------
@@ -116,14 +113,12 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
   //-----------------------------------
 
   @inject
-  firstMethod()
-  {
+  firstMethod() {
     hasRunFirstMethod = true;
   }
 
   @inject
-  firstMethodWithParameters(InjectedClazz value)
-  {
+  firstMethodWithParameters(InjectedClazz value) {
     this.firstMethodWithParametersValue = value;
   }
 
@@ -132,24 +127,21 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
   //-----------------------------------
 
   @PostConstruct(order: 1)
-  firstPostConstructMethod()
-  {
+  firstPostConstructMethod() {
     hasRunFirstPostConstructMethod = true;
     firstPostConstructMethodOrder = postConstructOrder;
     postConstructOrder++;
   }
 
   @PostConstruct(order: 2)
-  secondPostConstructMethod()
-  {
+  secondPostConstructMethod() {
     hasRunSecondPostConstructMethod = true;
     secondPostConstructMethodOrder = postConstructOrder;
     postConstructOrder++;
   }
 
   @postConstruct
-  lastPostConstructMethod()
-  {
+  lastPostConstructMethod() {
     hasRunLastPostConstructMethod = true;
     lastPostConstructMethodOrder = postConstructOrder;
     postConstructOrder++;
@@ -160,24 +152,21 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
   //-----------------------------------
 
   @PreDestroy(order: 1)
-  firstPreDestroyMethod()
-  {
+  firstPreDestroyMethod() {
     hasRunFirstPreDestroyMethod = true;
     firstPreDestroytMethodOrder = preDestroyOrder;
     preDestroyOrder++;
   }
 
   @PreDestroy(order: 2)
-  secondPreDestroyMethod()
-  {
+  secondPreDestroyMethod() {
     hasRunSecondPreDestroyMethod = true;
     secondPreDestroytMethodOrder = preDestroyOrder;
     preDestroyOrder++;
   }
 
   @preDestroy
-  lastPreDestroyMethod()
-  {
+  lastPreDestroyMethod() {
     hasRunLastPreDestroyMethod = true;
     lastPreDestroytMethodOrder = preDestroyOrder;
     preDestroyOrder++;
@@ -185,38 +174,28 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
 }
 
 @Reflect()
-class ClazzTwo
-{
+class ClazzTwo {
   ValueHolder valueHolder;
 
-  ClazzTwo(ValueHolder _injectedString)
-  {
+  ClazzTwo(ValueHolder _injectedString) {
     valueHolder = _injectedString;
   }
 
-  ClazzTwo.named()
-  {
+  ClazzTwo.named() {
     valueHolder = const ValueHolder("named");
   }
 }
 
 @Reflect()
-class InjectedClazz
-{
+class InjectedClazz {
   InjectedClazz();
 }
 
 @Reflect()
-abstract class InterfaceClazz
-{
-
-}
+abstract class InterfaceClazz {}
 
 @Reflect()
-abstract class MixinClazz
-{
-
-}
+abstract class MixinClazz {}
 
 @Reflect()
 class ValueHolder {

@@ -22,14 +22,12 @@
 
 part of robotlegs_di;
 
-class InjectorInterfaceConstructorError extends InjectorError
-{
-	//-----------------------------------
+class InjectorInterfaceConstructorError extends InjectorError {
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	InjectorInterfaceConstructorError([String message = ""]) : super(message);
-	
+
+  InjectorInterfaceConstructorError([String message = ""]) : super(message);
 }

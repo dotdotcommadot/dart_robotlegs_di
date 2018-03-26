@@ -22,24 +22,23 @@
 
 part of robotlegs_di;
 
-class InjectionPoint 
-{
-	//-----------------------------------
+class InjectionPoint {
+  //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
+
   InjectionPoint next;
   InjectionPoint last;
   Map injectParameters;
-  
-	//-----------------------------------
+
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-  
+
   InjectionPoint();
 
   //-----------------------------------
@@ -47,8 +46,6 @@ class InjectionPoint
   // Public Methods
   //
   //-----------------------------------
-  
-	void applyInjection(IInjector injector, dynamic target, Type type)
-	{
-	}
+
+  void applyInjection(IInjector injector, dynamic target, Type type) {}
 }

@@ -27,14 +27,13 @@ import 'package:robotlegs_di/robotlegs_di.dart';
 part 'stuffs/product.dart';
 part 'stuffs/shop.dart';
 
-void main() 
-{
-	IInjector injector = new Injector();
-	
-	injector.map( Product ).asSingleton();
-	injector.map( Shop );
-	injector.map( int ).toValue(5);
-	
-	Shop shop = injector.getInstance( Shop );
-	//injector.teardown();
+void main() {
+  IInjector injector = new Injector();
+
+  injector.map(Product).asSingleton();
+  injector.map(Shop);
+  injector.map(int).toValue(5);
+
+  Shop shop = injector.getInstance(Shop);
+  //injector.teardown();
 }

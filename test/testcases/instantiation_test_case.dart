@@ -25,61 +25,54 @@ import '../objects/objects.dart';
 * THE SOFTWARE.
 */
 
+instantiationTestCase() {
+  IInjector injector;
 
+  setUp(() {
+    injector = new Injector();
+    injector.map(ValueHolder).toValue(const ValueHolder(''));
+    injector.map(InjectedClazz);
+    injector
+        .map(ValueHolder, 'setterInjectedValueHolder')
+        .toValue(const ValueHolder('setter'));
+  });
 
-instantiationTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-		injector.map(ValueHolder).toValue(const ValueHolder(''));
-		injector.map(InjectedClazz);
-		injector.map(ValueHolder, 'setterInjectedValueHolder').toValue(const ValueHolder('setter'));
-	});
-	
-	tearDown(() {
-		injector = null;
-	});
-	
-	test('Instantiating Class', ()
-	{
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Instantiating Class', () {
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz, isNotNull);
-	});
+  });
 
-	test('Instantiating Class From Interface', ()
-	{
-		injector.map(InterfaceClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(InterfaceClazz);
-		expect(myClazz, isNotNull);
-	});
+  test('Instantiating Class From Interface', () {
+    injector.map(InterfaceClazz).toType(Clazz);
 
-	test('Instantiating Class From Abstract Class', ()
-	{
-		injector.map(AbstractClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(AbstractClazz);
-		expect(myClazz, isNotNull);
-	});
+    Clazz myClazz = injector.getInstance(InterfaceClazz);
+    expect(myClazz, isNotNull);
+  });
 
-	test('Instantiating Class From Mixin', ()
-	{
-		injector.map(MixinClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(MixinClazz);
-		expect(myClazz, isNotNull);
-	});
-	
-	test('Instantiating Class with Named Constructor', () 
-	{
-		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, 'named');
-		
-		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
-		expect(myClazzTwo.valueHolder.value, equals("named"));
-	});
+  test('Instantiating Class From Abstract Class', () {
+    injector.map(AbstractClazz).toType(Clazz);
+
+    Clazz myClazz = injector.getInstance(AbstractClazz);
+    expect(myClazz, isNotNull);
+  });
+
+  test('Instantiating Class From Mixin', () {
+    injector.map(MixinClazz).toType(Clazz);
+
+    Clazz myClazz = injector.getInstance(MixinClazz);
+    expect(myClazz, isNotNull);
+  });
+
+  test('Instantiating Class with Named Constructor', () {
+    injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, 'named');
+
+    ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
+    expect(myClazzTwo.valueHolder.value, equals("named"));
+  });
 }

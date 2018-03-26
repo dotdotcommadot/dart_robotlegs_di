@@ -22,22 +22,27 @@
 
 part of robotlegs_di;
 
-class OrderedInjectionPoint extends MethodInjectionPoint 
-{
-	//-----------------------------------
+class OrderedInjectionPoint extends MethodInjectionPoint {
+  //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	int order;
-	
-	//-----------------------------------
+
+  int order;
+
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	OrderedInjectionPoint(String method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<String, dynamic> namedArguments, this.order)
-		: super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, false);
+
+  OrderedInjectionPoint(
+      String method,
+      List<dynamic> positionalArguments,
+      int numRequiredPositionalArguments,
+      Map<String, dynamic> namedArguments,
+      this.order)
+      : super(method, positionalArguments, numRequiredPositionalArguments,
+            namedArguments, false);
 }

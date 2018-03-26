@@ -27,7 +27,6 @@ import 'package:robotlegs_di/robotlegs_di.dart';
 
 part 'benchmarks/mapping_benchmark.dart';
 
-main() 
-{
+main() {
   new MappingBenchmark().report();
 }

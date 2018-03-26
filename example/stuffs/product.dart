@@ -23,54 +23,47 @@
 part of robotlegs_di_example;
 
 class Product {
-	
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	Product();
-	
+
+  Product();
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	@postConstruct
-	void postConstructMethod() 
-	{
-		print("Product::postConstructMethod");
-	}
 
-	@PostConstruct(order: 1)
-	void firstPostConstructMethod() 
-	{
-		print("Product::firstPostConstructMethod");
-	}
+  @postConstruct
+  void postConstructMethod() {
+    print("Product::postConstructMethod");
+  }
 
-	@PostConstruct(order: 2)
-	void secondPostConstructMethod() 
-	{
-		print("Product::secondPostConstructMethod");
-	}
+  @PostConstruct(order: 1)
+  void firstPostConstructMethod() {
+    print("Product::firstPostConstructMethod");
+  }
 
-	@preDestroy
-	void preDestroyMethod() 
-	{
-		print("Product::preDestroyMethod");
-	}
+  @PostConstruct(order: 2)
+  void secondPostConstructMethod() {
+    print("Product::secondPostConstructMethod");
+  }
 
-	@PreDestroy(order: 1)
-	void firstPreDestroyMethod() 
-	{
-		print("Product::firstPreDestroyMethod");
-	}
+  @preDestroy
+  void preDestroyMethod() {
+    print("Product::preDestroyMethod");
+  }
 
-	@PreDestroy(order: 2)
-	void secondPreDestroyMethod() 
-	{
-		print("Product::secondPreDestroyMethod");
-	}
+  @PreDestroy(order: 1)
+  void firstPreDestroyMethod() {
+    print("Product::firstPreDestroyMethod");
+  }
+
+  @PreDestroy(order: 2)
+  void secondPreDestroyMethod() {
+    print("Product::secondPreDestroyMethod");
+  }
 }

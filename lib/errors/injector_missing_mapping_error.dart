@@ -22,13 +22,12 @@
 
 part of robotlegs_di;
 
-class InjectorMissingMappingError extends InjectorError
-{
-	//-----------------------------------
+class InjectorMissingMappingError extends InjectorError {
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	InjectorMissingMappingError([String message = ""]) : super(message);
+
+  InjectorMissingMappingError([String message = ""]) : super(message);
 }

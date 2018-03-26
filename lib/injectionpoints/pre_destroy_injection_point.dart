@@ -22,15 +22,19 @@
 
 part of robotlegs_di;
 
-class PreDestroyInjectionPoint extends OrderedInjectionPoint 
-{
-	//-----------------------------------
+class PreDestroyInjectionPoint extends OrderedInjectionPoint {
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	PreDestroyInjectionPoint(
-		String method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<String, dynamic> namedArguments, int order)
-	  : super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, order);
+
+  PreDestroyInjectionPoint(
+      String method,
+      List<dynamic> positionalArguments,
+      int numRequiredPositionalArguments,
+      Map<String, dynamic> namedArguments,
+      int order)
+      : super(method, positionalArguments, numRequiredPositionalArguments,
+            namedArguments, order);
 }

@@ -22,15 +22,19 @@
 
 part of robotlegs_di;
 
-class PostConstructInjectionPoint extends OrderedInjectionPoint 
-{
-	//-----------------------------------
+class PostConstructInjectionPoint extends OrderedInjectionPoint {
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	PostConstructInjectionPoint( 
-		String method, List<dynamic> positionalArguments, int numRequiredPositionalArguments, Map<String, dynamic> namedArguments, int order)
-		: super(method, positionalArguments, numRequiredPositionalArguments, namedArguments, order);
+
+  PostConstructInjectionPoint(
+      String method,
+      List<dynamic> positionalArguments,
+      int numRequiredPositionalArguments,
+      Map<String, dynamic> namedArguments,
+      int order)
+      : super(method, positionalArguments, numRequiredPositionalArguments,
+            namedArguments, order);
 }

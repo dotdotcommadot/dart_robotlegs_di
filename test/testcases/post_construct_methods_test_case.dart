@@ -25,46 +25,45 @@ import '../objects/objects.dart';
 * THE SOFTWARE.
 */
 
+postConstructMethodsTestCase() {
+  IInjector injector;
 
+  setUp(() {
+    injector = new Injector();
+  });
 
-postConstructMethodsTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Running Methods', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Running Methods', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
+    expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
     expect(myClazz.hasRunLastPostConstructMethod, isTrue);
-	});
+  });
 
-	test('Running Methods in Right Order', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
-	  expect(myClazz.hasRunLastPostConstructMethod, isTrue);
-	  
-	  expect(myClazz.firstPostConstructMethodOrder < myClazz.secondPostConstructMethodOrder, isTrue);
-	  expect(myClazz.secondPostConstructMethodOrder < myClazz.lastPostConstructMethodOrder, isTrue);
-	});
+  test('Running Methods in Right Order', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
+    expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
+    expect(myClazz.hasRunLastPostConstructMethod, isTrue);
+
+    expect(
+        myClazz.firstPostConstructMethodOrder <
+            myClazz.secondPostConstructMethodOrder,
+        isTrue);
+    expect(
+        myClazz.secondPostConstructMethodOrder <
+            myClazz.lastPostConstructMethodOrder,
+        isTrue);
+  });
 }

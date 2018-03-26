@@ -22,27 +22,24 @@
 
 part of robotlegs_di;
 
-class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint 
-{
-	//-----------------------------------
+class NoParamsConstructorInjectionPoint extends ConstructorInjectionPoint {
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	NoParamsConstructorInjectionPoint(String method)
-		: super(method, [], 0, null);
-	
-	//-----------------------------------
+
+  NoParamsConstructorInjectionPoint(String method) : super(method, [], 0, null);
+
+  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	@override
-	dynamic createInstance(Type type, IInjector injector)
-	{
-		ClassMirror reflectType = _refly.reflectType(type) as ClassMirror;
-		return reflectType.newInstance(method, []);
-	}
+
+  @override
+  dynamic createInstance(Type type, IInjector injector) {
+    ClassMirror reflectType = _refly.reflectType(type) as ClassMirror;
+    return reflectType.newInstance(method, []);
+  }
 }

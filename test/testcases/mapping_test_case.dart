@@ -25,51 +25,46 @@ import '../objects/objects.dart';
 * THE SOFTWARE.
 */
 
+mappingTestCase() {
+  IInjector injector;
 
+  setUp(() {
+    injector = new Injector();
+  });
 
-mappingTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Mapping To Value', () 
-	{
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
-	});
-	
-	test('Mapping To Type', () 
-	{
-		injector.map(InterfaceClazz).toType(Clazz);
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(InjectedClazz);
-		
-		InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
-		expect(myInterfaceClazz, isNotNull);
-	});
+  tearDown(() {
+    injector = null;
+  });
 
-	test('Mapping As Singleton', () 
-	{
-		injector.map(InjectedClazz).asSingleton();
-		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedClazz, isNotNull);
-		expect(myClazz.firstMethodWithParametersValue, isNotNull);
-		expect(identical(myClazz.firstMethodWithParametersValue, myClazz.myInjectedClazz), isTrue);
-	});
+  test('Mapping To Value', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
+  });
+
+  test('Mapping To Type', () {
+    injector.map(InterfaceClazz).toType(Clazz);
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+
+    InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
+    expect(myInterfaceClazz, isNotNull);
+  });
+
+  test('Mapping As Singleton', () {
+    injector.map(InjectedClazz).asSingleton();
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.myInjectedClazz, isNotNull);
+    expect(myClazz.firstMethodWithParametersValue, isNotNull);
+    expect(
+        identical(
+            myClazz.firstMethodWithParametersValue, myClazz.myInjectedClazz),
+        isTrue);
+  });
 }

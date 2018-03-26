@@ -22,23 +22,22 @@
 
 part of robotlegs_di;
 
-abstract class IProviderlessMapping
-{
-	//-----------------------------------
+abstract class IProviderlessMapping {
+  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	IUnsealedMapping toType(Type type, [String constructorName = '']);
 
-	IUnsealedMapping toValue(dynamic value);
+  IUnsealedMapping toType(Type type, [String constructorName = '']);
 
-	IUnsealedMapping toSingleton(Type type);
+  IUnsealedMapping toValue(dynamic value);
 
-	IUnsealedMapping asSingleton();
+  IUnsealedMapping toSingleton(Type type);
 
-	IUnsealedMapping toProvider(IProvider provider);
+  IUnsealedMapping asSingleton();
 
-	dynamic seal();
+  IUnsealedMapping toProvider(IProvider provider);
+
+  dynamic seal();
 }

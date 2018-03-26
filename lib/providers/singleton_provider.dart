@@ -22,65 +22,62 @@
 
 part of robotlegs_di;
 
-class SingletonProvider implements IProvider
-{
+class SingletonProvider implements IProvider {
   //-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
-	
-	IInjector _creatingInjector;
-	Type _responseType ;
-	dynamic _response;
-	bool _destroyed = false;
 
-	//-----------------------------------
-	//
-	// Constructor
-	//
-	//-----------------------------------
-	
-	SingletonProvider(this._creatingInjector, this._responseType );
+  IInjector _creatingInjector;
+  Type _responseType;
 
-	//-----------------------------------
-	//
-	// Public Methods
-	//
-	//-----------------------------------
-  
-	dynamic apply(IInjector injector, Type type, Map injectParameters) 
-	{
-		if (_response == null)
-			_response = _createResponse(_creatingInjector);
-		
-  	return _response;
+  dynamic _response;
+  bool _destroyed = false;
+
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  SingletonProvider(this._creatingInjector, this._responseType);
+
+  //-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+
+  dynamic apply(IInjector injector, Type type, Map injectParameters) {
+    if (_response == null) _response = _createResponse(_creatingInjector);
+
+    return _response;
   }
-	
-  void destroy() 
-  {
-  	_destroyed = true;
-  	if (_response == null)
-  		return;
-  	
-  	TypeDescriptor descriptor = _creatingInjector.getTypeDescriptor(_responseType);
-  	PreDestroyInjectionPoint preDestroyInjectonPoint = descriptor.preDestroyMethods;
-  	while (preDestroyInjectonPoint != null)
-  	{
-  		preDestroyInjectonPoint.applyInjection(_creatingInjector, _response, _responseType);
-  		preDestroyInjectonPoint = preDestroyInjectonPoint.next;
-  	}
-  	_response = null;
+
+  void destroy() {
+    _destroyed = true;
+    if (_response == null) return;
+
+    TypeDescriptor descriptor =
+        _creatingInjector.getTypeDescriptor(_responseType);
+    PreDestroyInjectionPoint preDestroyInjectonPoint =
+        descriptor.preDestroyMethods;
+    while (preDestroyInjectonPoint != null) {
+      preDestroyInjectonPoint.applyInjection(
+          _creatingInjector, _response, _responseType);
+      preDestroyInjectonPoint = preDestroyInjectonPoint.next;
+    }
+    _response = null;
   }
-  
-  dynamic _createResponse(Injector injector)
-	{
-  	if (_destroyed)
-  	{
-  		throw new InjectorError("Forbidden usage of unmapped singleton provider for type "
-    		+ _responseType.runtimeType.toString());
-  	}
-  	
-  	return injector.instantiateUnmapped(_responseType);
-	}
+
+  dynamic _createResponse(Injector injector) {
+    if (_destroyed) {
+      throw new InjectorError(
+          "Forbidden usage of unmapped singleton provider for type " +
+              _responseType.runtimeType.toString());
+    }
+
+    return injector.instantiateUnmapped(_responseType);
+  }
 }

@@ -22,146 +22,131 @@
 
 part of robotlegs_di;
 
-class TypeDescriptor 
-{
+class TypeDescriptor {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	InjectionPoint injectionPoints;
-	
-	List<ConstructorInjectionPoint> constructorInjectionPoints = new List<ConstructorInjectionPoint>();
-	
-	PreDestroyInjectionPoint preDestroyMethods;
-	
+
+  InjectionPoint injectionPoints;
+
+  List<ConstructorInjectionPoint> constructorInjectionPoints =
+      new List<ConstructorInjectionPoint>();
+
+  PreDestroyInjectionPoint preDestroyMethods;
+
   //-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
-	
-	bool _postConstructAdded;
-	
+
+  bool _postConstructAdded;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	TypeDescriptor([bool useDefaultConstructor = true]) 
-	{
-		if (useDefaultConstructor)
-			constructorInjectionPoints.add(new NoParamsConstructorInjectionPoint(''));
-	}
-	
+
+  TypeDescriptor([bool useDefaultConstructor = true]) {
+    if (useDefaultConstructor)
+      constructorInjectionPoints.add(new NoParamsConstructorInjectionPoint(''));
+  }
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	TypeDescriptor addConstructor(
-	  String method,
-		[positionalArguments = null, 
-		int numRequiredPositionalArguments = 0,
-		namedArguments = null]
-	)
-	{
-		constructorInjectionPoints.add(new ConstructorInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments));
-		return this;
-	}
-	
-	TypeDescriptor addProperty(
-		String property,
-	  Type type,
-	  [String injectionName = '',
-	  bool optional = false]
-	)
-	{
-		if (_postConstructAdded)
-			throw new InjectorError('Can\'t add injection point after post construct method');
-		
-		addInjectionPoint(new PropertyInjectionPoint(Injector._getMappingId(type, injectionName), property, optional));
-		
-		return this;
-	}
-	
-	TypeDescriptor addMethod(
-		String method,
-		[positionalArguments = null, 
-		int numRequiredPositionalArguments = 0,
-    namedArguments = null,
-    optional = false]
-	)
-	{
-		if (_postConstructAdded)
-    	throw new InjectorError('Can\'t add injection point after post construct method');
-		
-		addInjectionPoint(new MethodInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, optional));
-		
-		return this;
-	}
-	
-	TypeDescriptor addPostConstructMethod(
-		String method,
-		[positionalArguments = null, 
-		int numRequiredPositionalArguments = 0,
-		namedArguments = null]
-	)
-	{
-		_postConstructAdded = true;
-		
-		addInjectionPoint(new PostConstructInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, 0));
-		
-		return this;
-	}
 
-	TypeDescriptor addPreDestroyMethod(
-	  String method,
-	  [positionalArguments = null, 
-	  int numRequiredPositionalArguments = 0,
-	  namedArguments = null]
-	)
-	{
-		final PreDestroyInjectionPoint injectionPoint = new PreDestroyInjectionPoint(method, positionalArguments, numRequiredPositionalArguments, namedArguments, 0);
-		
-		addPreDestroyInjectionPoint(injectionPoint);
-		
-		return this;
-	}
-	
-	void addConstructorInjectionPoint(ConstructorInjectionPoint injectionPoint)
-	{
-		constructorInjectionPoints.add(injectionPoint);
-	}
-	
-	void addInjectionPoint(InjectionPoint injectionPoint) 
-	{
-		if (injectionPoints != null)
-		{
-			injectionPoints.last.next = injectionPoint;
-			injectionPoints.last = injectionPoint;
-		}
-		else
-		{
-			injectionPoints = injectionPoint;
-			injectionPoints.last = injectionPoint;
-		}
-	}
-	
-	addPreDestroyInjectionPoint(PreDestroyInjectionPoint injectionPoint)
-	{
-		if (preDestroyMethods != null)
-		{
-			preDestroyMethods.last.next = injectionPoint;
-    	preDestroyMethods.last = injectionPoint;
-		}
-		else
-		{
-			preDestroyMethods = injectionPoint;
-    	preDestroyMethods.last = injectionPoint;
-		}
-	}
+  TypeDescriptor addConstructor(String method,
+      [positionalArguments = null,
+      int numRequiredPositionalArguments = 0,
+      namedArguments = null]) {
+    constructorInjectionPoints.add(new ConstructorInjectionPoint(method,
+        positionalArguments, numRequiredPositionalArguments, namedArguments));
+    return this;
+  }
+
+  TypeDescriptor addProperty(String property, Type type,
+      [String injectionName = '', bool optional = false]) {
+    if (_postConstructAdded)
+      throw new InjectorError(
+          'Can\'t add injection point after post construct method');
+
+    addInjectionPoint(new PropertyInjectionPoint(
+        Injector._getMappingId(type, injectionName), property, optional));
+
+    return this;
+  }
+
+  TypeDescriptor addMethod(String method,
+      [positionalArguments = null,
+      int numRequiredPositionalArguments = 0,
+      namedArguments = null,
+      optional = false]) {
+    if (_postConstructAdded)
+      throw new InjectorError(
+          'Can\'t add injection point after post construct method');
+
+    addInjectionPoint(new MethodInjectionPoint(method, positionalArguments,
+        numRequiredPositionalArguments, namedArguments, optional));
+
+    return this;
+  }
+
+  TypeDescriptor addPostConstructMethod(String method,
+      [positionalArguments = null,
+      int numRequiredPositionalArguments = 0,
+      namedArguments = null]) {
+    _postConstructAdded = true;
+
+    addInjectionPoint(new PostConstructInjectionPoint(
+        method,
+        positionalArguments,
+        numRequiredPositionalArguments,
+        namedArguments,
+        0));
+
+    return this;
+  }
+
+  TypeDescriptor addPreDestroyMethod(String method,
+      [positionalArguments = null,
+      int numRequiredPositionalArguments = 0,
+      namedArguments = null]) {
+    final PreDestroyInjectionPoint injectionPoint =
+        new PreDestroyInjectionPoint(method, positionalArguments,
+            numRequiredPositionalArguments, namedArguments, 0);
+
+    addPreDestroyInjectionPoint(injectionPoint);
+
+    return this;
+  }
+
+  void addConstructorInjectionPoint(ConstructorInjectionPoint injectionPoint) {
+    constructorInjectionPoints.add(injectionPoint);
+  }
+
+  void addInjectionPoint(InjectionPoint injectionPoint) {
+    if (injectionPoints != null) {
+      injectionPoints.last.next = injectionPoint;
+      injectionPoints.last = injectionPoint;
+    } else {
+      injectionPoints = injectionPoint;
+      injectionPoints.last = injectionPoint;
+    }
+  }
+
+  addPreDestroyInjectionPoint(PreDestroyInjectionPoint injectionPoint) {
+    if (preDestroyMethods != null) {
+      preDestroyMethods.last.next = injectionPoint;
+      preDestroyMethods.last = injectionPoint;
+    } else {
+      preDestroyMethods = injectionPoint;
+      preDestroyMethods.last = injectionPoint;
+    }
+  }
 }

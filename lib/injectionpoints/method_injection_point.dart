@@ -22,76 +22,79 @@
 
 part of robotlegs_di;
 
-class MethodInjectionPoint extends InjectionPoint 
-{
+class MethodInjectionPoint extends InjectionPoint {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	final String method;
-	
-	final bool isOptional;
 
-	final List<Type> positionalArguments;
+  final String method;
 
-	final int numRequiredPositionalArguments;
-	
-	final Map<String, Type> namedArguments;
-	
+  final bool isOptional;
+
+  final List<Type> positionalArguments;
+
+  final int numRequiredPositionalArguments;
+
+  final Map<String, Type> namedArguments;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	MethodInjectionPoint(this.method, this.positionalArguments, this.numRequiredPositionalArguments,  this.namedArguments, this.isOptional);
-	
+
+  MethodInjectionPoint(
+      this.method,
+      this.positionalArguments,
+      this.numRequiredPositionalArguments,
+      this.namedArguments,
+      this.isOptional);
+
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	@override
-	void applyInjection(Injector injector, Object target, Type targetType)
-	{
-    _refly.reflect(target).invoke(
-      method, 
-      _getPositionalValues(injector, target, targetType)
-    );
-	}
-	
-	List<dynamic> _getPositionalValues(Injector injector, Object target, Type targetType)
-	{
-		if (positionalArguments == null || positionalArguments.length == 0)
-			return [];
-		
-		IProvider provider;
-		List<dynamic> positionalValues = new List<dynamic>();
-		
-		int nunmProcessedPositionalArguments = 0;
-		
-		positionalArguments.forEach( 
-			(Type type)
-		{
-			provider = injector._getProvider(Injector._getMappingId(type));
-			
-			if (provider == null)
-			{
-				if (isOptional || nunmProcessedPositionalArguments >= numRequiredPositionalArguments)
-					return;
-				
-				throw(new InjectorMissingMappingError(
-	        'Injector is missing a mapping to handle injection into target ' +
-	        target.toString() + ' of type "' + type.toString() + '"'));
-			}
-			
-			positionalValues.add(provider.apply(injector, type, null));
-			nunmProcessedPositionalArguments++;
-		});
-			
-		return positionalValues;
-	}
+
+  @override
+  void applyInjection(Injector injector, Object target, Type targetType) {
+    _refly
+        .reflect(target)
+        .invoke(method, _getPositionalValues(injector, target, targetType));
+  }
+
+  List<dynamic> _getPositionalValues(
+      Injector injector, Object target, Type targetType) {
+    if (positionalArguments == null || positionalArguments.length == 0)
+      return [];
+
+    IProvider provider;
+    List<dynamic> positionalValues = new List<dynamic>();
+
+    int nunmProcessedPositionalArguments = 0;
+
+    positionalArguments.forEach((Type type) {
+      provider = injector._getProvider(Injector._getMappingId(type));
+
+      if (provider == null) {
+        if (isOptional ||
+            nunmProcessedPositionalArguments >= numRequiredPositionalArguments)
+          return;
+
+        throw (new InjectorMissingMappingError(
+            'Injector is missing a mapping to handle injection into target ' +
+                target.toString() +
+                ' of type "' +
+                type.toString() +
+                '"'));
+      }
+
+      positionalValues.add(provider.apply(injector, type, null));
+      nunmProcessedPositionalArguments++;
+    });
+
+    return positionalValues;
+  }
 }

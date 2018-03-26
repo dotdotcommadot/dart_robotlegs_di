@@ -23,32 +23,25 @@ import 'package:test/test.dart';
 * THE SOFTWARE.
 */
 
-
-
-parentInjectorTestCase()
-{
+parentInjectorTestCase() {
   IInjector injector;
   IInjector childInjector;
-  
-  setUp(()
-  {
+
+  setUp(() {
     injector = new Injector();
   });
-  
-  tearDown(() 
-  {
+
+  tearDown(() {
     injector = null;
     childInjector = null;
   });
-  
-  test('Create Child Injector', () 
-  {
+
+  test('Create Child Injector', () {
     childInjector = injector.createChildInjector();
     expect(childInjector.parentInjector, equals(injector));
   });
 
-  test('Set Parent Injector', () 
-  {
+  test('Set Parent Injector', () {
     childInjector = new Injector();
     childInjector.parentInjector = injector;
     expect(childInjector.parentInjector, equals(injector));

@@ -25,22 +25,19 @@ library robotlegs_di_test;
 import 'package:test/test.dart';
 
 import 'robotlegs_di_test.reflectable.dart';
+import 'testcases/injection_test_case.dart';
 import 'testcases/instantiation_test_case.dart';
-import 'testcases/parent_injector_test_case.dart';
 import 'testcases/mapping_test_case.dart';
+import 'testcases/parent_injector_test_case.dart';
 import 'testcases/post_construct_methods_test_case.dart';
 import 'testcases/pre_destroy_methods_test_case.dart';
-import 'testcases/injection_test_case.dart';
 
-
-
-main()
-{
-	initializeReflectable();
-	group('Instantiation Tests -', instantiationTestCase);
-	group('Injection Tests -', injectionTestCase);
-	group('Mapping Tests -', mappingTestCase);
-	group('Parent Injector Tests -', parentInjectorTestCase);
-	group('Post-Contrust Methods Tests -', postConstructMethodsTestCase);
-	group('Pre-Destroy Methods Tests -', preDestroyMethodsTestCase);
+main() {
+  initializeReflectable();
+  group('Instantiation Tests -', instantiationTestCase);
+  group('Injection Tests -', injectionTestCase);
+  group('Mapping Tests -', mappingTestCase);
+  group('Parent Injector Tests -', parentInjectorTestCase);
+  group('Post-Contrust Methods Tests -', postConstructMethodsTestCase);
+  group('Pre-Destroy Methods Tests -', preDestroyMethodsTestCase);
 }

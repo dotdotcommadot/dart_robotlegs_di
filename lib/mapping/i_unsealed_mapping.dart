@@ -22,13 +22,12 @@
 
 part of robotlegs_di;
 
-abstract class IUnsealedMapping
-{
-	//-----------------------------------
+abstract class IUnsealedMapping {
+  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	dynamic seal();
+
+  dynamic seal();
 }

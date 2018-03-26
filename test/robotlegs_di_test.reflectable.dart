@@ -2,15 +2,17 @@
 // https://github.com/dart-lang/reflectable.
 
 import "dart:core";
-import 'objects/objects.dart' as prefix1;
+
+import "package:reflectable/mirrors.dart" as m;
+import "package:reflectable/reflectable.dart" show isTransformed;
+import "package:reflectable/src/reflectable_transformer_based.dart" as r;
 import 'package:robotlegs_di/robotlegs_di.dart' as prefix0;
 
+import 'objects/objects.dart' as prefix1;
+
 // ignore:unused_import
-import "package:reflectable/mirrors.dart" as m;
 // ignore:unused_import
-import "package:reflectable/src/reflectable_transformer_based.dart" as r;
 // ignore:unused_import
-import "package:reflectable/reflectable.dart" show isTransformed;
 
 final _data = {
   const prefix0.Reflect(): new r.ReflectorData(
@@ -292,8 +294,8 @@ final _data = {
             const prefix0.Reflect(), -1, 9, 9, const <Object>[]),
         new r.VariableMirrorImpl(r"valueHolder", 32773, 2,
             const prefix0.Reflect(), 6, 6, 6, const <Object>[]),
-        new r.VariableMirrorImpl(r"value", 33797, 6, const prefix0.Reflect(), -1,
-            10, 10, const <Object>[]),
+        new r.VariableMirrorImpl(r"value", 33797, 6, const prefix0.Reflect(),
+            -1, 10, 10, const <Object>[]),
         new r.MethodMirrorImpl(r"", 64, 0, -1, 0, 0, const <int>[],
             const prefix0.Reflect(), const []),
         new r.MethodMirrorImpl(r"==", 131074, null, -1, 8, 8, const <int>[0],
@@ -459,8 +461,8 @@ final _data = {
             null, null, null, const <Object>[], null, null),
         new r.ParameterMirrorImpl(r"invocation", 32774, 24,
             const prefix0.Reflect(), -1, 12, 12, const <Object>[], null, null),
-        new r.ParameterMirrorImpl(r"value", 32774, 28, const prefix0.Reflect(), 3,
-            3, 3, const <Object>[], null, null),
+        new r.ParameterMirrorImpl(r"value", 32774, 28, const prefix0.Reflect(),
+            3, 3, 3, const <Object>[], null, null),
         new r.ParameterMirrorImpl(r"_myInjectedValueHolder", 32870, 36,
             const prefix0.Reflect(), 6, 6, 6, const [], null, null),
         new r.ParameterMirrorImpl(r"_myInjectedHelloValueHolder", 32870, 38,
@@ -499,8 +501,8 @@ final _data = {
             const prefix0.Reflect(), -1, 8, 8, const [], null, null),
         new r.ParameterMirrorImpl(r"_lastPreDestroytMethodOrder", 32870, 72,
             const prefix0.Reflect(), -1, 9, 9, const [], null, null),
-        new r.ParameterMirrorImpl(r"value", 32774, 73, const prefix0.Reflect(), 6,
-            6, 6, const <Object>[], null, null),
+        new r.ParameterMirrorImpl(r"value", 32774, 73, const prefix0.Reflect(),
+            6, 6, 6, const <Object>[], null, null),
         new r.ParameterMirrorImpl(r"_injectedString", 32806, 78,
             const prefix0.Reflect(), 6, 6, 6, const <Object>[], null, null),
         new r.ParameterMirrorImpl(r"_valueHolder", 32870, 77,

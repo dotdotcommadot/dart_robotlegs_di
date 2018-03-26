@@ -23,55 +23,50 @@
 part of robotlegs_di_example;
 
 class Shop {
-
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	@inject
-	Product product;
 
-	@inject
-	Product otherProduct;
+  @inject
+  Product product;
+
+  @inject
+  Product otherProduct;
 
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	Shop();
-	
+
+  Shop();
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	@postConstruct
-	void onPostConstruct() 
-	{
-		print("Shop::onPostConstruct: " + product.toString());
-		print("Shop::onPostConstruct: " + otherProduct.toString());
-	}
 
-	@preDestroy
-	void onPreDestroy() 
-	{
-		print("Shop::onPreDestroy");
-	}
+  @postConstruct
+  void onPostConstruct() {
+    print("Shop::onPostConstruct: " + product.toString());
+    print("Shop::onPostConstruct: " + otherProduct.toString());
+  }
 
-	@inject
-	void injectedMethod() 
-	{
-		print("Shop::injectedMethod");
-	}
+  @preDestroy
+  void onPreDestroy() {
+    print("Shop::onPreDestroy");
+  }
 
-	@inject
-	void withParamesInjectedMethod(int value) 
-	{
-		print("Shop::withParamesInjectedMethod " + value.toString());
-	}
+  @inject
+  void injectedMethod() {
+    print("Shop::injectedMethod");
+  }
+
+  @inject
+  void withParamesInjectedMethod(int value) {
+    print("Shop::withParamesInjectedMethod " + value.toString());
+  }
 }
