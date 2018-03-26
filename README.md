@@ -148,5 +148,7 @@ For more info about this project, contact:
 - [matejthetree@gmail.com](mailto:matejthetree@gmail.com)
 
 ##Todo
-*optimize reflectable capabilities
-*
+* optimize reflectable capabilities
+* optimize public and private library members
+* simplify broadcasts
+* cover more use cases with tests
