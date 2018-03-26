@@ -22,8 +22,8 @@
 
 part of robotlegs_di;
 
-class Refly extends Reflectable {
-	const Refly():super(
+class Reflect extends Reflectable {
+	const Reflect():super(
 		instanceInvokeCapability,
 		invokingCapability,
 		reflectedTypeCapability,

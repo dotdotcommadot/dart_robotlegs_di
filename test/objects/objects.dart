@@ -23,13 +23,13 @@ import 'package:robotlegs_di/robotlegs_di.dart';
 * THE SOFTWARE.
 */
 
-@Refly()
+@Reflect()
 abstract class AbstractClazz
 {
 
 }
 
-@Refly()
+@Reflect()
 class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
 {
   //-----------------------------------
@@ -184,7 +184,7 @@ class Clazz extends AbstractClazz with MixinClazz implements InterfaceClazz
   }
 }
 
-@Refly()
+@Reflect()
 class ClazzTwo
 {
   ValueHolder valueHolder;
@@ -200,25 +200,25 @@ class ClazzTwo
   }
 }
 
-@Refly()
+@Reflect()
 class InjectedClazz
 {
   InjectedClazz();
 }
 
-@Refly()
+@Reflect()
 abstract class InterfaceClazz
 {
 
 }
 
-@Refly()
+@Reflect()
 abstract class MixinClazz
 {
 
 }
 
-@Refly()
+@Reflect()
 class ValueHolder {
   final String value;
 
