@@ -86,7 +86,7 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping
 		return this;
 	}
 	
-	IUnsealedMapping toType(Type type, [Symbol constructor = const Symbol('')]) 
+	IUnsealedMapping toType(Type type, [String constructor = ''])
 	{
 		toProvider(new TypeProvider(type, constructor));
 		return this;

@@ -30,7 +30,7 @@ class TypeProvider implements IProvider
 	//
 	//-----------------------------------
 
-	final Symbol constructor;
+	final String constructor;
 	
 	//-----------------------------------
   //
@@ -46,7 +46,7 @@ class TypeProvider implements IProvider
 	//
 	//-----------------------------------
 	
-	TypeProvider(this._responseType, [this.constructor = const Symbol('')]);
+	TypeProvider(this._responseType, [this.constructor = '']);
 
 	//-----------------------------------
 	//

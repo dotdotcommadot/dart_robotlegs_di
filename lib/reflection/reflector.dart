@@ -31,6 +31,7 @@ class Refly extends Reflectable {
 		typingCapability,
 		metadataCapability,
 		newInstanceCapability,
+		superclassQuantifyCapability
 	);
 }
 
@@ -140,38 +141,38 @@ class Reflector
 	{
 		mirror.declarations.values.forEach( (DeclarationMirror declaration) 
 		{
-			declaration.metadata.forEach( (InstanceMirror metadata) 
+			declaration.metadata.forEach( (dynamic metadata)
 			{
-				if (metadata.reflectee is Inject)
+				if (metadata is Inject)
 				{
 					if (declaration is VariableMirror) 
 					{
-						final String mappingId = Injector._getMappingId(declaration.type.reflectedType, (metadata.reflectee as Inject).name );
+						final String mappingId = Injector._getMappingId(declaration.type.reflectedType, metadata.name );
 						
-						_createPropertyInjectionPoint(mappingId, declaration.simpleName, (metadata.reflectee as Inject).optional);
+						_createPropertyInjectionPoint(mappingId, declaration.simpleName, metadata.optional);
 					}
 					else if (declaration is MethodMirror && !declaration.isGetter)
 					{
 					  if (declaration.isSetter)
 					  {
 							final String name = (declaration.simpleName).toString().split('=').first;
-					    final String mappingId = Injector._getMappingId(declaration.parameters.first.type.reflectedType, (metadata.reflectee as Inject).name );
+					    final String mappingId = Injector._getMappingId(declaration.parameters.first.type.reflectedType, metadata.name );
 					    
-					    _createPropertyInjectionPoint(mappingId, name, (metadata.reflectee as Inject).optional);
+					    _createPropertyInjectionPoint(mappingId, name, metadata.optional);
 					  }
 					  else
 					  {
-							_createMethodInjectionPoint(declaration.simpleName, declaration.parameters, (metadata.reflectee as Inject).optional, declaration.isSetter);
+							_createMethodInjectionPoint(declaration.simpleName, declaration.parameters, metadata.optional, declaration.isSetter);
 					  }
 					}
 				} 
-				else if (metadata.reflectee is PostConstruct) 
+				else if (metadata is PostConstruct)
 				{
-					_createPostConstructInjectionPoint(declaration.simpleName, [], null, (metadata.reflectee as PostConstruct).order);
+					_createPostConstructInjectionPoint(declaration.simpleName, [], null, metadata.order);
 				}
-				else if (metadata.reflectee is PreDestroy) 
+				else if (metadata is PreDestroy)
 				{
-					_createPreDestroyInjectionPoint(declaration.simpleName, [], null, (metadata.reflectee as PreDestroy).order);
+					_createPreDestroyInjectionPoint(declaration.simpleName, [], null, metadata.order);
 				}
 			});
 		});
@@ -265,11 +266,20 @@ class Reflector
 		_processableClassMirrors = new List<ClassMirror>();
 
 		ClassMirror classMirror = _refly.reflectType(type);
-		
-		while (classMirror != null)
-		{
+
+		void processClassMirrors(ClassMirror classMirror){
 			_processableClassMirrors.add(classMirror);
-			classMirror = classMirror.superclass;
+			try {
+				if (classMirror.superclass != null) {
+                processClassMirrors(classMirror.superclass);
+              }
+			} catch (e) {
+				print(e);
+			}
 		}
+
+		processClassMirrors(classMirror);
+
+
 	}
 }

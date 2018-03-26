@@ -92,7 +92,7 @@ abstract class IInjector
 
 	dynamic getOrCreateNewInstance(Type type, [String name = '']);
 	
-	dynamic instantiateUnmapped(Type type, [Symbol constructor = const Symbol('')]);
+	dynamic instantiateUnmapped(Type type, [String constructor = '']);
 	
 	void destroyInstance(dynamic instance);
 

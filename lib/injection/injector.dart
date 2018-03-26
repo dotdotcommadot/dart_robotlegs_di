@@ -214,8 +214,12 @@ class Injector implements IInjector
   	{
   		if (provider is TypeProvider)
   		{
-	  		final ConstructorInjectionPoint constructorInjectionPoint = 
-	  			_reflector.getDescriptor(type).constructorInjectionPoints.where((injectionPoint) => injectionPoint.method == (provider as TypeProvider).constructor).first;
+	  		TypeDescriptor typeDescriptor = _reflector.getDescriptor(type);
+	  		List<ConstructorInjectionPoint> constructorInjectionPoints = typeDescriptor.constructorInjectionPoints;
+	  		Iterable<ConstructorInjectionPoint> iterable = constructorInjectionPoints.where((injectionPoint) {
+	  		  return injectionPoint.method == (provider as TypeProvider).constructor;
+	  		});
+	  		final ConstructorInjectionPoint constructorInjectionPoint = iterable.first;
 	  		
 	  		return provider.apply(
   				this, 
@@ -250,7 +254,7 @@ class Injector implements IInjector
   	return instance;
   }
   
-  dynamic instantiateUnmapped(Type type, [Symbol constructor = const Symbol('')]) 
+  dynamic instantiateUnmapped(Type type, [String constructor = ''])
   {
   	if (!_canBeInstantiated(type))
   	{
