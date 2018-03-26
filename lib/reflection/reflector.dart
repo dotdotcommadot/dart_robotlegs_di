@@ -32,7 +32,8 @@ class Reflect extends Reflectable {
             typingCapability,
             metadataCapability,
             newInstanceCapability,
-            const SuperclassQuantifyCapability(Object,excludeUpperBound: true));
+            const SuperclassQuantifyCapability(Object,
+                excludeUpperBound: true));
 }
 
 class Reflector {
@@ -280,7 +281,7 @@ class Reflector {
       _processableClassMirrors.add(classMirror);
       if (classMirror.superclass != null) {
         processClassMirrors(classMirror.superclass);
-      } 
+      }
     }
 
     processClassMirrors(classMirror);
