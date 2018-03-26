@@ -35,7 +35,7 @@ preDestroyMethodsTestCase()
 	setUp(() 
 	{
 		injector = new Injector();
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		

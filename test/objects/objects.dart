@@ -196,7 +196,7 @@ class ClazzTwo
 
   ClazzTwo.named()
   {
-    valueHolder = ValueHolder("named");
+    valueHolder = const ValueHolder("named");
   }
 }
 

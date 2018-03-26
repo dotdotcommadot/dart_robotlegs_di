@@ -43,7 +43,7 @@ injectionTestCase()
 	
 	test('Injecting ValueHolder', ()
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -53,7 +53,7 @@ injectionTestCase()
 
 	test('Injecting Class', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -64,8 +64,8 @@ injectionTestCase()
 
 	test('Named Injection', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
-		injector.map(ValueHolder, "hello").toValue(ValueHolder("hello world"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+		injector.map(ValueHolder, "hello").toValue(const ValueHolder("hello world"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -76,17 +76,17 @@ injectionTestCase()
 
 	test('Optional Injection', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.myInjectedHelloValueHolder.value, isNull);
+		expect(myClazz.myInjectedHelloValueHolder, isNull);
 	});
 
 	test('Constructor Injection', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(ClazzTwo);
 		
 		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo);
@@ -95,7 +95,7 @@ injectionTestCase()
 
 	test('Setter Injection', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(Clazz);
 		injector.map(InjectedClazz);
 		

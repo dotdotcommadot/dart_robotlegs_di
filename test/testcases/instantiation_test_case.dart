@@ -34,9 +34,9 @@ instantiationTestCase()
 	setUp(() 
 	{
 		injector = new Injector();	
-		injector.map(ValueHolder).toValue('');
+		injector.map(ValueHolder).toValue(const ValueHolder(''));
 		injector.map(InjectedClazz);
-		injector.map(ValueHolder, 'setterInjectedValueHolder').toValue("");
+		injector.map(ValueHolder, 'setterInjectedValueHolder').toValue(const ValueHolder('setter'));
 	});
 	
 	tearDown(() {
@@ -77,9 +77,9 @@ instantiationTestCase()
 	
 	test('Instantiating Class with Named Constructor', () 
 	{
-		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, const Symbol('named'));
+		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, 'named');
 		
 		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
-		expect(myClazzTwo.valueHolder, equals("named"));
+		expect(myClazzTwo.valueHolder.value, equals("named"));
 	});
 }

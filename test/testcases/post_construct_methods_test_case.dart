@@ -43,7 +43,7 @@ postConstructMethodsTestCase()
 	
 	test('Running Methods', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -55,7 +55,7 @@ postConstructMethodsTestCase()
 
 	test('Running Methods in Right Order', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		

@@ -43,7 +43,7 @@ mappingTestCase()
 	
 	test('Mapping To Value', () 
 	{
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		injector.map(Clazz);
 		
@@ -54,7 +54,7 @@ mappingTestCase()
 	test('Mapping To Type', () 
 	{
 		injector.map(InterfaceClazz).toType(Clazz);
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(InjectedClazz);
 		
 		InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
@@ -64,7 +64,7 @@ mappingTestCase()
 	test('Mapping As Singleton', () 
 	{
 		injector.map(InjectedClazz).asSingleton();
-		injector.map(ValueHolder).toValue(ValueHolder("abcABC-123"));
+		injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
 		injector.map(Clazz);
 		
 		Clazz myClazz = injector.getInstance(Clazz);
