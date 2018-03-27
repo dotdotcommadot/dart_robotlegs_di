@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,26 +25,26 @@
 * THE SOFTWARE.
 */
 
-library robotlegs_di_test;
+reflectionCapabilitiesTestCase() {
+  IInjector injector;
 
-import 'package:test/test.dart';
+  setUp(() {
+    injector = new Injector();
+  });
 
-import 'robotlegs_di_test.reflectable.dart';
-import 'testcases/injection_test_case.dart';
-import 'testcases/instantiation_test_case.dart';
-import 'testcases/mapping_test_case.dart';
-import 'testcases/parent_injector_test_case.dart';
-import 'testcases/post_construct_methods_test_case.dart';
-import 'testcases/pre_destroy_methods_test_case.dart';
-import 'testcases/reflection_capabilities_test_case.dart';
+  tearDown(() {
+    injector = null;
+  });
 
-main() {
-  initializeReflectable();
-  group('Reflection capabilities Test', reflectionCapabilitiesTestCase);
-  group('Instantiation Tests -', instantiationTestCase);
-  group('Injection Tests -', injectionTestCase);
-  group('Mapping Tests -', mappingTestCase);
-  group('Parent Injector Tests -', parentInjectorTestCase);
-  group('Post-Contrust Methods Tests -', postConstructMethodsTestCase);
-  group('Pre-Destroy Methods Tests -', preDestroyMethodsTestCase);
+  test('Instantiate BaseClass', () {
+    var instance = injector.getOrCreateNewInstance(BaseClazz);
+    expect(instance,isNotNull);
+
+  });
+
+  test('Instantiate SuperClass', (){
+    var instance = injector.getOrCreateNewInstance(SuperClazz);
+    expect(instance, isNotNull);
+  });
+
 }

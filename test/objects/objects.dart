@@ -203,3 +203,16 @@ class ValueHolder {
 
   const ValueHolder(this.value);
 }
+
+class BaseClazz {
+}
+
+abstract class BaseInterface{
+}
+
+@Reflect()
+class ImplementingBaseInterface implements BaseInterface{}
+
+@Reflect()
+class SuperClazz extends BaseClazz{
+}

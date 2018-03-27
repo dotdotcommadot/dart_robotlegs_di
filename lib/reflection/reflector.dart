@@ -25,9 +25,15 @@ part of robotlegs_di;
 class Reflect extends Reflectable {
   const Reflect()
       : super(
-            reflectedTypeCapability,
+//            instanceInvokeCapability,
+//            invokingCapability,
+//            reflectedTypeCapability,
+//            typeCapability,
+            typingCapability,
+//            metadataCapability,
+//            newInstanceCapability,
             const SuperclassQuantifyCapability(Object,
-                excludeUpperBound: true));
+                excludeUpperBound: false));
 }
 
 class Reflector {
@@ -273,7 +279,8 @@ class Reflector {
 
     void processClassMirrors(ClassMirror classMirror) {
       _processableClassMirrors.add(classMirror);
-      if (classMirror.superclass != null) {
+      if (classMirror.superclass != null &&
+          classMirror.superclass.qualifiedName != "dart.core.Object") {
         processClassMirrors(classMirror.superclass);
       }
     }
