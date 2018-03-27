@@ -25,13 +25,7 @@ part of robotlegs_di;
 class Reflect extends Reflectable {
   const Reflect()
       : super(
-            instanceInvokeCapability,
-            invokingCapability,
             reflectedTypeCapability,
-            typeCapability,
-            typingCapability,
-            metadataCapability,
-            newInstanceCapability,
             const SuperclassQuantifyCapability(Object,
                 excludeUpperBound: true));
 }
