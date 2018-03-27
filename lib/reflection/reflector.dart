@@ -275,7 +275,7 @@ class Reflector {
   void _createProcessableClassMirrorsFor(Type type) {
     _processableClassMirrors = new List<ClassMirror>();
 
-    ClassMirror classMirror = _refly.reflectType(type);
+    ClassMirror classMirror = reflect.reflectType(type);
 
     void processClassMirrors(ClassMirror classMirror) {
       _processableClassMirrors.add(classMirror);

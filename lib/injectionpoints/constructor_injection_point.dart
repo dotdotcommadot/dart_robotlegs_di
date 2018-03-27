@@ -41,7 +41,7 @@ class ConstructorInjectionPoint extends MethodInjectionPoint {
   //-----------------------------------
 
   dynamic createInstance(Type type, IInjector injector) {
-    ClassMirror reflectType = _refly.reflectType(type);
+    ClassMirror reflectType = reflect.reflectType(type);
     return reflectType.newInstance(
         method, _getPositionalValues(injector, type, type));
   }

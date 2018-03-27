@@ -60,7 +60,7 @@ class MethodInjectionPoint extends InjectionPoint {
 
   @override
   void applyInjection(Injector injector, Object target, Type targetType) {
-    _refly
+    reflect
         .reflect(target)
         .invoke(method, _getPositionalValues(injector, target, targetType));
   }
