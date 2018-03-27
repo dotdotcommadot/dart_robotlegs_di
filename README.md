@@ -12,12 +12,13 @@ It will also be the default DI-engine for Robotlegs for Dart.
 Robotlegs is an open source MV* framework, which was originally written for ActionScript 3.
 It provides a very clean API for building applications ranging from large enterprise software, to mini-sites and animations.
 Robotlegs for Dart project is the beginning of an attempt to bring all the sweetness Robotlegs for AS3 has to Google Dart.
+At the moment, project has not reached even alpha
 - [Robotlegs for AS3 on Github](https://github.com/robotlegs/robotlegs-framework)
-- [Robotlegs for Dart on Github](https://github.com/dotdotcommadot/dart_robotlegs)
+- [Robotlegs for Dart on Github](https://github.com/matejthetree/dart_robotlegs)
 
 ### Robotlegs DI
 Robotlegs DI, the project you're currently looking at, is a Dependency Injection framework inspired by the DI framework the original Robotlegs framework uses, called [SwiftSuspenders](https://github.com/robotlegs/swiftsuspenders).
-The original API is very clean, intuitive and flexibel, so this project will try to remain as close to the original API as possible, 
+The original API is very clean, intuitive and flexible, so this project will try to remain as close to the original API as possible, 
 and be extended or modified where needed.
 Programming in Google Dart isn't necessarily that much different to programming in ActionScript 3 (and certainly Apache Flex), so a big part can remain in the same likes.
 - [SwiftSuspenders on Github](https://github.com/robotlegs/swiftsuspenders)
@@ -141,6 +142,7 @@ These methods run right before the mappings for this object are removed by calli
 	
 ## Tests
 Check test files for simple examples how to use injector.
+
 ## Info
 	
 For more info about this project, contact:
@@ -149,6 +151,5 @@ For more info about this project, contact:
 
 ##Todo
 * optimize reflectable capabilities
-* optimize public and private library members
 * simplify broadcasts
 * cover more use cases with tests
