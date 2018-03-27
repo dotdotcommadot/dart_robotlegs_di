@@ -1,7 +1,7 @@
 # Robotlegs DI
 
 
-###### Version: 0.0.2 -- alpha
+###### Version: 0.1.3 -- alpha
 
 ## About
 

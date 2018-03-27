@@ -1,6 +1,6 @@
 name: robotlegs_di
-version: 0.1.0
-author: Hans Van den Keybus
+version: 0.1.3
+author: Hans Van den Keybus / Matej Simunic
 description: Dependency Injection framework for Robotlegs for Google Dart
 dependencies:
   reflectable: 2.0.0-dev.1.0
