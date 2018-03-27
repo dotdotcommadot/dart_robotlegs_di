@@ -29,7 +29,7 @@ Programming in Google Dart isn't necessarily that much different to programming 
 Robotlegs DI is using [Reflectable](https://github.com/dart-lang/reflectable) as a reflection system for dart, since dart:mirrors are not supported on many dart platforms.
 
 To be able to use Reflectable there are some steps you need to take care of:
-1. You must mark all the classes you wish to map with `@Reflect()` metadata
+* You must mark all the classes you wish to map with `@Reflect()` metadata
 ```$xslt
 @Reflect()
 abstract class AbstractClazz
@@ -38,7 +38,9 @@ abstract class AbstractClazz
 }
 
 ```
-2. Creating a build script, taken from Reflectable readme
+* Creating a build script, taken from Reflectable readme:
+
+
 In order to generate code, you will need to write a tiny Dart program which imports the actual builder. We'll assume that you store this program as tool/builder.dart as seen from the root of your package. Here's the code:
 ```
 import 'package:reflectable/reflectable_builder.dart' as builder;
@@ -49,14 +51,12 @@ main(List<String> arguments) async {
 ```
 Now run the code generation step with the root of your package as the current directory:
 
-`> dart tool/builder.dart web/myProgram.dart`
+`> dart tool/builder.dart lib/main.dart`
 where `lib/main.dart` should be replaced by the root file/library of the program for which you wish to generate code that contains your `main()` function. You can generate code for several programs in one step; for instance, to generate code for a set of test files in test, this would typically be `tool/builder.dart test/*_test.dart`.
-
 Note that you should generate code for the same set of root libraries every time you run builder.dart. This is because the build framework stores data about the code generation in a single database in the directory .dart_tool, so you will get complaints about inconsistencies if you switch from generating code for `lib/main.dart` to generating code for `lib/other.dart`.
-
 If and when you need to generate code for another set of programs, delete all files named `*.reflectable.dart`, and the directory `.dart_tool`.
 
-3. It is necessary to import the generated code, which is stored in a library whose file name is obtained by taking the file name of the main library of the program and adding .reflectable. If you main library was called `main.dart`, this amounts to `import 'main.reflectable.dart'`.
+* It is necessary to import the generated code, which is stored in a library whose file name is obtained by taking the file name of the main library of the program and adding .reflectable. If you main library was called `main.dart`, this amounts to `import 'main.reflectable.dart'`.
    
    It is also necessary to initialize the reflection support by calling `initializeReflectable()`, at the beginning of your `main()` function.
 ```$xslt
