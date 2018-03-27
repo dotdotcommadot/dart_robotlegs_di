@@ -26,7 +26,7 @@ class Reflect extends Reflectable {
   const Reflect()
       : super(
 //            instanceInvokeCapability,
-//            invokingCapability,
+            invokingCapability,
 //            reflectedTypeCapability,
 //            typeCapability,
             typingCapability,
