@@ -446,7 +446,14 @@ class Injector implements IInjector {
   }
 
   static String _getQualifiedName(Type type) {
-    TypeMirror reflectType = reflect.reflectType(type);
+    TypeMirror reflectType;
+    try {
+      reflectType = reflect.reflectType(type);
+    } catch (e) {
+      print(" Class you are trying to map is not marked for reflection. You need"
+          " to anotate it. Please check docs for how to ");
+      throw e;
+    }
     String qualifiedName = reflectType.qualifiedName;
     return qualifiedName;
   }
