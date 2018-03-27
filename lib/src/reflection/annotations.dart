@@ -20,24 +20,41 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
+//-----------------------------------
+// inject
+//-----------------------------------
 
-abstract class IProviderlessMapping {
-  //-----------------------------------
-  //
-  // Public Methods
-  //
-  //-----------------------------------
+const Inject inject = const Inject();
 
-  IUnsealedMapping toType(Type type, [String constructorName = '']);
+class Inject {
+  final String name;
+  final bool optional;
 
-  IUnsealedMapping toValue(dynamic value);
+  const Inject({this.name: "", this.optional: false});
+}
 
-  IUnsealedMapping toSingleton(Type type);
+//-----------------------------------
+// postConstruct
+//-----------------------------------
 
-  IUnsealedMapping asSingleton();
+const PostConstruct postConstruct = const PostConstruct();
 
-  IUnsealedMapping toProvider(IProvider provider);
+class PostConstruct {
+  final String name;
+  final int order;
 
-  dynamic seal();
+  const PostConstruct({this.name: "", this.order: 99999});
+}
+
+//-----------------------------------
+// preDestroy
+//-----------------------------------
+
+const PreDestroy preDestroy = const PreDestroy();
+
+class PreDestroy {
+  final String name;
+  final int order;
+
+  const PreDestroy({this.name: "", this.order: 99999});
 }

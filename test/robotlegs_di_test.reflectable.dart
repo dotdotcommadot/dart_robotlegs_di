@@ -3,7 +3,8 @@
 
 import "dart:core";
 import 'objects/objects.dart' as prefix1;
-import 'package:robotlegs_di/robotlegs_di.dart' as prefix0;
+import 'package:robotlegs_di/src/reflection/annotations.dart' as prefix2;
+import 'package:robotlegs_di/src/reflection/reflector.dart' as prefix0;
 
 // ignore:unused_import
 import "package:reflectable/mirrors.dart" as m;
@@ -326,13 +327,13 @@ final _data = {
       ],
       <m.DeclarationMirror>[
         new r.VariableMirrorImpl(r"myInjectedValueHolder", 32773, 1,
-            const prefix0.Reflect(), 6, -1, -1, const <Object>[prefix0.inject]),
+            const prefix0.Reflect(), 6, -1, -1, const <Object>[prefix2.inject]),
         new r.VariableMirrorImpl(r"myInjectedHelloValueHolder", 32773, 1,
             const prefix0.Reflect(), 6, -1, -1, const <Object>[
-          const prefix0.Inject(name: 'hello', optional: true)
+          const prefix2.Inject(name: 'hello', optional: true)
         ]),
         new r.VariableMirrorImpl(r"myInjectedClazz", 32773, 1,
-            const prefix0.Reflect(), 3, -1, -1, const <Object>[prefix0.inject]),
+            const prefix0.Reflect(), 3, -1, -1, const <Object>[prefix2.inject]),
         new r.VariableMirrorImpl(r"hasRunFirstMethod", 32773, 1,
             const prefix0.Reflect(), -1, -1, -1, const <Object>[]),
         new r.VariableMirrorImpl(r"firstMethodWithParametersValue", 32773, 1,
@@ -390,7 +391,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[prefix0.inject]),
+            const <Object>[prefix2.inject]),
         new r.MethodMirrorImpl(
             r"firstMethodWithParameters",
             65538,
@@ -400,7 +401,7 @@ final _data = {
             -1,
             const <int>[2],
             const prefix0.Reflect(),
-            const <Object>[prefix0.inject]),
+            const <Object>[prefix2.inject]),
         new r.MethodMirrorImpl(
             r"firstPostConstructMethod",
             65538,
@@ -410,7 +411,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[const prefix0.PostConstruct(order: 1)]),
+            const <Object>[const prefix2.PostConstruct(order: 1)]),
         new r.MethodMirrorImpl(
             r"secondPostConstructMethod",
             65538,
@@ -420,7 +421,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[const prefix0.PostConstruct(order: 2)]),
+            const <Object>[const prefix2.PostConstruct(order: 2)]),
         new r.MethodMirrorImpl(
             r"lastPostConstructMethod",
             65538,
@@ -430,7 +431,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[prefix0.postConstruct]),
+            const <Object>[prefix2.postConstruct]),
         new r.MethodMirrorImpl(
             r"firstPreDestroyMethod",
             65538,
@@ -440,7 +441,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[const prefix0.PreDestroy(order: 1)]),
+            const <Object>[const prefix2.PreDestroy(order: 1)]),
         new r.MethodMirrorImpl(
             r"secondPreDestroyMethod",
             65538,
@@ -450,7 +451,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[const prefix0.PreDestroy(order: 2)]),
+            const <Object>[const prefix2.PreDestroy(order: 2)]),
         new r.MethodMirrorImpl(
             r"lastPreDestroyMethod",
             65538,
@@ -460,7 +461,7 @@ final _data = {
             -1,
             const <int>[],
             const prefix0.Reflect(),
-            const <Object>[prefix0.preDestroy]),
+            const <Object>[prefix2.preDestroy]),
         new r.ImplicitGetterMirrorImpl(const prefix0.Reflect(), 0, -1, -1, 35),
         new r.ImplicitSetterMirrorImpl(const prefix0.Reflect(), 0, -1, -1, 36),
         new r.ImplicitGetterMirrorImpl(const prefix0.Reflect(), 1, -1, -1, 37),
@@ -508,7 +509,7 @@ final _data = {
             -1,
             const <int>[22],
             const prefix0.Reflect(),
-            const <Object>[prefix0.inject]),
+            const <Object>[prefix2.inject]),
         new r.MethodMirrorImpl(r"mySetterInjectedValueHolder", 131075, 1, 6, -1,
             -1, const <int>[], const prefix0.Reflect(), const <Object>[]),
         new r.MethodMirrorImpl(r"", 0, 1, -1, -1, -1, const <int>[],

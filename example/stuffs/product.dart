@@ -1,3 +1,5 @@
+import 'package:robotlegs_di/src/reflection/annotations.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +22,6 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_example;
 
 class Product {
   //-----------------------------------

@@ -1,3 +1,12 @@
+import 'dart:async';
+
+import 'package:robotlegs_di/src/descriptors/descriptor.dart';
+import 'package:robotlegs_di/src/errors/injector_error.dart';
+import 'package:robotlegs_di/src/injectionpoints/injection_point.dart';
+import 'package:robotlegs_di/src/mapping/mapping.dart';
+import 'package:robotlegs_di/src/providers/provider.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +29,97 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
+abstract class IInjector {
+  //-----------------------------------
+  //
+  // Public Properties
+  //
+  //-----------------------------------
+
+  //-----------------------------------
+  // Streams
+  //-----------------------------------
+
+  Stream get onPostInstantiated;
+
+  Stream get onPreMappingCreated;
+
+  Stream get onPreMappingChanged;
+
+  StreamController onPreMappingChangedController;
+
+  Stream get onPostMappingCreated;
+
+  Stream get onPostMappingChanged;
+
+  StreamController onPostMappingChangedController;
+
+  Stream get onPostMappingRemoved;
+
+  Stream get onPreConstruct;
+
+  Stream get onPostConstruct;
+
+  Stream get onMappingOverride;
+
+  StreamController onMappingOverrideController;
+
+  //-----------------------------------
+  // ParentInjector
+  //-----------------------------------
+
+  set parentInjector(IInjector value);
+
+  IInjector get parentInjector;
+
+  //-----------------------------------
+  //
+  // Private Properties
+  //
+  //-----------------------------------
+
+  Map<String, IProvider> providerMappings;
+
+  //-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+
+  InjectionMapping map(Type type, [String name = '']);
+
+  void unmap(Type type, [String name = '']);
+
+  bool satisfies(Type type, [String name = '']);
+
+  bool satisfiesDirectly(Type type, [String name = '']);
+
+  InjectionMapping getMapping(Type type, [String name = '']);
+
+  void injectInto(dynamic target);
+
+  dynamic getInstance(Type type, [String name = '', Type targetType = null]);
+
+  dynamic getOrCreateNewInstance(Type type, [String name = '']);
+
+  dynamic instantiateUnmapped(Type type, [String constructor = '']);
+
+  void destroyInstance(dynamic instance);
+
+  void teardown();
+
+  IInjector createChildInjector();
+
+  void addTypeDescriptor(Type type, TypeDescriptor descriptor);
+
+  TypeDescriptor getTypeDescriptor(Type type);
+
+  bool hasMapping(Type type, [String name = '']);
+
+  bool hasDirectMapping(Type type, [String name = '']);
+
+  String getQualifiedName(Type type);
+}
 
 class Injector implements IInjector {
   //-----------------------------------
@@ -36,6 +135,8 @@ class Injector implements IInjector {
   // Public Properties
   //
   //-----------------------------------
+
+  Map<String, IProvider> providerMappings = new Map<String, IProvider>();
 
   //-----------------------------------
   // Streams
@@ -54,7 +155,7 @@ class Injector implements IInjector {
   Stream _onPreMappingChanged;
 
   Stream get onPreMappingChanged => _onPreMappingChanged;
-  StreamController _onPreMappingChangedController = new StreamController();
+  StreamController onPreMappingChangedController = new StreamController();
 
   Stream _onPostMappingCreated;
 
@@ -64,7 +165,7 @@ class Injector implements IInjector {
   Stream _onPostMappingChanged;
 
   Stream get onPostMappingChanged => _onPostMappingChanged;
-  StreamController _onPostMappingChangedController = new StreamController();
+  StreamController onPostMappingChangedController = new StreamController();
 
   Stream _onPostMappingRemoved;
 
@@ -84,7 +185,7 @@ class Injector implements IInjector {
   Stream _onMappingOverride;
 
   Stream get onMappingOverride => _onMappingOverride;
-  StreamController _onMappingOverrideController = new StreamController();
+  StreamController onMappingOverrideController = new StreamController();
 
   //-----------------------------------
   // ParentInjector
@@ -123,8 +224,6 @@ class Injector implements IInjector {
   //
   //-----------------------------------
 
-  Map<String, IProvider> _providerMappings = new Map<String, IProvider>();
-
   final Reflector _reflector = new Reflector();
 
   Map<String, bool> _mappingsInProcess = new Map<String, bool>();
@@ -145,17 +244,16 @@ class Injector implements IInjector {
     _onPreMappingCreated =
         _onPreMappingCreatedController.stream.asBroadcastStream();
     _onPreMappingChanged =
-        _onPreMappingChangedController.stream.asBroadcastStream();
+        onPreMappingChangedController.stream.asBroadcastStream();
     _onPostMappingCreated =
         _onPostMappingCreatedController.stream.asBroadcastStream();
     _onPostMappingChanged =
-        _onPostMappingChangedController.stream.asBroadcastStream();
+        onPostMappingChangedController.stream.asBroadcastStream();
     _onPostMappingRemoved =
         _onPostMappingRemovedController.stream.asBroadcastStream();
     _onPreConstruct = _onPreConstructController.stream.asBroadcastStream();
     _onPostConstruct = _onPostConstructController.stream.asBroadcastStream();
-    _onMappingOverride =
-        _onMappingOverrideController.stream.asBroadcastStream();
+    _onMappingOverride = onMappingOverrideController.stream.asBroadcastStream();
   }
 
   //-----------------------------------
@@ -165,7 +263,7 @@ class Injector implements IInjector {
   //-----------------------------------
 
   InjectionMapping map(Type type, [String name = '']) {
-    final String mappingId = _getMappingId(type, name);
+    final String mappingId = getMappingId(type, name);
 
     if (_mappings[mappingId] == null)
       return _createMapping(mappingId, type, name);
@@ -174,7 +272,7 @@ class Injector implements IInjector {
   }
 
   void unmap(Type type, [String name = '']) {
-    final String mappingId = _getMappingId(type, name);
+    final String mappingId = getMappingId(type, name);
     InjectionMapping mapping = _mappings[mappingId];
 
     if ((mapping != null) && mapping.isSealed) {
@@ -187,24 +285,24 @@ class Injector implements IInjector {
     }
     mapping.getProvider().destroy();
     _mappings.remove(mappingId);
-    _providerMappings.remove(mappingId);
+    providerMappings.remove(mappingId);
 
     _onPostMappingRemovedController.add("");
   }
 
   bool satisfies(Type type, [String name = '']) {
-    final String mappingId = _getMappingId(type, name);
-    return _getProvider(mappingId, true) != null;
+    final String mappingId = getMappingId(type, name);
+    return getProvider(mappingId, true) != null;
   }
 
   bool satisfiesDirectly(Type type, [String name = '']) {
-    final String mappingId = _getMappingId(type, name);
+    final String mappingId = getMappingId(type, name);
     return hasDirectMapping(type, name) ||
-        (_getDefaultProvider(mappingId, false) != null);
+        (getDefaultProvider(mappingId, false) != null);
   }
 
   InjectionMapping getMapping(Type type, [String name = '']) {
-    final String mappingId = _getMappingId(type, name);
+    final String mappingId = getMappingId(type, name);
     InjectionMapping mapping = _mappings[mappingId];
     if (mapping == null) {
       throw new InjectorMissingMappingError(
@@ -217,13 +315,13 @@ class Injector implements IInjector {
 
   void injectInto(dynamic target) {
     final Type type = _reflector.getType(target);
-    _applyinjectionPoints(target, type, _reflector.getDescriptor(type));
+    applyinjectionPoints(target, type, _reflector.getDescriptor(type));
   }
 
   dynamic getInstance(Type type, [String name = '', Type targetType = null]) {
-    final String mappingId = _getMappingId(type, name);
-    IProvider provider = _getProvider(mappingId);
-    if (provider == null) provider = _getDefaultProvider(mappingId, true);
+    final String mappingId = getMappingId(type, name);
+    IProvider provider = getProvider(mappingId);
+    if (provider == null) provider = getDefaultProvider(mappingId, true);
 
     if (provider != null) {
       if (provider is TypeProvider) {
@@ -268,7 +366,7 @@ class Injector implements IInjector {
   }
 
   dynamic instantiateUnmapped(Type type, [String constructor = '']) {
-    if (!_canBeInstantiated(type)) {
+    if (!canBeInstantiated(type)) {
       throw new InjectorInterfaceConstructorError(
           'Can\'t instantiate interface ' + type.toString());
     }
@@ -278,7 +376,7 @@ class Injector implements IInjector {
         .first
         .createInstance(type, this);
     _onPostInstantiatedController.add("");
-    _applyinjectionPoints(instance, type, typeDescription);
+    applyinjectionPoints(instance, type, typeDescription);
 
     return instance;
   }
@@ -320,21 +418,18 @@ class Injector implements IInjector {
     return injector;
   }
 
-  void addTypeDescriptor(Type type, TypeDescriptor descriptor) {
-    _reflector.addDescriptor(type, descriptor);
-  }
+  void addTypeDescriptor(Type type, TypeDescriptor descriptor) =>
+      _reflector.addDescriptor(type, descriptor);
 
-  TypeDescriptor getTypeDescriptor(Type type) {
-    return _reflector.getDescriptor(type);
-  }
+  TypeDescriptor getTypeDescriptor(Type type) => _reflector.getDescriptor(type);
 
-  bool hasMapping(Type type, [String name = '']) {
-    return _getProvider(_getMappingId(type, name)) != null;
-  }
+  bool hasMapping(Type type, [String name = '']) =>
+      getProvider(getMappingId(type, name)) != null;
 
-  bool hasDirectMapping(Type type, [String name = '']) {
-    return _mappings[_getMappingId(type, name)] != null;
-  }
+  bool hasDirectMapping(Type type, [String name = '']) =>
+      _mappings[getMappingId(type, name)] != null;
+
+  String getQualifiedName(Type type) => _getQualifiedName(type);
 
   //-----------------------------------
   //
@@ -346,16 +441,16 @@ class Injector implements IInjector {
     INJECTION_POINTS_CACHE = new Map();
   }
 
-  bool _canBeInstantiated(Type type) {
+  bool canBeInstantiated(Type type) {
     final TypeDescriptor descriptor = _reflector.getDescriptor(type);
     return descriptor.constructorInjectionPoints.length != null;
   }
 
-  IProvider _getProvider(String mappingId, [fallbackToDefault = true]) {
+  IProvider getProvider(String mappingId, [fallbackToDefault = true]) {
     IProvider softProvider;
     Injector injector = this;
     while (injector != null) {
-      IProvider provider = injector._providerMappings[mappingId];
+      IProvider provider = injector.providerMappings[mappingId];
       if (provider != null) {
         if (provider is SoftProvider) {
           softProvider = provider;
@@ -372,10 +467,10 @@ class Injector implements IInjector {
     if (softProvider != null) {
       return softProvider;
     }
-    return fallbackToDefault ? _getDefaultProvider(mappingId, true) : null;
+    return fallbackToDefault ? getDefaultProvider(mappingId, true) : null;
   }
 
-  IProvider _getDefaultProvider(String mappingId, bool consultParents) {
+  IProvider getDefaultProvider(String mappingId, bool consultParents) {
     if ((_fallbackProvider != null) &&
         (_fallbackProvider.prepareNextRequest(mappingId) != null)) {
       return _fallbackProvider;
@@ -384,7 +479,8 @@ class Injector implements IInjector {
     if (consultParents &&
         !_blockParentFallbackProvider &&
         (_parentInjector != null)) {
-      return _parentInjector._getDefaultProvider(mappingId, consultParents);
+      return (_parentInjector as Injector)
+          .getDefaultProvider(mappingId, consultParents);
     }
     return null;
   }
@@ -415,7 +511,7 @@ class Injector implements IInjector {
     return mapping;
   }
 
-  void _applyinjectionPoints(
+  void applyinjectionPoints(
       dynamic instance, Type type, TypeDescriptor typeDescriptor) {
     InjectionPoint injectionPoint = typeDescriptor.injectionPoints;
 
@@ -433,29 +529,27 @@ class Injector implements IInjector {
     _onPostConstructController.add('');
   }
 
-  String getQualifiedName(Type type) => _getQualifiedName(type);
   //-----------------------------------
   //
   // Private Static Methods
   //
   //-----------------------------------
 
-  static String _getMappingId(Type type, [String injectionName = '']) {
+  static String getMappingId(Type type, [String injectionName = '']) {
     String qualifiedName = _getQualifiedName(type);
     return qualifiedName + "|" + injectionName;
   }
 
   static String _getQualifiedName(Type type) {
-    TypeMirror reflectType;
+    String qualifiedName;
     try {
-      reflectType = reflect.reflectType(type);
+      qualifiedName = reflect.reflectType(type).qualifiedName;
     } catch (e) {
-      print(" Class you are trying to map is not marked for reflection. You need"
+      print(
+          " Class you are trying to map is not marked for reflection. You need"
           " to anotate it. Please check docs for how to ");
       throw e;
     }
-    String qualifiedName = reflectType.qualifiedName;
     return qualifiedName;
   }
-
 }

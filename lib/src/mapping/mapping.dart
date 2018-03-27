@@ -1,3 +1,7 @@
+import 'package:robotlegs_di/src/errors/injector_error.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/providers/provider.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +24,35 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
+abstract class IUnsealedMapping {
+  //-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+
+  dynamic seal();
+}
+
+abstract class IProviderlessMapping {
+  //-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+
+  IUnsealedMapping toType(Type type, [String constructorName = '']);
+
+  IUnsealedMapping toValue(dynamic value);
+
+  IUnsealedMapping toSingleton(Type type);
+
+  IUnsealedMapping asSingleton();
+
+  IUnsealedMapping toProvider(IProvider provider);
+
+  dynamic seal();
+}
 
 class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
   //-----------------------------------
@@ -32,7 +64,7 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
   bool get isSealed => _sealed;
 
   bool get hasProvider =>
-      _creatingInjector._providerMappings[_mappingId] != null;
+      _creatingInjector.providerMappings[_mappingId] != null;
 
   //-----------------------------------
   //
@@ -46,9 +78,9 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
 
   String _mappingId;
 
-  IInjector _creatingInjector;
+  Injector _creatingInjector;
 
-  IInjector _overridingInjector;
+  Injector _overridingInjector;
 
   bool _defaultProviderSet = false;
 
@@ -113,11 +145,11 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
     }
 
     //TODO add name and "this" to event
-    _creatingInjector._onMappingOverrideController.add(_type);
-    _creatingInjector._onPreMappingChangedController.add('');
+    _creatingInjector.onMappingOverrideController.add(_type);
+    _creatingInjector.onPreMappingChangedController.add('');
     _defaultProviderSet = false;
     _mapProvider(provider);
-    _creatingInjector._onPostMappingChangedController.add('');
+    _creatingInjector.onPostMappingChangedController.add('');
     return this;
   }
 
@@ -132,10 +164,10 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
 
     if (!_soft) {
       final IProvider provider = getProvider();
-      _creatingInjector._onPreMappingChangedController.add('');
+      _creatingInjector.onPreMappingChangedController.add('');
       _soft = true;
       _mapProvider(provider);
-      _creatingInjector._onPostMappingChangedController.add('');
+      _creatingInjector.onPostMappingChangedController.add('');
     }
     return this;
   }
@@ -146,10 +178,10 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
     if (_local) return this;
 
     final IProvider provider = getProvider();
-    _creatingInjector._onPreMappingChangedController.add('');
+    _creatingInjector.onPreMappingChangedController.add('');
     _local = true;
     _mapProvider(provider);
-    _creatingInjector._onPostMappingChangedController.add('');
+    _creatingInjector.onPostMappingChangedController.add('');
     return this;
   }
 
@@ -176,7 +208,7 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
   }
 
   IProvider getProvider() {
-    IProvider provider = _creatingInjector._providerMappings[_mappingId];
+    IProvider provider = _creatingInjector.providerMappings[_mappingId];
     while (provider is ForwardingProvider) {
       provider = (provider as ForwardingProvider).provider;
     }
@@ -213,6 +245,6 @@ class InjectionMapping implements IProviderlessMapping, IUnsealedMapping {
     if (_overridingInjector != null) {
       provider = new InjectorUsingProvider(_overridingInjector, provider);
     }
-    _creatingInjector._providerMappings[_mappingId] = provider;
+    _creatingInjector.providerMappings[_mappingId] = provider;
   }
 }

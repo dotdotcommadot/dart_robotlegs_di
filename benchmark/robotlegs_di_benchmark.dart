@@ -25,7 +25,8 @@ library robotlegs_di_benchmark;
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:robotlegs_di/robotlegs_di.dart';
 
-part 'benchmarks/mapping_benchmark.dart';
+import 'benchmarks/mapping_benchmark.dart';
+
 
 main() {
   new MappingBenchmark().report();

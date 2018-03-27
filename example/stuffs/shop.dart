@@ -1,3 +1,7 @@
+import 'package:robotlegs_di/src/reflection/annotations.dart';
+
+import 'product.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +24,6 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_example;
 
 class Shop {
   //-----------------------------------
@@ -34,6 +37,8 @@ class Shop {
 
   @inject
   Product otherProduct;
+
+  ValueHolder _valueHolder;
 
   //-----------------------------------
   //
@@ -66,7 +71,17 @@ class Shop {
   }
 
   @inject
-  void withParamesInjectedMethod(int value) {
-    print("Shop::withParamesInjectedMethod " + value.toString());
+  void withParamesInjectedMethod(ValueHolder valueHolder) {
+    print("Shop::withParamesInjectedMethod " + valueHolder.value);
+    this._valueHolder = valueHolder;
   }
+
+  String getValue() => _valueHolder != null ?_valueHolder.value:null;
 }
+
+class ValueHolder {
+  final String value;
+
+  const ValueHolder(this.value);
+}
+

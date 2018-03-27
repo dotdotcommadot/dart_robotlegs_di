@@ -1,3 +1,7 @@
+import 'package:robotlegs_di/src/errors/injector_error.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/injectionpoints/injection_point.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -19,8 +23,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-part of robotlegs_di;
 
 class TypeDescriptor {
   //-----------------------------------
@@ -77,7 +79,7 @@ class TypeDescriptor {
           'Can\'t add injection point after post construct method');
 
     addInjectionPoint(new PropertyInjectionPoint(
-        Injector._getMappingId(type, injectionName), property, optional));
+        Injector.getMappingId(type, injectionName), property, optional));
 
     return this;
   }

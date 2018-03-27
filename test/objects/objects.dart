@@ -1,4 +1,5 @@
-import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/reflection/annotations.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
 
 /*
 * Copyright (c) 2014 the original author or authors

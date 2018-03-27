@@ -1,4 +1,5 @@
 import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
 import 'package:test/test.dart';
 
 import '../objects/objects.dart';

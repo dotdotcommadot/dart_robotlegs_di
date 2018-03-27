@@ -1,3 +1,9 @@
+import 'package:reflectable/reflectable.dart';
+import 'package:robotlegs_di/src/descriptors/descriptor.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/injectionpoints/injection_point.dart';
+import 'package:robotlegs_di/src/reflection/annotations.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,7 +26,7 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
+const Reflect reflect = const Reflect();
 
 class Reflect extends Reflectable {
   const Reflect()
@@ -34,6 +40,9 @@ class Reflect extends Reflectable {
 //            newInstanceCapability,
             const SuperclassQuantifyCapability(Object,
                 excludeUpperBound: false));
+
+  /// Just shortcut to get [ClassMirror] from type
+  getClassMirror(Type type) => reflectType(type) as ClassMirror;
 }
 
 class Reflector {
@@ -147,7 +156,7 @@ class Reflector {
       declaration.metadata.forEach((dynamic metadata) {
         if (metadata is Inject) {
           if (declaration is VariableMirror) {
-            final String mappingId = Injector._getMappingId(
+            final String mappingId = Injector.getMappingId(
                 declaration.type.reflectedType, metadata.name);
 
             _createPropertyInjectionPoint(
@@ -156,7 +165,7 @@ class Reflector {
             if (declaration.isSetter) {
               final String name =
                   (declaration.simpleName).toString().split('=').first;
-              final String mappingId = Injector._getMappingId(
+              final String mappingId = Injector.getMappingId(
                   declaration.parameters.first.type.reflectedType,
                   metadata.name);
 

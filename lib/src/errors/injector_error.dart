@@ -20,18 +20,14 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
-
-class InjectionPoint {
+class InjectorError extends Error {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
 
-  InjectionPoint next;
-  InjectionPoint last;
-  Map injectParameters;
+  final String message;
 
   //-----------------------------------
   //
@@ -39,7 +35,7 @@ class InjectionPoint {
   //
   //-----------------------------------
 
-  InjectionPoint();
+  InjectorError([this.message = ""]);
 
   //-----------------------------------
   //
@@ -47,5 +43,29 @@ class InjectionPoint {
   //
   //-----------------------------------
 
-  void applyInjection(IInjector injector, dynamic target, Type type) {}
+  String toString() {
+    if (message != null) return "Injector Error: $message";
+
+    return "Injector Error";
+  }
+}
+
+class InjectorInterfaceConstructorError extends InjectorError {
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  InjectorInterfaceConstructorError([String message = ""]) : super(message);
+}
+
+class InjectorMissingMappingError extends InjectorError {
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  InjectorMissingMappingError([String message = ""]) : super(message);
 }
