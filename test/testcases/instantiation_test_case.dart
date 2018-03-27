@@ -75,4 +75,11 @@ instantiationTestCase() {
     ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
     expect(myClazzTwo.valueHolder.value, equals("named"));
   });
+
+  test('Getting class qualified name', () {
+
+    String qualifiedName = injector.getQualifiedName(Clazz);
+    expect(qualifiedName, ".Clazz");
+
+  });
 }
