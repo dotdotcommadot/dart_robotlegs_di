@@ -26,8 +26,10 @@ import 'package:robotlegs_di/src/injection/injector.dart';
 
 import 'stuffs/product.dart';
 import 'stuffs/shop.dart';
-
+import 'robotlegs_di_example.reflectable.dart';
 void main() {
+
+  initializeReflectable();
   IInjector injector = new Injector();
 
   injector.map(Product).asSingleton();
@@ -35,7 +37,7 @@ void main() {
   injector.map(ValueHolder).toValue(new ValueHolder("valueHolderString"));
 
   Shop shop = injector.getInstance(Shop);
-  print("Shop value holder has $shop.getValue() value");
+  print("Shop getValue() => " + shop.getValue());
 
   injector.teardown();
 }

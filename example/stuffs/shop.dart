@@ -1,4 +1,5 @@
 import 'package:robotlegs_di/src/reflection/annotations.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
 
 import 'product.dart';
 
@@ -24,7 +25,7 @@ import 'product.dart';
 * THE SOFTWARE.
 */
 
-
+@Reflect()
 class Shop {
   //-----------------------------------
   //
@@ -79,6 +80,7 @@ class Shop {
   String getValue() => _valueHolder != null ?_valueHolder.value:null;
 }
 
+@Reflect()
 class ValueHolder {
   final String value;
 

@@ -1,5 +1,6 @@
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
 
 /*
 * Copyright (c) 2014 the original author or authors
@@ -48,5 +49,6 @@ class MappingBenchmark extends BenchmarkBase {
   }
 }
 
+@Reflect()
 abstract class Abstract {
 }
