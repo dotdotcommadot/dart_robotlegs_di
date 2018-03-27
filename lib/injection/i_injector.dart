@@ -111,6 +111,8 @@ abstract class IInjector {
 
   bool hasDirectMapping(Type type, [String name = '']);
 
+  String getQualifiedName(Type type);
+
   //-----------------------------------
   //
   // Private Methods

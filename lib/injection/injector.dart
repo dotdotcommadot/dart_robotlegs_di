@@ -433,6 +433,7 @@ class Injector implements IInjector {
     _onPostConstructController.add('');
   }
 
+  String getQualifiedName(Type type) => _getQualifiedName(type);
   //-----------------------------------
   //
   // Private Static Methods
@@ -440,8 +441,14 @@ class Injector implements IInjector {
   //-----------------------------------
 
   static String _getMappingId(Type type, [String injectionName = '']) {
-    TypeMirror reflectType = _refly.reflectType(type);
-    String qualifiedName = reflectType.qualifiedName;
+    String qualifiedName = _getQualifiedName(type);
     return qualifiedName + "|" + injectionName;
   }
+
+  static String _getQualifiedName(Type type) {
+    TypeMirror reflectType = reflect.reflectType(type);
+    String qualifiedName = reflectType.qualifiedName;
+    return qualifiedName;
+  }
+
 }
