@@ -53,14 +53,14 @@ instantiationTestCase() {
     injector.map(InterfaceClazz).toType(Clazz);
 
     Clazz myClazz = injector.getInstance(InterfaceClazz);
-    expect(myClazz, isNotNull);
+    expect(myClazz.runtimeType, equals(Clazz));
   });
 
   test('Instantiating Class From Abstract Class', () {
     injector.map(AbstractClazz).toType(Clazz);
 
     Clazz myClazz = injector.getInstance(AbstractClazz);
-    expect(myClazz, isNotNull);
+    expect(myClazz.runtimeType, equals(Clazz));
   });
 
   test('Instantiating Class From Mixin', () {

@@ -94,4 +94,25 @@ injectionTestCase() {
     Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz.mySetterInjectedValueHolder.value, equals("abcABC-123"));
   });
+
+  test('Method Injection',(){
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(Clazz);
+    injector.map(InjectedClazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+
+    expect(myClazz.hasRunFirstMethod, equals(true));
+  });
+
+  test('Method Injection with Parameters',(){
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(Clazz);
+    injector.map(InjectedClazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+
+    expect(myClazz.firstMethodWithParametersValue, isNotNull);
+    expect(myClazz.firstMethodWithParametersValue.runtimeType, equals(InjectedClazz));
+  });
 }

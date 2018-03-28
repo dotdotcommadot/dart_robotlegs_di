@@ -1,5 +1,7 @@
 import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/errors/injector_error.dart';
 import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/mapping/mapping.dart';
 import 'package:test/test.dart';
 
 import '../objects/objects.dart';
@@ -34,25 +36,83 @@ mappingTestCase() {
   });
 
   tearDown(() {
+    injector.teardown();
     injector = null;
+  });
+
+  test('Basic mapping', () {
+    injector.map(InjectedClazz);
+
+    InjectedClazz injectedClazz = injector.getInstance(InjectedClazz);
+    expect(injectedClazz, isNotNull);
+  });
+
+  test('Satisfies', () {
+    injector.map(InjectedClazz);
+
+    bool satisfies = injector.satisfies(InjectedClazz);
+    expect(satisfies, equals(true));
+  });
+
+  test('Satisfies directly', () {
+    injector.map(InjectedClazz);
+
+    bool satisfies = injector.satisfiesDirectly(InjectedClazz);
+    expect(satisfies, equals(true));
+  });
+
+  test('Get mapping', () {
+    injector.map(InjectedClazz);
+
+    InjectionMapping injectionMapping = injector.getMapping(InjectedClazz);
+    expect(injectionMapping, isNotNull);
+  });
+
+  test('Inject Into', () {
+    injector.map(ValueHolder).toValue(new ValueHolder("injected"));
+
+    PropertyMarkedForInjection instance = new PropertyMarkedForInjection();
+    injector.injectInto(instance);
+
+    expect(instance.valueHolder.value, equals("injected"));
+  });
+
+  test('Unmap', () {
+    injector.map(InjectedClazz);
+    injector.unmap(InjectedClazz);
+
+    bool satisfies = injector.satisfies(InjectedClazz);
+    
+    expect(satisfies, isFalse);
+  });
+
+  test('Get or create new instance', () {
+    injector.map(InjectedClazz).asSingleton();
+
+    InjectedClazz instance = injector.getOrCreateNewInstance(InjectedClazz);
+    InjectedClazz instance2 = injector.getOrCreateNewInstance(InjectedClazz);
+    injector.unmap(InjectedClazz);
+    InjectedClazz instance3 = injector.getOrCreateNewInstance(InjectedClazz);
+
+    expect(identical(instance, instance2), isTrue);
+    expect(identical(instance, instance3), isFalse);
+  });
+
+
+
+
+  test('Basic named mapping', () {
+    injector.map(InjectedClazz,"named");
+
+    InjectedClazz injectedClazzNamed = injector.getInstance(InjectedClazz,"named");
+    expect(injectedClazzNamed, isNotNull);
+    expect(() => injector.getInstance(InjectedClazz), throwsA(new isInstanceOf<InjectorMissingMappingError>()));
   });
 
   test('Mapping To Value', () {
     injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-    injector.map(InjectedClazz);
-    injector.map(Clazz);
-
-    Clazz myClazz = injector.getInstance(Clazz);
-    expect(myClazz.myInjectedValueHolder.value, equals("abcABC-123"));
-  });
-
-  test('Mapping To Type', () {
-    injector.map(InterfaceClazz).toType(Clazz);
-    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
-    injector.map(InjectedClazz);
-
-    InterfaceClazz myInterfaceClazz = injector.getInstance(InterfaceClazz);
-    expect(myInterfaceClazz, isNotNull);
+    ValueHolder valueHolder = injector.getInstance(ValueHolder);
+    expect(valueHolder.value, equals("abcABC-123"));
   });
 
   test('Mapping As Singleton', () {

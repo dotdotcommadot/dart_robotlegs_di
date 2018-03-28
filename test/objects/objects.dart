@@ -205,14 +205,24 @@ class ValueHolder {
   const ValueHolder(this.value);
 }
 
-class BaseClazz {
+@Reflect()
+class PropertyMarkedForInjection{
+  @Inject()
+  ValueHolder valueHolder;
 }
 
-abstract class BaseInterface{
+class BaseClazz extends AbstractBaseClazz{
+}
+
+class AbstractBaseClazz {
 }
 
 @Reflect()
-class ImplementingBaseInterface implements BaseInterface{}
+abstract class IBaseInterface{
+}
+
+@Reflect()
+class ImplementationOfBaseInterface implements IBaseInterface{}
 
 @Reflect()
 class SuperClazz extends BaseClazz{
