@@ -147,7 +147,8 @@ Check test files for simple examples how to use injector.
 	
 For more info about this project, contact:
 
-- [matejthetree@gmail.com](mailto:matejthetree@gmail.com)
+- Hans Van den Keybus [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
+- Matej Simunic [matejthetree@gmail.com](mailto:matejthetree@gmail.com)
 
 ##Todo
 * optimize reflectable capabilities
