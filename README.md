@@ -14,7 +14,7 @@ It provides a very clean API for building applications ranging from large enterp
 Robotlegs for Dart project is the beginning of an attempt to bring all the sweetness Robotlegs for AS3 has to Google Dart.
 At the moment, project has not reached even alpha
 - [Robotlegs for AS3 on Github](https://github.com/robotlegs/robotlegs-framework)
-- [Robotlegs for Dart on Github](https://github.com/matejthetree/dart_robotlegs)
+- [Robotlegs for Dart on Github](https://github.com/dotdotcommadot/dart_robotlegs)
 
 ### Robotlegs DI
 Robotlegs DI, the project you're currently looking at, is a Dependency Injection framework inspired by the DI framework the original Robotlegs framework uses, called [SwiftSuspenders](https://github.com/robotlegs/swiftsuspenders).
