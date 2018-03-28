@@ -7,27 +7,30 @@ import 'package:robotlegs_di/src/mapping/mapping.dart';
 import 'package:robotlegs_di/src/providers/provider.dart';
 import 'package:robotlegs_di/src/reflection/reflector.dart';
 
-/*
-* Copyright (c) 2014 the original author or authors
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+////
+/// Copyright (c) 2014 the original author or authors
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+////
+
+/// The [IInjector] manages the mappings and acts as the central hub from which all
+/// injections are started.
 
 abstract class IInjector {
   //-----------------------------------
@@ -65,53 +68,172 @@ abstract class IInjector {
   StreamController onMappingOverrideController;
 
   //-----------------------------------
-  // ParentInjector
-  //-----------------------------------
-
-  set parentInjector(IInjector value);
-
-  IInjector get parentInjector;
-
-  //-----------------------------------
-  //
-  // Private Properties
-  //
-  //-----------------------------------
-
-  Map<String, IProvider> providerMappings;
-
-  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
 
+  
+   /// Maps a request description, consisting of the [type] and, optionally, the
+   /// [name]
+   ///
+   /// <p>The returned mapping is created if it didn't exist yet or simply returned otherwise.</p>
+   ///
+   /// <p>Named mappings should be used as sparingly as possible as they increase the likelyhood
+   /// of typing errors to cause hard to debug errors at runtime.</p>
+   ///
+   /// [type]  The [class]describing the mapping
+   /// [name]  The name, as a case-sensitive string, to further describe the mapping
+   ///
+   /// Returns The [InjectionMapping] for the given request description
+   ///
+   /// See [unmap]
+   /// See [InjectionMapping]
   InjectionMapping map(Type type, [String name = '']);
 
+   ///  Removes the mapping described by the given [type]and [name].
+   ///
+   /// [type]  The [class]describing the mapping
+   /// [name]  The name, as a case-sensitive string, to further describe the mapping
+   ///
+   /// Throws a [InjectorError] Descriptions that are not mapped can't be unmapped
+   /// Throws a [InjectorError] Sealed mappings have to be unsealed before unmapping them
+   ///
+   /// See [map]
+   /// See [InjectionMapping]
+   /// See [InjectionMapping.unseal]
   void unmap(Type type, [String name = '']);
+
+   /// Indicates whether the injector can supply a response for the specified dependency either
+   /// by using a mapping of its own or by querying one of its ancestor injectors.
+   ///
+   /// [type]  The type of the dependency under query
+   /// [name]  The name of the dependency under query
+   ///
+   /// Returns [true] if the dependency can be satisfied, [false] if not
 
   bool satisfies(Type type, [String name = '']);
 
+   /// Indicates whether the injector can directly supply a response for the specified
+   /// dependency.
+   ///
+   /// <p>In contrast to [satisfies], [satisfiesDirectly] only informs
+   /// about mappings on this injector itself, without querying its ancestor injectors.</p>
+   ///
+   /// [type]  The type of the dependency under query
+   /// [name]  The name of the dependency under query
+   ///
+   /// Returns [true] if the dependency can be satisfied, [false] if not
+
   bool satisfiesDirectly(Type type, [String name = '']);
 
+   /// Returns the mapping for the specified dependency class
+   ///
+   /// <p>Note that getMapping will only return mappings in exactly this injector, not ones
+   /// mapped in an ancestor injector. To get mappings from ancestor injectors, query them
+   /// using [parentInjector].
+   /// This restriction is in place to prevent accidental changing of mappings in ancestor
+   /// injectors where only the child's response is meant to be altered.</p>
+   ///
+   /// [type]  The type of the dependency to return the mapping for
+   /// [name]  The name of the dependency to return the mapping for
+   ///
+   /// Returns The mapping for the specified dependency class
+   ///
+   /// Throws a [InjectorMissingMappingError] when no mapping was found
+   /// for the specified dependency
   InjectionMapping getMapping(Type type, [String name = '']);
+
+  
+   /// Inspects the given object and injects into all injection points configured for its class.
+   ///
+   /// [target]  The instance to inject into
+   ///
+   /// Throws a [InjectorError] The [Injector] must have mappings
+   /// for all injection points
+   ///
+   /// See [map]
 
   void injectInto(dynamic target);
 
+  
+   /// Instantiates the class identified by the given [type]and [name].
+   ///
+   /// <p>The parameter [targetType]is only useful if the
+   /// [InjectionMapping]used to satisfy the request might vary its result based on
+   /// that [targetType]. An Example of that would be a provider returning a logger
+   /// instance pre-configured for the instance it is used in.</p>
+   ///
+   /// [type]  The [class]describing the mapping
+   /// [name]  The name, as a case-sensitive string, to use for mapping resolution
+   /// [targetType]  The type of the instance that is dependent on the returned value
+   ///
+   /// Returns The mapped or created instance
+   ///
+   /// Throws a [InjectorMissingMappingError] if no mapping was found
+   /// for the specified dependency and no [fallbackProvider]is set.
   dynamic getInstance(Type type, [String name = '', Type targetType = null]);
 
+   /// Returns an instance of the given type. If the Injector has a mapping for the type, that
+   /// is used for getting the instance. If not, a new instance of the class is created and
+   /// injected into.
+   ///
+   /// [type]  The type to get an instance of
+   /// Returns The instance that was created or retrieved from the mapped provider
+   ///
+   /// Throws a [InjectorMissingMappingError] if no mapping is found
+   /// for one of the type's dependencies and no [fallbackProvider] is set
   dynamic getOrCreateNewInstance(Type type, [String name = '']);
 
+   /// Creates an instance of the given type and injects into it.
+   ///
+   /// [type]  The type to instantiate
+   /// Returns The new instance, with all of its dependencies fulfilled
+   ///
+   /// Throws a [InjectorMissingMappingError] if no mapping is found
+   /// for one of the type's dependencies and no [fallbackProvider] is set
   dynamic instantiateUnmapped(Type type, [String constructor = '']);
 
+   /// Uses the [TypeDescriptor] the injector associates with the given instance's
+   /// type to iterate over all [[PreDestroy]]methods in the instance, supporting
+   /// automated destruction.
+   ///
+   /// [instance]  The instance to destroy
   void destroyInstance(dynamic instance);
 
+   /// Destroys the injector by cleaning up all instances it manages.
+   ///
+   /// Cleanup in this context means iterating over all mapped dependency providers and invoking
+   /// their [destroy] methods and calling [preDestroy] methods on all objects the
+   /// injector created or injected into.
+   ///
   void teardown();
 
+   /// Creates a new [Injector] and sets itself as that new [Injector]'s
+   /// [parentInjector].
+   ///
+   /// Returns The newly created [Injector] instance
+   ///
+   /// See [parentInjector]
   IInjector createChildInjector();
 
+   /// Sets the [Injector] to ask in case the current [Injector] doesn't
+   /// have a mapping for a dependency.
+   ///
+   /// <p>Parent Injectors can be nested in arbitrary depths with very little overhead,
+   /// enabling very modular setups for the managed object graphs.</p>
+   ///
+  IInjector parentInjector;
+
+   /// Instructs the injector to use the description for the given [type] when constructing or
+   /// destroying instances.
+   ///
+   /// The description [descriptor] consists details for the constructor, all properties and methods to
+   /// inject into during construction and all methods to invoke during destruction.
   void addTypeDescriptor(Type type, TypeDescriptor descriptor);
 
+   /// Returns a description of the given [type] containing its constructor, injection points
+   /// and post construct and pre destroy hooks
   TypeDescriptor getTypeDescriptor(Type type);
 
   bool hasMapping(Type type, [String name = '']);
@@ -191,32 +313,19 @@ class Injector implements IInjector {
   // ParentInjector
   //-----------------------------------
 
-  IInjector _parentInjector;
-
-  set parentInjector(IInjector value) => _parentInjector = value;
-
-  IInjector get parentInjector => _parentInjector;
+  IInjector parentInjector;
 
   //-----------------------------------
   // FallbackProvider
   //-----------------------------------
 
-  IFallbackProvider _fallbackProvider;
-
-  set fallbackProvider(IFallbackProvider value) => _fallbackProvider = value;
-
-  IFallbackProvider get fallbackProvider => _fallbackProvider;
+  IFallbackProvider fallbackProvider;
 
   //-----------------------------------
   // BlockParentFallbackProvider
   //-----------------------------------
 
-  bool _blockParentFallbackProvider = false;
-
-  set blockParentFallbackProvider(bool value) =>
-      _blockParentFallbackProvider = value;
-
-  bool get blockParentFallbackProvider => _blockParentFallbackProvider;
+  bool blockParentFallbackProvider = false;
 
   //-----------------------------------
   //
@@ -343,9 +452,9 @@ class Injector implements IInjector {
       }
     }
 
-    String fallbackMessage = (_fallbackProvider != null)
+    String fallbackMessage = (fallbackProvider != null)
         ? "the fallbackProvider, '" +
-            _fallbackProvider.toString() +
+            fallbackProvider.toString() +
             "', was unable to fulfill this request."
         : "the injector has no fallbackProvider.";
 
@@ -408,8 +517,8 @@ class Injector implements IInjector {
     _mappings = new Map<String, InjectionMapping>();
     _mappingsInProcess = new Map();
     _managedObjects = new List<dynamic>();
-    _fallbackProvider = null;
-    _blockParentFallbackProvider = false;
+    fallbackProvider = null;
+    blockParentFallbackProvider = false;
   }
 
   IInjector createChildInjector() {
@@ -471,15 +580,15 @@ class Injector implements IInjector {
   }
 
   IProvider getDefaultProvider(String mappingId, bool consultParents) {
-    if ((_fallbackProvider != null) &&
-        (_fallbackProvider.prepareNextRequest(mappingId) != null)) {
-      return _fallbackProvider;
+    if ((fallbackProvider != null) &&
+        (fallbackProvider.prepareNextRequest(mappingId) != null)) {
+      return fallbackProvider;
     }
 
     if (consultParents &&
-        !_blockParentFallbackProvider &&
-        (_parentInjector != null)) {
-      return (_parentInjector as Injector)
+        !blockParentFallbackProvider &&
+        (parentInjector != null)) {
+      return (parentInjector as Injector)
           .getDefaultProvider(mappingId, consultParents);
     }
     return null;
