@@ -515,6 +515,7 @@ class Injector implements IInjector {
     });
 
     _mappings = new Map<String, InjectionMapping>();
+    providerMappings.clear();
     _mappingsInProcess = new Map();
     _managedObjects = new List<dynamic>();
     fallbackProvider = null;
