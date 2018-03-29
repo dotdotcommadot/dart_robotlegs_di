@@ -1,5 +1,4 @@
 import 'package:robotlegs_di/robotlegs_di.dart';
-import 'package:robotlegs_di/src/errors/injector_error.dart';
 import 'package:robotlegs_di/src/injection/injector.dart';
 import 'package:test/test.dart';
 
@@ -50,6 +49,6 @@ reflectionCapabilitiesTestCase() {
 
   test('Instantiate Base type', () {
     expect(() => injector.map(String).toValue("asdf"),
-        throwsA(new isInstanceOf<InjectorMissingMappingError>()));
+        throwsA(new isInstanceOf<Error>()));
   });
 }
