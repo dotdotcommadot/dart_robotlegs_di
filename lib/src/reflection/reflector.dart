@@ -254,7 +254,13 @@ class Reflector {
     parameterMirrors
         .where((ParameterMirror parameter) => !parameter.isNamed)
         .forEach((ParameterMirror parameter) {
-      parameters.add(parameter.type.reflectedType);
+      try {
+        parameters.add(parameter.type.reflectedType);
+      } catch (e) {
+        print(e);
+        print("\ntrying to map positional constructor parameter,"
+            " of a class that is not reflected. \n");
+      }
     });
 
     return parameters;
@@ -275,7 +281,13 @@ class Reflector {
     parameterMirrors
         .where((ParameterMirror parameter) => !parameter.isNamed)
         .forEach((ParameterMirror parameter) {
-      parameters[parameter.simpleName] = parameter.type.reflectedType;
+      try {
+        parameters[parameter.simpleName] = parameter.type.reflectedType;
+      } catch (e) {
+        print(e);
+        print("\ntrying to map positional constructor parameter,"
+            " of a class that is not reflected. \n");
+      }
     });
 
     return parameters;

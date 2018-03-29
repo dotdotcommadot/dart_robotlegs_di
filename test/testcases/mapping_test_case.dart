@@ -71,19 +71,10 @@ mappingTestCase() {
   test('Inject Into', () {
     injector.map(ValueHolder).toValue(new ValueHolder("injected"));
 
-    PropertyMarkedForInjection instance = new PropertyMarkedForInjection();
+    ValueHolderInjectee instance = new ValueHolderInjectee();
     injector.injectInto(instance);
 
     expect(instance.valueHolder.value, equals("injected"));
-  });
-
-  test('Unmap', () {
-    injector.map(InjectedClazz);
-    injector.unmap(InjectedClazz);
-
-    bool satisfies = injector.satisfies(InjectedClazz);
-    
-    expect(satisfies, isFalse);
   });
 
   test('Get or create new instance', () {
@@ -98,15 +89,14 @@ mappingTestCase() {
     expect(identical(instance, instance3), isFalse);
   });
 
-
-
-
   test('Basic named mapping', () {
-    injector.map(InjectedClazz,"named");
+    injector.map(InjectedClazz, "named");
 
-    InjectedClazz injectedClazzNamed = injector.getInstance(InjectedClazz,"named");
+    InjectedClazz injectedClazzNamed =
+        injector.getInstance(InjectedClazz, "named");
     expect(injectedClazzNamed, isNotNull);
-    expect(() => injector.getInstance(InjectedClazz), throwsA(new isInstanceOf<InjectorMissingMappingError>()));
+    expect(() => injector.getInstance(InjectedClazz),
+        throwsA(new isInstanceOf<InjectorMissingMappingError>()));
   });
 
   test('Mapping To Value', () {

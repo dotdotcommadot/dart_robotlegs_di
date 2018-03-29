@@ -37,6 +37,39 @@ injectionTestCase() {
     injector = null;
   });
 
+  test('Unmap removes mapping', () {
+    injector.map(InjectedClazz);
+
+    expect(injector.satisfies(InjectedClazz), isTrue);
+
+    injector.unmap(InjectedClazz);
+
+    expect(injector.satisfies(InjectedClazz), isFalse);
+  });
+
+  test('Injector injects bound value into all injectees', () {
+    ValueHolderInjectee injectee = new ValueHolderInjectee();
+    ValueHolderInjectee injectee2 = new ValueHolderInjectee();
+    const valueHolder = const ValueHolder("abcABC-123");
+    injector.map(ValueHolder).toValue(valueHolder);
+
+    injector.injectInto(injectee);
+    expect(identical(valueHolder, injectee.valueHolder), isTrue);
+
+    injector.injectInto(injectee2);
+    expect(identical(valueHolder, injectee2.valueHolder), isTrue);
+  });
+
+  test('map value by interface', () {
+    var injectee = new InterfaceInjectee();
+    Interface value = new ImplementationOfInterface();
+
+    injector.map(Interface).toValue(value);
+    injector.injectInto(injectee);
+
+    expect(identical(value, injectee.interface), isTrue);
+  });
+
   test('Injecting ValueHolder', () {
     injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
     injector.map(InjectedClazz);
@@ -69,6 +102,68 @@ injectionTestCase() {
     expect(myClazz.myInjectedHelloValueHolder.value, equals("hello world"));
   });
 
+  test('Named Injection by Interface', () {
+    var injectee = new NamedInterfaceInjectee();
+    Interface value = new ImplementationOfInterface();
+
+    injector.map(Interface, "name").toValue(value);
+    injector.injectInto(injectee);
+
+    expect(identical(value, injectee.interface), isTrue);
+  });
+
+  test('mapped value is not injected into', () {
+    var injectee = new RecursiveInterfaceInjectee();
+    InterfaceInjectee value = new InterfaceInjectee();
+
+    injector.map(InterfaceInjectee).toValue(value);
+    injector.injectInto(injectee);
+
+    expect(value.interface, isNull);
+  });
+
+  test('map multiple interface to one singleton class', () {
+    var injectee = new MultipleSingletonsOfSameClassInjectee();
+
+    injector.map(Interface).toSingleton(ImplementationOfInterface);
+    injector.map(Interface2).toSingleton(ImplementationOfInterface);
+    injector.injectInto(injectee);
+
+    expect(injectee.interface, isNotNull);
+    expect(injectee.interface2, isNotNull);
+    expect(identical(injectee.interface, injectee.interface2), isFalse);
+  });
+
+  test('map class to type creates new instances', () {
+    var injectee = new RandomNumberInjectee();
+    var injectee2 = new RandomNumberInjectee();
+
+    injector.map(RandomNumberHolder).toType(RandomNumberHolder);
+
+    injector.injectInto(injectee);
+    expect(injectee.randomNumberHolder.randomNumber, isNotNull);
+    injector.injectInto(injectee2);
+    expect(injectee2.randomNumberHolder.randomNumber, isNotNull);
+
+    expect(
+        identical(injectee.randomNumberHolder.randomNumber,
+            injectee2.randomNumberHolder.randomNumber),
+        isFalse);
+  });
+
+  test('map class to type creates new instances', () {
+    var injectee = new ComplexClassInjectee();
+    var value = new InjectedClazz();
+
+    injector.map(InjectedClazz).toValue(value);
+    injector.map(ComplexClass).toType(ComplexClass);
+
+    injector.injectInto(injectee);
+
+    expect(injectee.complexClass, isNotNull);
+    expect(identical(injectee.complexClass.injectedClazz, value), isTrue);
+  });
+
   test('Optional Injection', () {
     injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
     injector.map(InjectedClazz);
@@ -95,7 +190,7 @@ injectionTestCase() {
     expect(myClazz.mySetterInjectedValueHolder.value, equals("abcABC-123"));
   });
 
-  test('Method Injection',(){
+  test('Method Injection', () {
     injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
     injector.map(Clazz);
     injector.map(InjectedClazz);
@@ -105,7 +200,7 @@ injectionTestCase() {
     expect(myClazz.hasRunFirstMethod, equals(true));
   });
 
-  test('Method Injection with Parameters',(){
+  test('Method Injection with Parameters', () {
     injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
     injector.map(Clazz);
     injector.map(InjectedClazz);
@@ -113,6 +208,7 @@ injectionTestCase() {
     Clazz myClazz = injector.getInstance(Clazz);
 
     expect(myClazz.firstMethodWithParametersValue, isNotNull);
-    expect(myClazz.firstMethodWithParametersValue.runtimeType, equals(InjectedClazz));
+    expect(myClazz.firstMethodWithParametersValue.runtimeType,
+        equals(InjectedClazz));
   });
 }

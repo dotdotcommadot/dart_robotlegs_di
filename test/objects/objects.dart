@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:robotlegs_di/src/reflection/annotations.dart';
 import 'package:robotlegs_di/src/reflection/reflector.dart';
 
@@ -188,9 +190,7 @@ class ClazzTwo {
 }
 
 @Reflect()
-class InjectedClazz {
-  InjectedClazz();
-}
+class InjectedClazz {}
 
 @Reflect()
 abstract class InterfaceClazz {}
@@ -206,24 +206,73 @@ class ValueHolder {
 }
 
 @Reflect()
-class PropertyMarkedForInjection{
+class ValueHolderInjectee {
   @Inject()
   ValueHolder valueHolder;
 }
 
-class BaseClazz extends AbstractBaseClazz{
-}
-
-class AbstractBaseClazz {
+@Reflect()
+class RandomNumberInjectee {
+  @Inject()
+  RandomNumberHolder randomNumberHolder;
 }
 
 @Reflect()
-abstract class IBaseInterface{
+class RandomNumberHolder {
+  final double randomNumber = new Random().nextDouble();
 }
 
 @Reflect()
-class ImplementationOfBaseInterface implements IBaseInterface{}
+class InterfaceInjectee {
+  @inject
+  Interface interface;
+}
 
 @Reflect()
-class SuperClazz extends BaseClazz{
+class NamedInterfaceInjectee {
+  @Inject(name: "name")
+  Interface interface;
 }
+
+@Reflect()
+class RecursiveInterfaceInjectee {
+  @Inject()
+  InterfaceInjectee interface;
+}
+
+@Reflect()
+class MultipleSingletonsOfSameClassInjectee {
+  @Inject()
+  Interface interface;
+
+  @Inject()
+  Interface2 interface2;
+}
+
+@Reflect()
+class ComplexClassInjectee {
+  @inject
+  ComplexClass complexClass;
+}
+
+@Reflect()
+class ComplexClass {
+  @inject
+  InjectedClazz injectedClazz;
+}
+
+class BaseClazz extends AbstractBaseClazz {}
+
+class AbstractBaseClazz {}
+
+@Reflect()
+abstract class Interface {}
+
+@Reflect()
+abstract class Interface2 {}
+
+@Reflect()
+class ImplementationOfInterface implements Interface, Interface2 {}
+
+@Reflect()
+class SuperClazz extends BaseClazz {}

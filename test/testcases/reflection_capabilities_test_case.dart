@@ -39,13 +39,16 @@ reflectionCapabilitiesTestCase() {
 
   test('Instantiate BaseClass', () {
     var instance = injector.getOrCreateNewInstance(BaseClazz);
-    expect(instance,isNotNull);
-
+    expect(instance, isNotNull);
   });
 
-  test('Instantiate SuperClass', (){
+  test('Instantiate SuperClass', () {
     var instance = injector.getOrCreateNewInstance(SuperClazz);
     expect(instance, isNotNull);
   });
 
+  test('Instantiate Base type', () {
+    expect(() => injector.map(String).toValue("asdf"),
+        throwsA(new isInstanceOf<InjectorMissingMappingError>()));
+  });
 }
