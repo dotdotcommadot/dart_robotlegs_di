@@ -23,3 +23,6 @@
 library robotlegs_di;
 
 export 'src/injection/injector.dart';
+export 'src/providers/provider.dart';
+export 'src/reflection/annotations.dart';
+export 'src/reflection/reflector.dart';
