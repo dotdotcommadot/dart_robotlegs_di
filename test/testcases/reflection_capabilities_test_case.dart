@@ -1,3 +1,9 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,9 +26,29 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+reflectionCapabilitiesTestCase() {
+  IInjector injector;
 
-abstract class AbstractClazz
-{
-	
+  setUp(() {
+    injector = new Injector();
+  });
+
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Instantiate BaseClass', () {
+    var instance = injector.getOrCreateNewInstance(BaseClazz);
+    expect(instance, isNotNull);
+  });
+
+  test('Instantiate SuperClass', () {
+    var instance = injector.getOrCreateNewInstance(SuperClazz);
+    expect(instance, isNotNull);
+  });
+
+  test('Instantiate Base type', () {
+    expect(() => injector.map(String).toValue("asdf"),
+        throwsA(new isInstanceOf<Error>()));
+  });
 }

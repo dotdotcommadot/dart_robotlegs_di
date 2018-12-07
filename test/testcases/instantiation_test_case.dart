@@ -1,3 +1,9 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,61 +26,61 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+instantiationTestCase() {
+  IInjector injector;
 
-instantiationTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-		injector.map(String).toValue('');
-		injector.map(InjectedClazz);
-		injector.map(String, 'setterInjectedString').toValue("");
-	});
-	
-	tearDown(() {
-		injector = null;
-	});
-	
-	test('Instantiating Class', ()
-	{
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
+  setUp(() {
+    injector = new Injector();
+    injector.map(ValueHolder).toValue(const ValueHolder(''));
+    injector.map(InjectedClazz);
+    injector
+        .map(ValueHolder, 'setterInjectedValueHolder')
+        .toValue(const ValueHolder('setter'));
+  });
+
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Instantiating Class', () {
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
     expect(myClazz, isNotNull);
-	});
+  });
 
-	test('Instantiating Class From Interface', ()
-	{
-		injector.map(InterfaceClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(InterfaceClazz);
-		expect(myClazz, isNotNull);
-	});
+  test('Instantiating Class From Interface', () {
+    injector.map(InterfaceClazz).toType(Clazz);
 
-	test('Instantiating Class From Abstract Class', ()
-	{
-		injector.map(AbstractClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(AbstractClazz);
-		expect(myClazz, isNotNull);
-	});
+    Clazz myClazz = injector.getInstance(InterfaceClazz);
+    expect(myClazz.runtimeType, equals(Clazz));
+  });
 
-	test('Instantiating Class From Mixin', ()
-	{
-		injector.map(MixinClazz).toType(Clazz);
-		
-		Clazz myClazz = injector.getInstance(MixinClazz);
-		expect(myClazz, isNotNull);
-	});
-	
-	test('Instantiating Class with Named Constructor', () 
-	{
-		injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, const Symbol('named'));
-		
-		ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
-		expect(myClazzTwo.injectedString, equals("named"));
-	});
+  test('Instantiating Class From Abstract Class', () {
+    injector.map(AbstractClazz).toType(Clazz);
+
+    Clazz myClazz = injector.getInstance(AbstractClazz);
+    expect(myClazz.runtimeType, equals(Clazz));
+  });
+
+  test('Instantiating Class From Mixin', () {
+    injector.map(MixinClazz).toType(Clazz);
+
+    Clazz myClazz = injector.getInstance(MixinClazz);
+    expect(myClazz, isNotNull);
+  });
+
+  test('Instantiating Class with Named Constructor', () {
+    injector.map(ClazzTwo, "clazzTwo_named").toType(ClazzTwo, 'named');
+
+    ClazzTwo myClazzTwo = injector.getInstance(ClazzTwo, "clazzTwo_named");
+    expect(myClazzTwo.valueHolder.value, equals("named"));
+  });
+
+  test('Getting class qualified name', () {
+
+    String qualifiedName = injector.getQualifiedName(Clazz);
+    expect(qualifiedName, ".Clazz");
+
+  });
 }

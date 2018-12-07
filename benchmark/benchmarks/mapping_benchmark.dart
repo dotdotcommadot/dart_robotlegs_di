@@ -1,3 +1,7 @@
+import 'package:benchmark_harness/benchmark_harness.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,34 +24,31 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_benchmark;
 
-class MappingBenchmark extends BenchmarkBase 
-{
-	final int ITERATIONS = 1000;
-	
+class MappingBenchmark extends BenchmarkBase {
+  final int ITERATIONS = 1000;
+
   IInjector injector = new Injector();
 
-  MappingBenchmark() : super( "Mapping" );
+  MappingBenchmark() : super("Mapping");
 
-  void run() 
-  {
-    for (int i = 0; i< ITERATIONS; i++)
-    {
-    	injector.getInstance(int, i.toString());
+  void run() {
+    for (int i = 0; i < ITERATIONS; i++) {
+      injector.getInstance(Abstract, i.toString());
     }
   }
 
-  void setup() 
-  { 
-    for (int i = 0; i< ITERATIONS; i++)
-    {
-    	injector.map(int, i.toString()).toValue(i);
+  void setup() {
+    for (int i = 0; i < ITERATIONS; i++) {
+      injector.map(Abstract, i.toString()).toValue(i);
     }
   }
 
-  void teardown() 
-  { 
+  void teardown() {
     injector = null;
   }
+}
+
+@Reflect()
+abstract class Abstract {
 }

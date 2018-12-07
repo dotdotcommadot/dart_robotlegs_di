@@ -1,35 +1,73 @@
 # Robotlegs DI
 
-[![Build Status](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/status.png)](https://drone.io/github.com/dotdotcommadot/dart_robotlegs_di/latest)
-###### Version: 0.0.1 -- alpha
+
+###### Version: 0.1.3 -- alpha
 
 ## About
 
 Robotlegs DI is a Dependency Injection framework for the Google Dart programming language.
 It will also be the default DI-engine for Robotlegs for Dart.
 
-### Google Dart
-Google Dart is a new open source programming language by Google, which attempts to clean up the mess web development has become.
-It comes with its own Virtual Machine which will be implemented out-of-the-box in Google Chrome and hopefully other browsers later on as well, 
-but currently it does a great job cross-compiling to JavaScript.
-It respects the HTML-CSS-JavaScript mindset, but when the VM will be in place, it will replace (only) the JavaScript part.
-- [Official Website](https://www.dartlang.org/)
-
 ### Robotlegs for Dart
 Robotlegs is an open source MV* framework, which was originally written for ActionScript 3.
 It provides a very clean API for building applications ranging from large enterprise software, to mini-sites and animations.
 Robotlegs for Dart project is the beginning of an attempt to bring all the sweetness Robotlegs for AS3 has to Google Dart.
+At the moment, project has not reached even alpha
 - [Robotlegs for AS3 on Github](https://github.com/robotlegs/robotlegs-framework)
 - [Robotlegs for Dart on Github](https://github.com/dotdotcommadot/dart_robotlegs)
 
 ### Robotlegs DI
 Robotlegs DI, the project you're currently looking at, is a Dependency Injection framework inspired by the DI framework the original Robotlegs framework uses, called [SwiftSuspenders](https://github.com/robotlegs/swiftsuspenders).
-The original API is very clean, intuitive and flexibel, so this project will try to remain as close to the original API as possible, 
+The original API is very clean, intuitive and flexible, so this project will try to remain as close to the original API as possible, 
 and be extended or modified where needed.
 Programming in Google Dart isn't necessarily that much different to programming in ActionScript 3 (and certainly Apache Flex), so a big part can remain in the same likes.
 - [SwiftSuspenders on Github](https://github.com/robotlegs/swiftsuspenders)
 
 ## Features
+
+### Reflection in Robotlegs DI
+Robotlegs DI is using [Reflectable](https://github.com/dart-lang/reflectable) as a reflection system for dart, since dart:mirrors are not supported on many dart platforms.
+
+To be able to use Reflectable there are some steps you need to take care of:
+* You must mark all the classes you wish to map with `@Reflect()` metadata
+```$xslt
+@Reflect()
+abstract class AbstractClazz
+{
+
+}
+
+```
+* Creating a build script, taken from Reflectable readme:
+
+
+In order to generate code, you will need to write a tiny Dart program which imports the actual builder. We'll assume that you store this program as tool/builder.dart as seen from the root of your package. Here's the code:
+```
+import 'package:reflectable/reflectable_builder.dart' as builder;
+
+main(List<String> arguments) async {
+  await builder.reflectableBuild(arguments);
+}
+```
+Now run the code generation step with the root of your package as the current directory:
+
+`> dart tool/builder.dart lib/main.dart`
+where `lib/main.dart` should be replaced by the root file/library of the program for which you wish to generate code that contains your `main()` function. You can generate code for several programs in one step; for instance, to generate code for a set of test files in test, this would typically be `tool/builder.dart test/*_test.dart`.
+Note that you should generate code for the same set of root libraries every time you run builder.dart. This is because the build framework stores data about the code generation in a single database in the directory .dart_tool, so you will get complaints about inconsistencies if you switch from generating code for `lib/main.dart` to generating code for `lib/other.dart`.
+If and when you need to generate code for another set of programs, delete all files named `*.reflectable.dart`, and the directory `.dart_tool`.
+
+* It is necessary to import the generated code, which is stored in a library whose file name is obtained by taking the file name of the main library of the program and adding .reflectable. If you main library was called `main.dart`, this amounts to `import 'main.reflectable.dart'`.
+   
+   It is also necessary to initialize the reflection support by calling `initializeReflectable()`, at the beginning of your `main()` function.
+```$xslt
+main() {
+  initializeReflectable(); // Set up reflection support.
+... // continue with running your app
+}
+```
+   
+ 
+
 
 ### Optionally Named Mappings 
 
@@ -102,8 +140,18 @@ These methods run right before the mappings for this object are removed by calli
 	@PreDestroy(order: 1)
 	void rightBeforeDestruction() { }
 	
+## Tests
+Check test files for simple examples how to use injector.
+
 ## Info
 	
 For more info about this project, contact:
 
-- [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
+- Hans Van den Keybus [hans@dotdotcommadot.com](mailto:hans@dotdotcommadot.com)
+- Matej Simunic [matejthetree@gmail.com](mailto:matejthetree@gmail.com)
+
+##Todo
+* optimize reflectable capabilities
+* simplify broadcasts
+* cover more use cases with tests
+* update the code latest robotlegs code from as3, the current implementation is a bit old.

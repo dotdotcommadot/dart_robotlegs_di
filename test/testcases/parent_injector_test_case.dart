@@ -1,3 +1,9 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,32 +26,42 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
-
-parentInjectorTestCase()
-{
+parentInjectorTestCase() {
   IInjector injector;
   IInjector childInjector;
-  
-  setUp(() 
-  {
+
+  setUp(() {
     injector = new Injector();
+    childInjector = injector.createChildInjector();
+
   });
-  
-  tearDown(() 
-  {
+
+  tearDown(() {
     injector = null;
     childInjector = null;
   });
-  
-  test('Create Child Injector', () 
-  {
-    childInjector = injector.createChildInjector();
+
+  test('Create Child Injector', () {
     expect(childInjector.parentInjector, equals(injector));
   });
 
-  test('Set Parent Injector', () 
-  {
+  test('Satisfies child injector', () {
+    injector.map(InjectedClazz);
+
+    bool satisfies = childInjector.satisfies(InjectedClazz);
+    expect(satisfies, equals(true));
+  });
+
+  test('Satisfies directly child injector', () {
+    injector.map(InjectedClazz);
+
+    bool satisfies = childInjector.satisfiesDirectly(InjectedClazz);
+    expect(satisfies, equals(false));
+  });
+
+
+
+  test('Set Parent Injector', () {
     childInjector = new Injector();
     childInjector.parentInjector = injector;
     expect(childInjector.parentInjector, equals(injector));

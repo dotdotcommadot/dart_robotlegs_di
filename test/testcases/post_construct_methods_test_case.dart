@@ -1,3 +1,9 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,46 +26,45 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+postConstructMethodsTestCase() {
+  IInjector injector;
 
-postConstructMethodsTestCase()
-{
-	IInjector injector;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Running Methods', () 
-	{
-		injector.map(String).toValue("abcABC-123");
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
+  setUp(() {
+    injector = new Injector();
+  });
+
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Running Methods', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
+    expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
     expect(myClazz.hasRunLastPostConstructMethod, isTrue);
-	});
+  });
 
-	test('Running Methods in Right Order', () 
-	{
-		injector.map(String).toValue("abcABC-123");
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		Clazz myClazz = injector.getInstance(Clazz);
-		expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
-		expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
-	  expect(myClazz.hasRunLastPostConstructMethod, isTrue);
-	  
-	  expect(myClazz.firstPostConstructMethodOrder < myClazz.secondPostConstructMethodOrder, isTrue);
-	  expect(myClazz.secondPostConstructMethodOrder < myClazz.lastPostConstructMethodOrder, isTrue);
-	});
+  test('Running Methods in Right Order', () {
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    Clazz myClazz = injector.getInstance(Clazz);
+    expect(myClazz.hasRunFirstPostConstructMethod, isTrue);
+    expect(myClazz.hasRunSecondPostConstructMethod, isTrue);
+    expect(myClazz.hasRunLastPostConstructMethod, isTrue);
+
+    expect(
+        myClazz.firstPostConstructMethodOrder <
+            myClazz.secondPostConstructMethodOrder,
+        isTrue);
+    expect(
+        myClazz.secondPostConstructMethodOrder <
+            myClazz.lastPostConstructMethodOrder,
+        isTrue);
+  });
 }

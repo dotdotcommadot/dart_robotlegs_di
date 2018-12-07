@@ -22,19 +22,22 @@
 
 library robotlegs_di_example;
 
-import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
 
-part 'stuffs/product.dart';
-part 'stuffs/shop.dart';
+import 'stuffs/product.dart';
+import 'stuffs/shop.dart';
+import 'robotlegs_di_example.reflectable.dart';
+void main() {
 
-void main() 
-{
-	IInjector injector = new Injector();
-	
-	injector.map( Product ).asSingleton();
-	injector.map( Shop );
-	injector.map( int ).toValue(5);
-	
-	Shop shop = injector.getInstance( Shop );
-	//injector.teardown();
+  initializeReflectable();
+  IInjector injector = new Injector();
+
+  injector.map(Product).asSingleton();
+  injector.map(Shop);
+  injector.map(ValueHolder).toValue(new ValueHolder("valueHolderString"));
+
+  Shop shop = injector.getInstance(Shop);
+  print("Shop getValue() => " + shop.getValue());
+
+  injector.teardown();
 }

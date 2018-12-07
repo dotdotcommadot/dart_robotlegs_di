@@ -1,3 +1,9 @@
+import 'package:robotlegs_di/robotlegs_di.dart';
+import 'package:robotlegs_di/src/injection/injector.dart';
+import 'package:test/test.dart';
+
+import '../objects/objects.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,46 +26,45 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_test;
+preDestroyMethodsTestCase() {
+  IInjector injector;
+  Clazz myClazz;
 
-preDestroyMethodsTestCase()
-{
-	IInjector injector;
-	Clazz myClazz;
-	
-	setUp(() 
-	{
-		injector = new Injector();	
-		injector.map(String).toValue("abcABC-123");
-		injector.map(InjectedClazz);
-		injector.map(Clazz);
-		
-		myClazz = injector.getInstance(Clazz);
-	});
-	
-	tearDown(() 
-	{
-		injector = null;
-	});
-	
-	test('Running Methods', () 
-	{
+  setUp(() {
+    injector = new Injector();
+    injector.map(ValueHolder).toValue(const ValueHolder("abcABC-123"));
+    injector.map(InjectedClazz);
+    injector.map(Clazz);
+
+    myClazz = injector.getInstance(Clazz);
+  });
+
+  tearDown(() {
+    injector = null;
+  });
+
+  test('Running Methods', () {
     injector.teardown();
-    
+
     expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
     expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
     expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
-	});
+  });
 
-	test('Running Methods in Right Order', () 
-	{
+  test('Running Methods in Right Order', () {
     injector.teardown();
-    
+
     expect(myClazz.hasRunFirstPreDestroyMethod, isTrue);
     expect(myClazz.hasRunSecondPreDestroyMethod, isTrue);
     expect(myClazz.hasRunLastPreDestroyMethod, isTrue);
-    
-    expect(myClazz.firstPreDestroytMethodOrder < myClazz.secondPreDestroytMethodOrder, isTrue);
-    expect(myClazz.secondPreDestroytMethodOrder < myClazz.lastPreDestroytMethodOrder, isTrue);
-	});
+
+    expect(
+        myClazz.firstPreDestroytMethodOrder <
+            myClazz.secondPreDestroytMethodOrder,
+        isTrue);
+    expect(
+        myClazz.secondPreDestroytMethodOrder <
+            myClazz.lastPreDestroytMethodOrder,
+        isTrue);
+  });
 }

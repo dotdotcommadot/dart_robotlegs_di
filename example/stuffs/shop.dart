@@ -1,3 +1,8 @@
+import 'package:robotlegs_di/src/reflection/annotations.dart';
+import 'package:robotlegs_di/src/reflection/reflector.dart';
+
+import 'product.dart';
+
 /*
 * Copyright (c) 2014 the original author or authors
 *
@@ -20,58 +25,65 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di_example;
-
+@Reflect()
 class Shop {
-
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	@inject
-	Product product;
 
-	@inject
-	Product otherProduct;
+  @inject
+  Product product;
+
+  @inject
+  Product otherProduct;
+
+  ValueHolder _valueHolder;
 
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	Shop();
-	
+
+  Shop();
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	@postConstruct
-	void onPostConstruct() 
-	{
-		print("Shop::onPostConstruct: " + product.toString());
-		print("Shop::onPostConstruct: " + otherProduct.toString());
-	}
 
-	@preDestroy
-	void onPreDestroy() 
-	{
-		print("Shop::onPreDestroy");
-	}
+  @postConstruct
+  void onPostConstruct() {
+    print("Shop::onPostConstruct: " + product.toString());
+    print("Shop::onPostConstruct: " + otherProduct.toString());
+  }
 
-	@inject
-	void injectedMethod() 
-	{
-		print("Shop::injectedMethod");
-	}
+  @preDestroy
+  void onPreDestroy() {
+    print("Shop::onPreDestroy");
+  }
 
-	@inject
-	void withParamesInjectedMethod(int value) 
-	{
-		print("Shop::withParamesInjectedMethod " + value.toString());
-	}
+  @inject
+  void injectedMethod() {
+    print("Shop::injectedMethod");
+  }
+
+  @inject
+  void withParamesInjectedMethod(ValueHolder valueHolder) {
+    print("Shop::withParamesInjectedMethod " + valueHolder.value);
+    this._valueHolder = valueHolder;
+  }
+
+  String getValue() => _valueHolder != null ?_valueHolder.value:null;
 }
+
+@Reflect()
+class ValueHolder {
+  final String value;
+
+  const ValueHolder(this.value);
+}
+

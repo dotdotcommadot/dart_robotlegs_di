@@ -20,15 +20,52 @@
 * THE SOFTWARE.
 */
 
-part of robotlegs_di;
+class InjectorError extends Error {
+  //-----------------------------------
+  //
+  // Public Properties
+  //
+  //-----------------------------------
 
-abstract class IUnsealedMapping
-{
-	//-----------------------------------
+  final String message;
+
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  InjectorError([this.message = ""]);
+
+  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	dynamic seal();
+
+  String toString() {
+    if (message != null) return "Injector Error: $message";
+
+    return "Injector Error";
+  }
+}
+
+class InjectorInterfaceConstructorError extends InjectorError {
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  InjectorInterfaceConstructorError([String message = ""]) : super(message);
+}
+
+class InjectorMissingMappingError extends InjectorError {
+  //-----------------------------------
+  //
+  // Constructor
+  //
+  //-----------------------------------
+
+  InjectorMissingMappingError([String message = ""]) : super(message);
 }
